@@ -5,12 +5,12 @@ export default createMuiTheme({
     primary: {
       main: "#FFCCBC",
       light: "#ffddc1",
-      dark: "#000000",      
+      dark: "#000000"
     },
     secondary: {
       main: "#f50057",
       light: "#ff5983",
       dark: "#bb002f"
     }
-  },
+  }
 });
