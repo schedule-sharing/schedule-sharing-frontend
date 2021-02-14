@@ -20,6 +20,7 @@
 <br/>
 
 
+
 - [cra-typescript-cheatsheet](https://github.com/typescript-cheatsheets/react#reacttypescript-cheatsheets)
 
 ## 기술스택
@@ -28,7 +29,7 @@
 
 - [react-redux](https://react-redux.js.org/introduction/quick-start)
 - [react-calender](https://www.npmjs.com/package/react-calendar)
-- 
+- [formik](https://formik.org/)
 
 ### Server
 
