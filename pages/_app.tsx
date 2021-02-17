@@ -4,9 +4,10 @@ import React, { useEffect } from "react";
 import { AppProps } from "next/app";
 import { MuiThemeProvider } from "@material-ui/core";
 import Head from "next/head";
+import { Provider } from "react-redux";
 import mainTheme from "../styles/themes/mainTheme";
-import SideMenuBar from "../components/layout/sidebar/SideMenuBar";
 import Layout from "../components/layout/Layout";
+import store from "../store/store";
 // Component =>pageComponent
 const MyApp = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
@@ -17,14 +18,16 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   }, []);
 
   return (
-    <MuiThemeProvider theme={mainTheme}>
-      <Head>
-        <title>title</title>
-      </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </MuiThemeProvider>
+    <Provider store={store}>
+      <MuiThemeProvider theme={mainTheme}>
+        <Head>
+          <title>title</title>
+        </Head>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </MuiThemeProvider>
+    </Provider>
   );
 };
 

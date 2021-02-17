@@ -34,3 +34,11 @@
 ### Server
 
 - [next](https://nextjs.org/)
+
+
+### 상태 
+
+- Reducers
+    - visibility: 보여지는것과 안보여지는것 구별하는 상태
+    - user: 유저상태 , role, id, email 등등
+    - group: 유저가 가입한 그룹 객체 아래 스케줄리스트 관리
