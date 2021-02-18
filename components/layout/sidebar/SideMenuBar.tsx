@@ -1,6 +1,7 @@
 import React, { ReactComponentElement } from "react";
+import Link from "next/link";
 import clsx from "clsx";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import List from "@material-ui/core/List";
@@ -11,101 +12,15 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import AddIcon from "@material-ui/icons/Add";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import { Avatar, Grid } from "@material-ui/core";
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex"
-  },
-  appBar: {
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    color: "white",
-    backgroundColor: theme.palette.secondary.main
-  },
-  hide: {
-    display: "none"
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    backgroundColor: theme.palette.primary.main
-  },
-  drawerHeader: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    paddingLeft: "16px",
-    paddingBottom: "10px"
-  },
-  drawerIcon: {
-    display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: "flex-end"
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    marginLeft: -drawerWidth
-  },
-  contentShift: {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    }),
-    marginLeft: 0
-  },
-  divider: {
-    backgroundColor: theme.palette.primary.dark
-  },
-  drawerAvatar: {
-    width: "75px",
-    height: "75px"
-  },
-  listText: {
-    fontSize: "30px"
-  },
-  addIcon: {
-    width: "50px",
-    height: "50px",
-    color: theme.palette.secondary.main
-  }
-}));
+import sideBarStyle from "../../../styles/sidebar/sideMenuBarStyle";
 
 const SideMenuBar: React.FC<{
   children?: ReactComponentElement<any, any>;
 }> = ({ children }) => {
-  const classes = useStyles();
+  const classes = sideBarStyle();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -170,13 +85,20 @@ const SideMenuBar: React.FC<{
         <Divider classes={{ root: classes.divider }} variant="middle" />
         <List>
           {["동네 친구", "학교", "여자친구"].map((text) => (
-            <ListItem button key={text}>
-              {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
-              <ListItemText
-                classes={{ primary: classes.listText }}
-                primary={text}
-              />
-            </ListItem>
+            <Link
+              key={text}
+              href={{
+                pathname: "/calenders/groupcalender",
+                query: { title: text }
+              }}>
+              <ListItem button key={text}>
+                {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
+                <ListItemText
+                  classes={{ primary: classes.listText }}
+                  primary={text}
+                />
+              </ListItem>
+            </Link>
           ))}
         </List>
         <Divider classes={{ root: classes.divider }} variant="middle" />

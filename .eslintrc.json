@@ -35,12 +35,12 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".tsx"]
+        "extensions": [".tsx",".ts"]
       }
     ],
     "import/prefer-default-export": "warn",
     "import/extensions": [
-      "error",
+      "warn",
       "ignorePackages",
       {
         "ts": "never",

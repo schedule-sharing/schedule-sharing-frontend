@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import "../styles/globals.css";
 import React, { useEffect } from "react";
 import { AppProps } from "next/app";
 import { MuiThemeProvider } from "@material-ui/core";
@@ -21,7 +20,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <Provider store={store}>
       <MuiThemeProvider theme={mainTheme}>
         <Head>
-          <title>title</title>
+          <title>Schedule Sharing</title>
         </Head>
         <Layout>
           <Component {...pageProps} />

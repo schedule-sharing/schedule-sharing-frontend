@@ -25,6 +25,7 @@ export default (state = initialState, action: VisibilityAction) => {
     case SET_VISIBILITY:
       // action
       return copied;
+
     default:
       return copied;
   }

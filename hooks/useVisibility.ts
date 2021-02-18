@@ -4,7 +4,7 @@ import { RootState } from "../store/reducers/rootReducer";
 import {
   setVisibility as setVisi,
   VisibilityStrings
-} from "../store/reducers/visibilityReducer";
+} from "../store/reducers/visibilityReducer/visibilityReducer";
 
 export default function useVisibility() {
   const dispatch = useDispatch();
