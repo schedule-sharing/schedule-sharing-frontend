@@ -11,12 +11,15 @@ import {
 } from "@material-ui/core";
 import { Formik } from "formik";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import Link from "next/link";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     padding: theme.spacing(2),
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    alignItems: "center",
+    margin: "0 auto"
   },
   textField: {
     backgroundColor: "white",
@@ -55,6 +58,7 @@ const LoginForm = () => {
             <Grid item container xs={12}>
               <TextField
                 fullWidth
+                size="small"
                 classes={{ root: classes.textField }}
                 name="userId"
                 placeholder="아이디"
@@ -68,6 +72,7 @@ const LoginForm = () => {
               />
               <TextField
                 fullWidth
+                size="small"
                 className={classes.textField}
                 name="userPw"
                 placeholder="비밀번호"
@@ -89,15 +94,24 @@ const LoginForm = () => {
                 }
                 helperText={formikProps.touched && formikProps.errors.userId}
               />
+
+              {/* 비번 잊음 */}
+              <Grid item justify="space-between" container xs={12}>
+                <Typography
+                  variant="caption"
+                  align="center"
+                  children="비밀번호를 잊어버렸어요"
+                />
+                <Link href="/signup">
+                  <Typography
+                    variant="caption"
+                    align="center"
+                    children="계정이 없어요"
+                  />
+                </Link>
+              </Grid>
             </Grid>
-            {/* 비번 잊음 */}
-            <Grid item justify="center" container xs={12}>
-              <Typography
-                variant="subtitle2"
-                align="center"
-                children="비밀번호잊어버렸어요"
-              />
-            </Grid>
+
             <Grid item xs={12}>
               <Button
                 type="submit"

@@ -4,7 +4,17 @@ const drawerWidth = 240;
 
 export default makeStyles((theme: Theme) => ({
   root: {
-    display: "flex"
+    display: "flex",
+    height: "100%"
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    height: "100%"
   },
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
@@ -28,10 +38,6 @@ export default makeStyles((theme: Theme) => ({
   hide: {
     display: "none"
   },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0
-  },
   drawerPaper: {
     width: drawerWidth,
     backgroundColor: theme.palette.primary.main
@@ -40,25 +46,9 @@ export default makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
-    paddingLeft: "16px",
-    paddingBottom: "10px"
-  },
-  drawerIcon: {
-    display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: "flex-end"
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    marginLeft: -drawerWidth
+    paddingLeft: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    paddingTop: theme.spacing(5)
   },
   contentShift: {
     transition: theme.transitions.create("margin", {

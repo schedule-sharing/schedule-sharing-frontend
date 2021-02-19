@@ -16,7 +16,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     padding: theme.spacing(2),
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    alignItems: "center",
+    margin: "0 auto"
   },
   textField: {
     backgroundColor: "white",
@@ -31,12 +33,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 type intialFormValueType = {
-  userId: string;
-  userPw: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 };
 const intialFormValue: intialFormValueType = {
-  userId: "",
-  userPw: ""
+  email: "",
+  password: "",
+  confirmPassword: ""
 };
 const SignUpForm = () => {
   const classes = useStyles();
@@ -55,21 +59,24 @@ const SignUpForm = () => {
             <Grid item container xs={12}>
               <TextField
                 fullWidth
+                size="small"
                 classes={{ root: classes.textField }}
-                name="userId"
+                name="email"
                 placeholder="아이디"
                 variant="outlined"
-                value={formikProps.values.userId}
+                value={formikProps.values.email}
                 onChange={formikProps.handleChange}
                 error={
-                  formikProps.touched && Boolean(formikProps.errors.userId)
+                  formikProps.touched.email && Boolean(formikProps.errors.email)
                 }
-                helperText={formikProps.touched && formikProps.errors.userId}
+                helperText={
+                  formikProps.touched.email && formikProps.errors.email
+                }
               />
               <TextField
                 fullWidth
                 className={classes.textField}
-                name="userPw"
+                name="password"
                 placeholder="비밀번호"
                 InputProps={{
                   endAdornment: (
@@ -82,22 +89,55 @@ const SignUpForm = () => {
                 }}
                 type={showPw ? "text" : "password"}
                 variant="outlined"
-                value={formikProps.values.userPw}
+                size="small"
+                value={formikProps.values.password}
                 onChange={formikProps.handleChange}
                 error={
-                  formikProps.touched && Boolean(formikProps.errors.userId)
+                  formikProps.touched.password &&
+                  Boolean(formikProps.errors.password)
                 }
-                helperText={formikProps.touched && formikProps.errors.userId}
+                helperText={
+                  formikProps.touched.password && formikProps.errors.password
+                }
               />
+              <TextField
+                fullWidth
+                size="small"
+                className={classes.textField}
+                name="confirmPassword"
+                placeholder="비밀번호확인"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={() => setShowPw((prev) => !prev)}>
+                        {showPw ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
+                type={showPw ? "text" : "password"}
+                variant="outlined"
+                value={formikProps.values.password}
+                onChange={formikProps.handleChange}
+                error={
+                  formikProps.touched.confirmPassword &&
+                  Boolean(formikProps.errors.confirmPassword)
+                }
+                helperText={
+                  formikProps.touched.confirmPassword &&
+                  formikProps.errors.confirmPassword
+                }
+              />
+              <Grid item justify="center" container xs={12}>
+                <Typography
+                  variant="subtitle2"
+                  align="center"
+                  children="By continuing, you are agreeing to the Terms of Service & Privacy Policy."
+                />
+              </Grid>
             </Grid>
             {/* desc */}
-            <Grid item justify="center" container xs={12}>
-              <Typography
-                variant="subtitle2"
-                align="center"
-                children="By continuing, you are agreeing to the Terms of Service & Privacy Policy."
-              />
-            </Grid>
+
             <Grid item xs={12}>
               <Button
                 type="submit"
