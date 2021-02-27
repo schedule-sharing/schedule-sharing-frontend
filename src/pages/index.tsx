@@ -9,7 +9,6 @@ export default function index() {
       <Applayout>
         <Head>
           <title>user</title>
-          <metadata>~~~~</metadata>
         </Head>
         <div> 단순 개발용임</div>
         <div>
