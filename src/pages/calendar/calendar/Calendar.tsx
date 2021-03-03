@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, Theme } from "@material-ui/core";
 import clsx from "clsx";
 
@@ -42,15 +42,25 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const Calendar = () => {
-  const [date, setDate] = useState<DateType>({
+  const [date, setDate] = useState({
     year: "",
     month: "",
     day: "",
-    startOfMonth: "Mon"
+    startOfMonth: 0
   });
   const dateLogic = () => {
+    // 날짜 로직
     const date = new Date();
+    setDate({
+      year: date.getFullYear().toString(),
+      month: date.getMonth().toString(),
+      day: date.getDate().toString(),
+      startOfMonth: date.getDate()
+    });
   };
+  useEffect(() => {
+    dateLogic();
+  }, []);
   const classes = useStyles();
   // date rendering example
   const dates1 = [
@@ -86,62 +96,33 @@ const Calendar = () => {
     { date: "30", dow: "Tues" },
     { date: "31", dow: "Wed" }
   ];
-  console.log(new Date().getMonth());
-  const dateRendering = (dates: Array<{ date: string; dow: string }>) => {
-    let empty = 0;
-    switch (dates[0].dow) {
-      case "Mon":
-        empty = 0;
-        break;
-      case "Tues":
-        empty = 1;
-        break;
-      case "Wed":
-        empty = 2;
-        break;
-      case "Thur":
-        empty = 3;
-        break;
-      case "Fri":
-        empty = 4;
-        break;
-      case "Sat":
-        empty = 5;
-        break;
-      case "Sun":
-        empty = 6;
-        break;
-      default:
-        break;
-    }
-    return (
-      <>
-        <div style={{ flexBasis: `calc((100% / 7)*${empty})` }} />
-        {dates.map((date) => (
-          <div
-            key={`year+month+${date.date} `}
-            className={clsx({
-              [classes.contentItem]: true,
-              [classes.saturday]: date.dow === "Sat",
-              [classes.sunday]: date.dow === "Sun"
-            })}>
-            <div>{date.date}</div>
-          </div>
-        ))}
-      </>
-    );
-  };
+  const dateRendering = (dates: Array<{ date: string; dow: string }>) => (
+    <>
+      <div style={{ flexBasis: `calc((100% / 7)*${date.startOfMonth})` }} />
+      {dates.map((dat) => (
+        <div
+          key={`year+month+${dat.date} `}
+          className={clsx({
+            [classes.contentItem]: true,
+            [classes.saturday]: dat.dow === "Sat",
+            [classes.sunday]: dat.dow === "Sun"
+          })}>
+          <div>{dat.date}</div>
+        </div>
+      ))}
+    </>
+  );
   return (
     <div className={classes.root}>
       <div className={classes.header}>headercontents</div>
       {/* weekrow */}
       <div className={classes.calHeader}>
+        <div className={classes.calHeaderItem}>S</div>
         <div className={classes.calHeaderItem}>M</div>
         <div className={classes.calHeaderItem}>T</div>
         <div className={classes.calHeaderItem}>W</div>
         <div className={classes.calHeaderItem}>T</div>
         <div className={classes.calHeaderItem}>F</div>
-        <div className={classes.calHeaderItem}>S</div>
         <div className={classes.calHeaderItem}>S</div>
       </div>
       {/* contents */}
