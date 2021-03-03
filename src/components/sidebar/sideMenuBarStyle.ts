@@ -1,6 +1,6 @@
 import { makeStyles, Theme } from "@material-ui/core";
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 export default makeStyles((theme: Theme) => ({
   root: {
@@ -13,7 +13,6 @@ export default makeStyles((theme: Theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
     height: "100%"
   },
   appBar: {

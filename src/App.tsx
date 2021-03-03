@@ -7,15 +7,15 @@ import HomeLayout from "./pages/home/HomeLayout";
 function App() {
   return (
     <>
-      {/* 개발완료후 삭제 */}
-      <Switch>
-        <Route path="/user" component={UserLayout} />
-        <Route path="/calendar" component={CalendarLayout} />
-        <Route path="/" component={HomeLayout} />
-      </Switch>
+      <div className="App">
+        <Switch>
+          <Route path="/user" component={UserLayout} />
+          <Route path="/calendar" component={CalendarLayout} />
+          <Route path="/" component={HomeLayout} />
+        </Switch>
+      </div>
       {/* 개발완료후 삭제 */}
       <div
-        className="App"
         style={{
           backgroundColor: "beige",
           position: "absolute",
@@ -36,6 +36,7 @@ function App() {
         </div>
         <div> timetreeapp.com 처럼 간단한 설명 화면 렌더링</div>
       </div>
+      {/* 개발완료후 삭제 */}
     </>
   );
 }
