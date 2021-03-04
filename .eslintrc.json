@@ -20,6 +20,7 @@
   },
   "plugins": ["react", "@typescript-eslint", "react-hooks","prettier"],
   "rules": {
+    "no-shadow":"warn",
     "react-hooks/rules-of-hooks": "warn",
     "react/jsx-props-no-spreading":"warn",
     "no-console": "warn",

@@ -12,7 +12,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-}
+  }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -24,4 +24,10 @@ a:link{
 }
 #root {
   flex: 1;
+}
+*{
+  box-sizing: border-box;
+}
+.App{
+  height: 100%;
 }

@@ -3,11 +3,9 @@ import Calendar from "./calendar/Calendar";
 import SideMenuBar from "../../components/sidebar/SideMenuBar";
 
 const CalendarLayout = () => (
-  <div>
-    <SideMenuBar>
-      <Calendar />
-    </SideMenuBar>
-  </div>
+  <SideMenuBar>
+    <Calendar />
+  </SideMenuBar>
 );
 
 export default CalendarLayout;
