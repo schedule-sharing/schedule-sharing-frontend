@@ -1,7 +1,7 @@
 type DateType = {
-  year: string;
-  month: string;
-  day: string;
-  startOfMonth: number;
+  year: number;
+  month: number;
+  day: number;
+  date: number;
 };
 // "Mon" | "Tues" | "Wed" | "Thur" | "Fri" | "Sat" | "Sun"

@@ -40,81 +40,94 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: "red"
   }
 }));
-
+const dates1 = [
+  { date: "1", dow: 1 },
+  { date: "2", dow: 2 },
+  { date: "3", dow: 3 },
+  { date: "4", dow: 4 },
+  { date: "5", dow: 5 },
+  { date: "6", dow: 6 },
+  { date: "7", dow: 0 },
+  { date: "8", dow: 1 },
+  { date: "9", dow: 2 },
+  { date: "10", dow: 3 },
+  { date: "11", dow: 4 },
+  { date: "12", dow: 5 },
+  { date: "13", dow: 6 },
+  { date: "14", dow: 0 },
+  { date: "15", dow: 1 },
+  { date: "16", dow: 2 },
+  { date: "17", dow: 3 },
+  { date: "18", dow: 4 },
+  { date: "19", dow: 5 },
+  { date: "20", dow: 6 },
+  { date: "21", dow: 0 },
+  { date: "22", dow: 1 },
+  { date: "23", dow: 2 },
+  { date: "24", dow: 3 },
+  { date: "25", dow: 4 },
+  { date: "26", dow: 5 },
+  { date: "27", dow: 6 },
+  { date: "28", dow: 0 },
+  { date: "29", dow: 1 },
+  { date: "30", dow: 2 },
+  { date: "31", dow: 3 }
+];
 const Calendar = () => {
-  const [date, setDate] = useState({
-    year: "",
-    month: "",
-    day: "",
-    startOfMonth: 0
-  });
-  const dateLogic = () => {
-    // 날짜 로직
-    const date = new Date();
-    setDate({
-      year: date.getFullYear().toString(),
-      month: date.getMonth().toString(),
-      day: date.getDate().toString(),
-      startOfMonth: date.getDate()
-    });
+  const [date, setDate] = useState<Array<DateType>>([
+    { date: 0, day: 1, month: 1, year: 2020 }
+  ]);
+  // 날짜 구하는 로직
+  const getDate = (year: number, month: number) => {
+    const arr: Array<DateType> = [];
+
+    // 해당월의 마지막날짜 구하는 로직
+    const endOfMonth = new Date(year, month + 1, 0).getDate();
+
+    // 해당 월의 날짜배열들
+    for (let i = 1; i <= endOfMonth; i += 1) {
+      arr.push({
+        year,
+        month,
+        date: i,
+        day: new Date(year, month, i).getDay()
+      });
+    }
+    setDate(arr);
   };
   useEffect(() => {
-    dateLogic();
+    // 초기마운트시  오늘 날짜 기준으로날짜 설정
+    const today = new Date(); // new Date(2021, 1, 3); 2월 3일 기준으로 날짜
+    const dat = {
+      year: today.getFullYear(),
+      month: today.getMonth()
+    };
+    getDate(dat.year, dat.month);
   }, []);
-  const classes = useStyles();
-  // date rendering example
-  const dates1 = [
-    { date: "1", dow: "Mon" },
-    { date: "2", dow: "Tues" },
-    { date: "3", dow: "Wed" },
-    { date: "4", dow: "Thur" },
-    { date: "5", dow: "Fri" },
-    { date: "6", dow: "Sat" },
-    { date: "7", dow: "Sun" },
-    { date: "8", dow: "Mon" },
-    { date: "9", dow: "Tues" },
-    { date: "10", dow: "Wed" },
-    { date: "11", dow: "Thur" },
-    { date: "12", dow: "Fri" },
-    { date: "13", dow: "Sat" },
-    { date: "14", dow: "Sun" },
-    { date: "15", dow: "Mon" },
-    { date: "16", dow: "Tues" },
-    { date: "17", dow: "Wed" },
-    { date: "18", dow: "Thur" },
-    { date: "19", dow: "Fri" },
-    { date: "20", dow: "Sat" },
-    { date: "21", dow: "Sun" },
-    { date: "22", dow: "Mon" },
-    { date: "23", dow: "Tues" },
-    { date: "24", dow: "Wed" },
-    { date: "25", dow: "Thur" },
-    { date: "26", dow: "Fri" },
-    { date: "27", dow: "Sat" },
-    { date: "28", dow: "Sun" },
-    { date: "29", dow: "Mon" },
-    { date: "30", dow: "Tues" },
-    { date: "31", dow: "Wed" }
-  ];
-  const dateRendering = (dates: Array<{ date: string; dow: string }>) => (
+
+  const dateRendering = (dates: Array<DateType>) => (
     <>
-      <div style={{ flexBasis: `calc((100% / 7)*${date.startOfMonth})` }} />
+      <div style={{ flexBasis: `calc((100% / 7)*${date[0].day})` }} />
       {dates.map((dat) => (
         <div
           key={`year+month+${dat.date} `}
           className={clsx({
             [classes.contentItem]: true,
-            [classes.saturday]: dat.dow === "Sat",
-            [classes.sunday]: dat.dow === "Sun"
+            [classes.saturday]: dat.day === 6,
+            [classes.sunday]: dat.day === 0
           })}>
           <div>{dat.date}</div>
         </div>
       ))}
     </>
   );
+  const classes = useStyles();
   return (
     <div className={classes.root}>
-      <div className={classes.header}>headercontents</div>
+      <div className={classes.header}>
+        headercontents
+        <div>{`${date[0].month + 1}월`}</div>
+      </div>
       {/* weekrow */}
       <div className={classes.calHeader}>
         <div className={classes.calHeaderItem}>S</div>
@@ -126,7 +139,7 @@ const Calendar = () => {
         <div className={classes.calHeaderItem}>S</div>
       </div>
       {/* contents */}
-      <div className={classes.content}>{dateRendering(dates1)}</div>
+      <div className={classes.content}>{dateRendering(date)}</div>
     </div>
   );
 };

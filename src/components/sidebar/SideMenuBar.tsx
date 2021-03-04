@@ -7,8 +7,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
-import Link from "next/link";
 import React from "react";
+import { Link } from "react-router-dom";
 import sideBarStyle from "./sideMenuBarStyle";
 
 const SideMenuBar: React.FC<{
@@ -50,7 +50,7 @@ const SideMenuBar: React.FC<{
           </Grid>
         </div>
         <Divider classes={{ root: classes.divider }} variant="middle" />
-        <List>
+        {/* <List>
           {["동네 친구", "학교", "여자친구"].map((text) => (
             <Link
               key={text}
@@ -59,7 +59,6 @@ const SideMenuBar: React.FC<{
                 query: { title: text }
               }}>
               <ListItem button key={text}>
-                {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
                 <ListItemText
                   classes={{ primary: classes.listText }}
                   primary={text}
@@ -67,7 +66,7 @@ const SideMenuBar: React.FC<{
               </ListItem>
             </Link>
           ))}
-        </List>
+        </List> */}
         <Divider classes={{ root: classes.divider }} variant="middle" />
         <Grid container justify="center">
           <IconButton classes={{ root: classes.addIcon }}>
