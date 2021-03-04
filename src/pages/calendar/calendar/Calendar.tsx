@@ -1,62 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Button, IconButton, makeStyles, Theme } from "@material-ui/core";
-import { ArrowBack, ArrowForward } from "@material-ui/icons";
+import { IconButton } from "@material-ui/core";
+import {
+  AddBox,
+  ArrowBack,
+  ArrowForward,
+  ShoppingBasket
+} from "@material-ui/icons";
 import clsx from "clsx";
+import React, { useEffect, useState } from "react";
+import useStyles from "./calendarStyle";
+import ScheduleForm from "../form/ScheduleForm";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    backgroundColor: theme.palette.primary.light,
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    minWidth: "600px"
-  },
-  // header
-  header: {
-    height: "80px",
-    backgroundColor: theme.palette.primary.main,
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center"
-  },
-  headerTitle: {
-    color: theme.palette.secondary.dark,
-    fontSize: theme.typography.h4.fontSize
-  },
-  // weekrow
-  calHeader: {
-    display: "flex",
-    borderBottom: "3px solid",
-    borderBottomColor: "rgba(255, 89, 131, .4)"
-  },
-  calHeaderItem: {
-    flexBasis: "calc(100% / 7)",
-    paddingLeft: theme.spacing(1)
-  },
-
-  // content
-  content: {
-    flex: "1",
-    flexWrap: "wrap",
-    display: "flex"
-  },
-  contentItem: {
-    border: "1px solid",
-    borderColor: theme.palette.grey.A100,
-    flexBasis: "calc(100% / 7)",
-    paddingLeft: theme.spacing(1)
-  },
-  saturday: {
-    color: "blue"
-  },
-  sunday: {
-    color: "red"
-  }
-}));
 const Calendar = () => {
   const [date, setDate] = useState<Array<DateType>>([
     { date: 0, day: 1, month: 1, year: 2020 }
   ]);
+  const [formRef, setFormRef] = useState<HTMLElement | null>(null);
+  const [formVisibility, setFormVisibility] = useState(false);
   // 날짜 구하는 로직
   const getDate = (year: number, month: number) => {
     const arr: Array<DateType> = [];
@@ -84,10 +43,9 @@ const Calendar = () => {
     };
     getDate(dat.year, dat.month);
   }, []);
-
   const dateRendering = (dates: Array<DateType>) => (
     <>
-      <div style={{ flexBasis: `calc((100% / 7)*${date[0].day})` }} />
+      <div style={{ flexBasis: `calc((100% / 7)*${dates[0].day})` }} />
       {dates.map((dat) => (
         <div
           key={`year+month+${dat.date} `}
@@ -96,7 +54,20 @@ const Calendar = () => {
             [classes.saturday]: dat.day === 6,
             [classes.sunday]: dat.day === 0
           })}>
-          <div>{dat.date}</div>
+          <div className={classes.contentItemTitle}>{dat.date}</div>
+          <div className={classes.contentItemBtnContainer}>
+            <IconButton
+              onClick={(e) => handleAddBtnClick(e)}
+              className={classes.contentItemIcon}
+              size="small"
+              children={<AddBox />}
+            />
+            <IconButton
+              className={classes.contentItemIcon}
+              size="small"
+              children={<ShoppingBasket />}
+            />
+          </div>
         </div>
       ))}
     </>
@@ -123,6 +94,13 @@ const Calendar = () => {
     }
     getDate(year, month);
   };
+
+  const handleAddBtnClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    setFormVisibility(true);
+    setFormRef(e.currentTarget);
+  };
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -144,6 +122,11 @@ const Calendar = () => {
       </div>
       {/* contents */}
       <div className={classes.content}>{dateRendering(date)}</div>
+      <ScheduleForm
+        anchorEl={formRef}
+        visibility={formVisibility}
+        setVisibility={setFormVisibility}
+      />
     </div>
   );
 };
