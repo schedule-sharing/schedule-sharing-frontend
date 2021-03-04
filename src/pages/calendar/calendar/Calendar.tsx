@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles, Theme } from "@material-ui/core";
+import { Button, IconButton, makeStyles, Theme } from "@material-ui/core";
+import { ArrowBack, ArrowForward } from "@material-ui/icons";
 import clsx from "clsx";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -7,12 +8,22 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.primary.light,
     height: "100%",
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    minWidth: "600px"
   },
+  // header
   header: {
     height: "80px",
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center"
   },
+  headerTitle: {
+    color: theme.palette.secondary.dark,
+    fontSize: theme.typography.h4.fontSize
+  },
+  // weekrow
   calHeader: {
     display: "flex",
     borderBottom: "3px solid",
@@ -22,6 +33,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexBasis: "calc(100% / 7)",
     paddingLeft: theme.spacing(1)
   },
+
+  // content
   content: {
     flex: "1",
     flexWrap: "wrap",
@@ -40,39 +53,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: "red"
   }
 }));
-const dates1 = [
-  { date: "1", dow: 1 },
-  { date: "2", dow: 2 },
-  { date: "3", dow: 3 },
-  { date: "4", dow: 4 },
-  { date: "5", dow: 5 },
-  { date: "6", dow: 6 },
-  { date: "7", dow: 0 },
-  { date: "8", dow: 1 },
-  { date: "9", dow: 2 },
-  { date: "10", dow: 3 },
-  { date: "11", dow: 4 },
-  { date: "12", dow: 5 },
-  { date: "13", dow: 6 },
-  { date: "14", dow: 0 },
-  { date: "15", dow: 1 },
-  { date: "16", dow: 2 },
-  { date: "17", dow: 3 },
-  { date: "18", dow: 4 },
-  { date: "19", dow: 5 },
-  { date: "20", dow: 6 },
-  { date: "21", dow: 0 },
-  { date: "22", dow: 1 },
-  { date: "23", dow: 2 },
-  { date: "24", dow: 3 },
-  { date: "25", dow: 4 },
-  { date: "26", dow: 5 },
-  { date: "27", dow: 6 },
-  { date: "28", dow: 0 },
-  { date: "29", dow: 1 },
-  { date: "30", dow: 2 },
-  { date: "31", dow: 3 }
-];
 const Calendar = () => {
   const [date, setDate] = useState<Array<DateType>>([
     { date: 0, day: 1, month: 1, year: 2020 }
@@ -121,22 +101,46 @@ const Calendar = () => {
       ))}
     </>
   );
+  const handleForwardBtnClick = () => {
+    let { year } = date[0];
+    let { month } = date[0];
+    if (month === 11) {
+      month = 0;
+      year += 1;
+    } else {
+      month += 1;
+    }
+    getDate(year, month);
+  };
+  const handleBackBtnClick = () => {
+    let { year } = date[0];
+    let { month } = date[0];
+    if (month === 0) {
+      month = 11;
+      year -= 1;
+    } else {
+      month -= 1;
+    }
+    getDate(year, month);
+  };
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        headercontents
-        <div>{`${date[0].month + 1}월`}</div>
+        <IconButton onClick={handleBackBtnClick} children={<ArrowBack />} />
+        <div className={classes.headerTitle}>
+          {`${date[0].year}년 ${date[0].month + 1}월`}
+        </div>
+        <IconButton
+          onClick={handleForwardBtnClick}
+          children={<ArrowForward />}
+        />
       </div>
       {/* weekrow */}
       <div className={classes.calHeader}>
-        <div className={classes.calHeaderItem}>S</div>
-        <div className={classes.calHeaderItem}>M</div>
-        <div className={classes.calHeaderItem}>T</div>
-        <div className={classes.calHeaderItem}>W</div>
-        <div className={classes.calHeaderItem}>T</div>
-        <div className={classes.calHeaderItem}>F</div>
-        <div className={classes.calHeaderItem}>S</div>
+        {["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"].map((v) => (
+          <div className={classes.calHeaderItem} key={v} children={v} />
+        ))}
       </div>
       {/* contents */}
       <div className={classes.content}>{dateRendering(date)}</div>

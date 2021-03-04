@@ -5,7 +5,7 @@ export default createMuiTheme({
     primary: {
       main: "#FFCCBC",
       light: "#ffddc1",
-      dark: "#000000"
+      dark: "#FFCCB0"
     },
     secondary: {
       main: "#f50057",

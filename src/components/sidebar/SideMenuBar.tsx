@@ -31,7 +31,7 @@ const SideMenuBar: React.FC<{
           <Grid container spacing={3}>
             <Grid item xs={4}>
               <Avatar
-                src="https://cdnweb01.wikitree.co.kr/webdata/editor/202009/23/img_20200923081643_5ab21941.webp"
+                // src="https://cdnweb01.wikitree.co.kr/webdata/editor/202009/23/img_20200923081643_5ab21941.webp"
                 className={classes.drawerAvatar}
               />
             </Grid>
