@@ -1,151 +1,132 @@
-import React, { useState } from "react";
-import { makeStyles, Theme } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
+import {
+  AddBox,
+  ArrowBack,
+  ArrowForward,
+  ShoppingBasket
+} from "@material-ui/icons";
 import clsx from "clsx";
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    backgroundColor: theme.palette.primary.light,
-    height: "100%",
-    display: "flex",
-    flexDirection: "column"
-  },
-  header: {
-    height: "80px",
-    backgroundColor: theme.palette.primary.main
-  },
-  calHeader: {
-    display: "flex",
-    borderBottom: "3px solid",
-    borderBottomColor: "rgba(255, 89, 131, .4)"
-  },
-  calHeaderItem: {
-    flexBasis: "calc(100% / 7)",
-    paddingLeft: theme.spacing(1)
-  },
-  content: {
-    flex: "1",
-    flexWrap: "wrap",
-    display: "flex"
-  },
-  contentItem: {
-    border: "1px solid",
-    borderColor: theme.palette.grey.A100,
-    flexBasis: "calc(100% / 7)",
-    paddingLeft: theme.spacing(1)
-  },
-  saturday: {
-    color: "blue"
-  },
-  sunday: {
-    color: "red"
-  }
-}));
+import React, { useEffect, useState } from "react";
+import useStyles from "./calendarStyle";
+import ScheduleForm from "../form/ScheduleForm";
 
 const Calendar = () => {
-  const [date, setDate] = useState<DateType>({
-    year: "",
-    month: "",
-    day: "",
-    startOfMonth: "Mon"
-  });
-  const dateLogic = () => {
-    const date = new Date();
+  const [date, setDate] = useState<Array<DateType>>([
+    { date: 0, day: 1, month: 1, year: 2020 }
+  ]);
+  const [formRef, setFormRef] = useState<HTMLElement | null>(null);
+  const [formVisibility, setFormVisibility] = useState(false);
+  // 날짜 구하는 로직
+  const getDate = (year: number, month: number) => {
+    const arr: Array<DateType> = [];
+
+    // 해당월의 마지막날짜 구하는 로직
+    const endOfMonth = new Date(year, month + 1, 0).getDate();
+
+    // 해당 월의 날짜배열들
+    for (let i = 1; i <= endOfMonth; i += 1) {
+      arr.push({
+        year,
+        month,
+        date: i,
+        day: new Date(year, month, i).getDay()
+      });
+    }
+    setDate(arr);
+  };
+  useEffect(() => {
+    // 초기마운트시  오늘 날짜 기준으로날짜 설정
+    const today = new Date(); // new Date(2021, 1, 3); 2월 3일 기준으로 날짜
+    const dat = {
+      year: today.getFullYear(),
+      month: today.getMonth()
+    };
+    getDate(dat.year, dat.month);
+  }, []);
+  const dateRendering = (dates: Array<DateType>) => (
+    <>
+      <div style={{ flexBasis: `calc((100% / 7)*${dates[0].day})` }} />
+      {dates.map((dat) => (
+        <div
+          key={`year+month+${dat.date} `}
+          className={clsx({
+            [classes.contentItem]: true,
+            [classes.saturday]: dat.day === 6,
+            [classes.sunday]: dat.day === 0
+          })}>
+          <div className={classes.contentItemTitle}>{dat.date}</div>
+          <div className={classes.contentItemBtnContainer}>
+            <IconButton
+              onClick={(e) => handleAddBtnClick(e)}
+              className={classes.contentItemIcon}
+              size="small"
+              children={<AddBox />}
+            />
+            <IconButton
+              className={classes.contentItemIcon}
+              size="small"
+              children={<ShoppingBasket />}
+            />
+          </div>
+        </div>
+      ))}
+    </>
+  );
+  const handleForwardBtnClick = () => {
+    let { year } = date[0];
+    let { month } = date[0];
+    if (month === 11) {
+      month = 0;
+      year += 1;
+    } else {
+      month += 1;
+    }
+    getDate(year, month);
+  };
+  const handleBackBtnClick = () => {
+    let { year } = date[0];
+    let { month } = date[0];
+    if (month === 0) {
+      month = 11;
+      year -= 1;
+    } else {
+      month -= 1;
+    }
+    getDate(year, month);
+  };
+
+  const handleAddBtnClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    setFormVisibility(true);
+    setFormRef(e.currentTarget);
   };
   const classes = useStyles();
-  // date rendering example
-  const dates1 = [
-    { date: "1", dow: "Mon" },
-    { date: "2", dow: "Tues" },
-    { date: "3", dow: "Wed" },
-    { date: "4", dow: "Thur" },
-    { date: "5", dow: "Fri" },
-    { date: "6", dow: "Sat" },
-    { date: "7", dow: "Sun" },
-    { date: "8", dow: "Mon" },
-    { date: "9", dow: "Tues" },
-    { date: "10", dow: "Wed" },
-    { date: "11", dow: "Thur" },
-    { date: "12", dow: "Fri" },
-    { date: "13", dow: "Sat" },
-    { date: "14", dow: "Sun" },
-    { date: "15", dow: "Mon" },
-    { date: "16", dow: "Tues" },
-    { date: "17", dow: "Wed" },
-    { date: "18", dow: "Thur" },
-    { date: "19", dow: "Fri" },
-    { date: "20", dow: "Sat" },
-    { date: "21", dow: "Sun" },
-    { date: "22", dow: "Mon" },
-    { date: "23", dow: "Tues" },
-    { date: "24", dow: "Wed" },
-    { date: "25", dow: "Thur" },
-    { date: "26", dow: "Fri" },
-    { date: "27", dow: "Sat" },
-    { date: "28", dow: "Sun" },
-    { date: "29", dow: "Mon" },
-    { date: "30", dow: "Tues" },
-    { date: "31", dow: "Wed" }
-  ];
-  console.log(new Date().getMonth());
-  const dateRendering = (dates: Array<{ date: string; dow: string }>) => {
-    let empty = 0;
-    switch (dates[0].dow) {
-      case "Mon":
-        empty = 0;
-        break;
-      case "Tues":
-        empty = 1;
-        break;
-      case "Wed":
-        empty = 2;
-        break;
-      case "Thur":
-        empty = 3;
-        break;
-      case "Fri":
-        empty = 4;
-        break;
-      case "Sat":
-        empty = 5;
-        break;
-      case "Sun":
-        empty = 6;
-        break;
-      default:
-        break;
-    }
-    return (
-      <>
-        <div style={{ flexBasis: `calc((100% / 7)*${empty})` }} />
-        {dates.map((date) => (
-          <div
-            key={`year+month+${date.date} `}
-            className={clsx({
-              [classes.contentItem]: true,
-              [classes.saturday]: date.dow === "Sat",
-              [classes.sunday]: date.dow === "Sun"
-            })}>
-            <div>{date.date}</div>
-          </div>
-        ))}
-      </>
-    );
-  };
   return (
     <div className={classes.root}>
-      <div className={classes.header}>headercontents</div>
+      <div className={classes.header}>
+        <IconButton onClick={handleBackBtnClick} children={<ArrowBack />} />
+        <div className={classes.headerTitle}>
+          {`${date[0].year}년 ${date[0].month + 1}월`}
+        </div>
+        <IconButton
+          onClick={handleForwardBtnClick}
+          children={<ArrowForward />}
+        />
+      </div>
       {/* weekrow */}
       <div className={classes.calHeader}>
-        <div className={classes.calHeaderItem}>M</div>
-        <div className={classes.calHeaderItem}>T</div>
-        <div className={classes.calHeaderItem}>W</div>
-        <div className={classes.calHeaderItem}>T</div>
-        <div className={classes.calHeaderItem}>F</div>
-        <div className={classes.calHeaderItem}>S</div>
-        <div className={classes.calHeaderItem}>S</div>
+        {["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"].map((v) => (
+          <div className={classes.calHeaderItem} key={v} children={v} />
+        ))}
       </div>
       {/* contents */}
-      <div className={classes.content}>{dateRendering(dates1)}</div>
+      <div className={classes.content}>{dateRendering(date)}</div>
+      <ScheduleForm
+        anchorEl={formRef}
+        visibility={formVisibility}
+        setVisibility={setFormVisibility}
+      />
     </div>
   );
 };
