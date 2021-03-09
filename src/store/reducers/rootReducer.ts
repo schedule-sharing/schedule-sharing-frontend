@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import myScheduleReducer from "./myScheduleReducer/myScheduleReducer";
+import myScheduleReducer from "./scheduleReducer/myScheduleReducer";
 import visibilityReducer from "./visibilityReducer/visibilityReducer";
 
 const rootReducer = combineReducers({

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AddMyScheduleFormData } from "../store/reducers/scheduleReducer/myScheduleReducer";
 
 const API_URL = "";
 
@@ -8,4 +9,10 @@ const testApi = async () => {
   return data;
 };
 
-export { testApi };
+const addMyScheduleApi = async (newSchedule: AddMyScheduleFormData) => {
+  const result = await axios.post(API_URL, newSchedule);
+  const { data } = result;
+  return data;
+};
+
+export { testApi, addMyScheduleApi };

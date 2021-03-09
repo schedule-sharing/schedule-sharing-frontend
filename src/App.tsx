@@ -3,8 +3,18 @@ import { Link, Switch, Route } from "react-router-dom";
 import CalendarLayout from "./pages/calendar/CalendarLayout";
 import UserLayout from "./pages/user/UserLayout";
 import HomeLayout from "./pages/home/HomeLayout";
+import useAddMySchedule from "./utils/hooks/useAddMySchedule";
 
 function App() {
+  const { addMySchedule, myScheduleList } = useAddMySchedule();
+  addMySchedule({
+    scheduleId: 1,
+    memberId: 1,
+    contents: "dsf",
+    name: "sdfsd",
+    scheduleStartDate: 20201020,
+    scheduleEndDate: 20201020
+  });
   return (
     <>
       <div className="App">

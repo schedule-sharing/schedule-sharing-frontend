@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     overflow: "hidden"
   }
 }));
-const ScheduleForm = ({
+const AddMyScheduleForm = ({
   visibility,
   anchorEl,
   setVisibility
@@ -177,4 +177,4 @@ const ScheduleForm = ({
   );
 };
 
-export default ScheduleForm;
+export default AddMyScheduleForm;

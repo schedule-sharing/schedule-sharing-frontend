@@ -8,7 +8,7 @@ import {
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import useStyles from "./calendarStyle";
-import ScheduleForm from "../form/ScheduleForm";
+import AddMyScheduleForm from "../form/AddMyScheduleForm";
 
 const Calendar = () => {
   const [date, setDate] = useState<Array<DateType>>([
@@ -120,7 +120,7 @@ const Calendar = () => {
       </div>
       {/* contents */}
       <div className={classes.content}>{dateRendering(date)}</div>
-      <ScheduleForm
+      <AddMyScheduleForm
         anchorEl={formRef}
         visibility={formVisibility}
         setVisibility={setFormVisibility}

@@ -1,35 +1,30 @@
+import { addMyScheduleApi } from "../../../api/mySheduleAPI";
+
 // state
+export interface AddMyScheduleFormData {
+  name: string;
+  contents: string;
+  scheduleStartDate: number;
+  scheduleEndDate: number;
+}
+
 export interface MySchedule {
   scheduleId: number;
   memberId: number;
   contents: string;
   name: string;
-  scheduleStartDate: Date;
-  scheduleEndDate: Date;
+  scheduleStartDate: number;
+  scheduleEndDate: number;
 }
 
-export interface ClubSchedule {
-  clubScheduleId: number;
-  clubId: number;
-  memberId: number;
-  contents: string;
-  name: string;
-  scheduleStartDate: Date;
-  scheduleEndDate: Date;
-}
-
-export interface ScheduleState {
+export interface MyScheduleState {
   mySchedule: MySchedule | null;
   myScheduleList: MySchedule[];
-  clubSchedule: ClubSchedule | null;
-  clubScheduleList: ClubSchedule[];
 }
 
-const initialState: ScheduleState = {
+const initialState: MyScheduleState = {
   mySchedule: null,
-  myScheduleList: [],
-  clubSchedule: null,
-  clubScheduleList: []
+  myScheduleList: []
 };
 
 // actions
@@ -38,7 +33,7 @@ const UPDATE_MY_SCHEDULE = "myschedule/update";
 
 // action creators
 type AddMyScheduleAction = ReturnType<typeof addMyScheduleAction>;
-type UpdateMyScheduleAction = ReturnType<typeof updateMySchedule>;
+type UpdateMyScheduleAction = ReturnType<typeof updateMyScheduleAction>;
 type MyScheduleActions = AddMyScheduleAction | UpdateMyScheduleAction;
 
 export const addMyScheduleAction = (newSchedule: MySchedule) => ({
@@ -46,21 +41,23 @@ export const addMyScheduleAction = (newSchedule: MySchedule) => ({
   payload: newSchedule
 });
 
-export const updateMySchedule = (newSchedule: MySchedule) => ({
+export const updateMyScheduleAction = (newSchedule: MySchedule) => ({
   type: UPDATE_MY_SCHEDULE,
   payload: newSchedule
 });
 
 // reducer
 export default (state = initialState, action: MyScheduleActions) => {
+  const copied = { ...state };
   switch (action.type) {
     case ADD_MY_SCHEDULE: {
-      return [...state.myScheduleList, action.payload];
+      const newScheduleList = copied.myScheduleList?.concat(action.payload);
+      return newScheduleList || null;
     }
     case UPDATE_MY_SCHEDULE: {
-      return [...state.myScheduleList, action.payload];
+      return copied || null;
     }
     default:
-      return {};
+      return null;
   }
 };

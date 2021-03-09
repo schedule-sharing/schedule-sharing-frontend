@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import { Formik } from "formik";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import { registerUserApi } from "../../../api/userAPI";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -32,22 +33,27 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: "white"
   }
 }));
-type intialFormValueType = {
+export type initialFormValueType = {
   email: string;
   password: string;
   confirmPassword: string;
+  name: string;
+  imagePath: string;
 };
-const intialFormValue: intialFormValueType = {
+const intialFormValue: initialFormValueType = {
   email: "",
   password: "",
-  confirmPassword: ""
+  confirmPassword: "",
+  name: "",
+  imagePath: ""
 };
 const SignUpForm = () => {
   const classes = useStyles();
   const [showPw, setShowPw] = useState(false);
   // submit
-  const handleSubmit = (v: intialFormValueType) => {
-    console.log(v);
+  const handleSubmit = (v: initialFormValueType) => {
+    const { email, password, name, imagePath } = v;
+    registerUserApi({ email, password, name, imagePath });
   };
 
   return (
@@ -127,6 +133,28 @@ const SignUpForm = () => {
                   formikProps.touched.confirmPassword &&
                   formikProps.errors.confirmPassword
                 }
+              />
+              <TextField
+                fullWidth
+                className={classes.textField}
+                name="name"
+                placeholder="이름"
+                type="name"
+                variant="outlined"
+                size="small"
+                value={formikProps.values.name}
+                onChange={formikProps.handleChange}
+              />
+              <TextField
+                fullWidth
+                className={classes.textField}
+                name="imagePath"
+                placeholder="이미지 경로"
+                type="imagePath"
+                variant="outlined"
+                size="small"
+                value={formikProps.values.imagePath}
+                onChange={formikProps.handleChange}
               />
               <Grid item justify="center" container xs={12}>
                 <Typography
