@@ -73,8 +73,7 @@ const Calendar = () => {
     </>
   );
   const handleForwardBtnClick = () => {
-    let { year } = date[0];
-    let { month } = date[0];
+    let { year, month } = date[0];
     if (month === 11) {
       month = 0;
       year += 1;
@@ -84,8 +83,7 @@ const Calendar = () => {
     getDate(year, month);
   };
   const handleBackBtnClick = () => {
-    let { year } = date[0];
-    let { month } = date[0];
+    let { year, month } = date[0];
     if (month === 0) {
       month = 11;
       year -= 1;

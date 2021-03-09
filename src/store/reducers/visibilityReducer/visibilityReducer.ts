@@ -2,6 +2,7 @@
 const SET_VISIBILITY = "visibility/set" as const;
 
 type VisibilityAction = ReturnType<typeof setVisibility>;
+
 // action creators
 export const setVisibility = (type: VisibilityStrings) => ({
   type: SET_VISIBILITY,
@@ -9,6 +10,7 @@ export const setVisibility = (type: VisibilityStrings) => ({
     type
   }
 });
+
 // states
 export type VisibilityStrings = "sidebar";
 const initialState: VisibilityState = {
@@ -17,8 +19,8 @@ const initialState: VisibilityState = {
 type VisibilityState = {
   sidebar: boolean;
 };
-// reducers
 
+// reducers
 export default (state = initialState, action: VisibilityAction) => {
   const copied = { ...state };
   switch (action.type) {
