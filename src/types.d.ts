@@ -13,3 +13,12 @@ type schudleAddType = {
   expireDate: string;
   leastPeople: string;
 };
+
+// user
+type SignUpFormValue = {
+  email: string;
+  name: string;
+  password: string;
+  imagePath: string;
+  confirmPassword?: string;
+};

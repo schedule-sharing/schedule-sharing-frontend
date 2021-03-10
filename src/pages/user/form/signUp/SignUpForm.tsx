@@ -1,53 +1,31 @@
-import React, { useState } from "react";
 import {
-  InputAdornment,
-  makeStyles,
-  Typography,
-  TextField,
-  Theme,
   Button,
+  Grid,
   IconButton,
-  Grid
+  InputAdornment,
+  TextField,
+  Typography
 } from "@material-ui/core";
-import { Formik } from "formik";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import { Formik } from "formik";
+import React, { useState } from "react";
+import useStyles from "./signUpFormStyle";
+import { signUp } from "../../../../api/user";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    padding: theme.spacing(2),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    margin: "0 auto"
-  },
-  textField: {
-    backgroundColor: "white",
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: "green"
-      }
-    }
-  },
-  loginBtn: {
-    backgroundColor: "white"
-  }
-}));
-type intialFormValueType = {
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
-const intialFormValue: intialFormValueType = {
+const intialFormValue: SignUpFormValue = {
   email: "",
+  name: "",
   password: "",
+  imagePath: "imagePath",
   confirmPassword: ""
 };
 const SignUpForm = () => {
   const classes = useStyles();
   const [showPw, setShowPw] = useState(false);
   // submit
-  const handleSubmit = (v: intialFormValueType) => {
-    console.log(v);
+  const handleSubmit = (v: SignUpFormValue) => {
+    const { email, name, password, imagePath } = v;
+    signUp({ email, name, password, imagePath });
   };
 
   return (
@@ -61,8 +39,22 @@ const SignUpForm = () => {
                 fullWidth
                 size="small"
                 classes={{ root: classes.textField }}
+                name="name"
+                placeholder="이름"
+                variant="outlined"
+                value={formikProps.values.name}
+                onChange={formikProps.handleChange}
+                error={
+                  formikProps.touched.name && Boolean(formikProps.errors.name)
+                }
+                helperText={formikProps.touched.name && formikProps.errors.name}
+              />
+              <TextField
+                fullWidth
+                size="small"
+                classes={{ root: classes.textField }}
                 name="email"
-                placeholder="아이디"
+                placeholder="이메일"
                 variant="outlined"
                 value={formikProps.values.email}
                 onChange={formikProps.handleChange}

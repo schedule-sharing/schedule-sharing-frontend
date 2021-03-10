@@ -39,7 +39,6 @@
         "extensions": [".tsx",".ts"]
       }
     ],
-    "import/prefer-default-export": "warn",
     "import/extensions": [
       "warn",
       "ignorePackages",

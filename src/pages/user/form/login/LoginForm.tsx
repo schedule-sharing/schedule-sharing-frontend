@@ -1,38 +1,17 @@
-import React, { useState } from "react";
 import {
-  InputAdornment,
-  makeStyles,
-  Typography,
-  TextField,
-  Theme,
   Button,
+  Grid,
   IconButton,
-  Grid
+  InputAdornment,
+  TextField,
+  Typography
 } from "@material-ui/core";
-import { Formik } from "formik";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import { Formik } from "formik";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import useStyles from "./loginFormStyle";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    padding: theme.spacing(2),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    margin: "0 auto"
-  },
-  textField: {
-    backgroundColor: "white",
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: "green"
-      }
-    }
-  },
-  loginBtn: {
-    backgroundColor: "white"
-  }
-}));
 type intialFormValueType = {
   userId: string;
   userPw: string;
