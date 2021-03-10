@@ -7,9 +7,8 @@ type DateType = {
 // "Mon" | "Tues" | "Wed" | "Thur" | "Fri" | "Sat" | "Sun"
 
 type schudleAddType = {
-  title: string;
-  date: string;
-  place: string;
-  expireDate: string;
-  leastPeople: string;
+  name: string;
+  contents: string;
+  scheduleStartDate: string;
+  scheduleEndDate: string;
 };
