@@ -10,7 +10,7 @@ import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { Formik } from "formik";
 import React, { useState } from "react";
 import useStyles from "./signUpFormStyle";
-import { signUp } from "../../../../api/user";
+import { signUp } from "../../../../api/user/user";
 
 const intialFormValue: SignUpFormValue = {
   email: "",

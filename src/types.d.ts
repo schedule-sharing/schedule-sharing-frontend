@@ -22,3 +22,7 @@ type SignUpFormValue = {
   imagePath: string;
   confirmPassword?: string;
 };
+type LoginFormValue = {
+  email: string;
+  password: string;
+};

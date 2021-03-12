@@ -32,12 +32,11 @@ axios.interceptors.request.use(
 // 응답 인터셉터
 axios.interceptors.response.use(
   (res: AxiosResponse) => {
-    console.log(`\n${res}\n`);
+    console.log(res);
     return res;
   },
   (err: AxiosError) => {
     handleError(err);
-    console.error(`응답에러:${err}`);
     return Promise.reject(err);
   }
 );
@@ -51,7 +50,7 @@ const handleError = (err: AxiosError) => {
     };
     console.log(error);
   } else if (err.request) {
-    console.log("요청은 했지만 응답이 없음요..");
+    console.log("요청은 했지만 응답이 없음..");
   } else {
     console.log(err);
   }

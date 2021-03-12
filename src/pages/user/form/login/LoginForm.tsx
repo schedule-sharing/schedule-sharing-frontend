@@ -11,21 +11,18 @@ import { Formik } from "formik";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useStyles from "./loginFormStyle";
+import { login } from "../../../../api/user/user";
 
-type intialFormValueType = {
-  userId: string;
-  userPw: string;
-};
-const intialFormValue: intialFormValueType = {
-  userId: "",
-  userPw: ""
+const intialFormValue: LoginFormValue = {
+  email: "",
+  password: ""
 };
 const LoginForm = () => {
   const classes = useStyles();
   const [showPw, setShowPw] = useState(false);
   // submit
-  const handleSubmit = (v: intialFormValueType) => {
-    console.log(v);
+  const handleSubmit = (v: LoginFormValue) => {
+    login(v);
   };
 
   return (
@@ -39,21 +36,19 @@ const LoginForm = () => {
                 fullWidth
                 size="small"
                 classes={{ root: classes.textField }}
-                name="userId"
+                name="email"
                 placeholder="아이디"
                 variant="outlined"
-                value={formikProps.values.userId}
+                value={formikProps.values.email}
                 onChange={formikProps.handleChange}
-                error={
-                  formikProps.touched && Boolean(formikProps.errors.userId)
-                }
-                helperText={formikProps.touched && formikProps.errors.userId}
+                error={formikProps.touched && Boolean(formikProps.errors.email)}
+                helperText={formikProps.touched && formikProps.errors.email}
               />
               <TextField
                 fullWidth
                 size="small"
                 className={classes.textField}
-                name="userPw"
+                name="password"
                 placeholder="비밀번호"
                 InputProps={{
                   endAdornment: (
@@ -66,12 +61,10 @@ const LoginForm = () => {
                 }}
                 type={showPw ? "text" : "password"}
                 variant="outlined"
-                value={formikProps.values.userPw}
+                value={formikProps.values.password}
                 onChange={formikProps.handleChange}
-                error={
-                  formikProps.touched && Boolean(formikProps.errors.userId)
-                }
-                helperText={formikProps.touched && formikProps.errors.userId}
+                error={formikProps.touched && Boolean(formikProps.errors.email)}
+                helperText={formikProps.touched && formikProps.errors.email}
               />
 
               {/* 비번 잊음 */}
