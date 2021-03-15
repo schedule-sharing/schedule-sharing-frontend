@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/reducers/rootReducer";
 import {
   addMyScheduleAction,
-  MySchedule
+  AddMyScheduleFormData
 } from "../../store/reducers/scheduleReducer/myScheduleReducer";
 
 export default function useAddMySchedule() {
@@ -12,7 +12,7 @@ export default function useAddMySchedule() {
     (state: RootState) => state.myScheduleReducer
   );
   const addMySchedule = useCallback(
-    (newSchedule: MySchedule) => {
+    (newSchedule: AddMyScheduleFormData) => {
       dispatch(addMyScheduleAction(newSchedule));
     },
     [dispatch]

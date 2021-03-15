@@ -8,7 +8,8 @@ import {
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import useStyles from "./calendarStyle";
-import ScheduleForm from "../form/ScheduleForm";
+import AddMyScheduleForm from "../form/AddMyScheduleForm";
+import { getMyScheduleListApi } from "../../../api/schedule/myschedule";
 
 const Calendar = () => {
   const [date, setDate] = useState<Array<DateType>>([
@@ -18,6 +19,11 @@ const Calendar = () => {
   const [formVisibility, setFormVisibility] = useState(false);
   // 날짜 구하는 로직
   const getDate = (year: number, month: number) => {
+    let yearMonth = "";
+    if (month < 9) {
+      yearMonth = `${year.toString()}-0${(month + 1).toString()}`;
+    } else yearMonth = `${year.toString()}-${(month + 1).toString()}`;
+    getMyScheduleListApi(yearMonth);
     const arr: Array<DateType> = [];
 
     // 해당월의 마지막날짜 구하는 로직
@@ -43,6 +49,7 @@ const Calendar = () => {
     };
     getDate(dat.year, dat.month);
   }, []);
+
   const dateRendering = (dates: Array<DateType>) => (
     <>
       <div style={{ flexBasis: `calc((100% / 7)*${dates[0].day})` }} />
@@ -95,6 +102,27 @@ const Calendar = () => {
     getDate(year, month);
   };
 
+  const handleBtnClick = (type: string) => {
+    let { year } = date[0];
+    let { month } = date[0];
+    if (type === "Back") {
+      if (month === 0) {
+        month = 11;
+        year -= 1;
+      } else {
+        month -= 1;
+      }
+    } else if (type === "Forward") {
+      if (month === 11) {
+        month = 0;
+        year += 1;
+      } else {
+        month += 1;
+      }
+    }
+    getDate(year, month);
+  };
+
   const handleAddBtnClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -105,12 +133,15 @@ const Calendar = () => {
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <IconButton onClick={handleBackBtnClick} children={<ArrowBack />} />
+        <IconButton
+          onClick={() => handleBtnClick("Back")}
+          children={<ArrowBack />}
+        />
         <div className={classes.headerTitle}>
           {`${date[0].year}년 ${date[0].month + 1}월`}
         </div>
         <IconButton
-          onClick={handleForwardBtnClick}
+          onClick={() => handleBtnClick("Forward")}
           children={<ArrowForward />}
         />
       </div>
@@ -122,7 +153,7 @@ const Calendar = () => {
       </div>
       {/* contents */}
       <div className={classes.content}>{dateRendering(date)}</div>
-      <ScheduleForm
+      <AddMyScheduleForm
         anchorEl={formRef}
         visibility={formVisibility}
         setVisibility={setFormVisibility}

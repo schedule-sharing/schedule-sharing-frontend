@@ -4,8 +4,8 @@ import { addMyScheduleApi } from "../../../api/schedule/myschedule";
 export interface AddMyScheduleFormData {
   name: string;
   contents: string;
-  scheduleStartDate: number;
-  scheduleEndDate: number;
+  scheduleStartDate: string;
+  scheduleEndDate: string;
 }
 
 export interface MySchedule {
@@ -13,8 +13,8 @@ export interface MySchedule {
   memberId: number;
   contents: string;
   name: string;
-  scheduleStartDate: number;
-  scheduleEndDate: number;
+  scheduleStartDate: string;
+  scheduleEndDate: string;
 }
 
 export interface MyScheduleState {
@@ -30,13 +30,18 @@ const initialState: MyScheduleState = {
 // actions
 const ADD_MY_SCHEDULE = "myschedule/add" as const;
 const UPDATE_MY_SCHEDULE = "myschedule/update";
+const GET_MY_SCHEDULE_LIST = "myschedule/getlist";
 
 // action creators
 type AddMyScheduleAction = ReturnType<typeof addMyScheduleAction>;
 type UpdateMyScheduleAction = ReturnType<typeof updateMyScheduleAction>;
-type MyScheduleActions = AddMyScheduleAction | UpdateMyScheduleAction;
+type GetMyScheduleListAction = ReturnType<typeof getMyScheduleListAction>;
+type MyScheduleActions =
+  | AddMyScheduleAction
+  | UpdateMyScheduleAction
+  | GetMyScheduleListAction;
 
-export const addMyScheduleAction = (newSchedule: MySchedule) => ({
+export const addMyScheduleAction = (newSchedule: AddMyScheduleFormData) => ({
   type: ADD_MY_SCHEDULE,
   payload: newSchedule
 });
@@ -46,16 +51,26 @@ export const updateMyScheduleAction = (newSchedule: MySchedule) => ({
   payload: newSchedule
 });
 
+export const getMyScheduleListAction = (month: string) => ({
+  type: GET_MY_SCHEDULE_LIST,
+  payload: month
+});
+
 // reducer
-export default (state = initialState, action: MyScheduleActions) => {
+export default async (state = initialState, action: MyScheduleActions) => {
   const copied = { ...state };
   switch (action.type) {
     case ADD_MY_SCHEDULE: {
-      const newScheduleList = copied.myScheduleList?.concat(action.payload);
-      return newScheduleList || null;
+      const data = await addMyScheduleApi(
+        action.payload as AddMyScheduleFormData
+      );
+      return data;
     }
     case UPDATE_MY_SCHEDULE: {
       return copied || null;
+    }
+    case GET_MY_SCHEDULE_LIST: {
+      return null;
     }
     default:
       return null;

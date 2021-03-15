@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
-axios.defaults.baseURL = "http://15.165.16.96:8080/";
+axios.defaults.baseURL = "http://15.165.16.96:8080/api";
 // if(cookie 있으면)
 // {    axios.defaults.headers.common.Authorization = `Bearer "${token}"`}
 // else
