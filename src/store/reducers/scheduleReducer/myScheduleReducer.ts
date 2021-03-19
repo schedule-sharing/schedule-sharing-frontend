@@ -1,4 +1,7 @@
-import { addMyScheduleApi } from "../../../api/schedule/myschedule";
+import {
+  addMyScheduleApi,
+  getMyScheduleListApi
+} from "../../../api/schedule/myschedule";
 
 // state
 export interface AddMyScheduleFormData {
@@ -18,12 +21,10 @@ export interface MySchedule {
 }
 
 export interface MyScheduleState {
-  mySchedule: MySchedule | null;
   myScheduleList: MySchedule[];
 }
 
 const initialState: MyScheduleState = {
-  mySchedule: null,
   myScheduleList: []
 };
 
@@ -70,9 +71,11 @@ export default async (state = initialState, action: MyScheduleActions) => {
       return copied || null;
     }
     case GET_MY_SCHEDULE_LIST: {
-      return null;
+      const data = await getMyScheduleListApi(action.payload as string);
+      copied.myScheduleList = data;
+      return copied;
     }
     default:
-      return null;
+      return copied;
   }
 };

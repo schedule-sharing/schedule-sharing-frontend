@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form } from "formik";
 import {
   Grid,
@@ -35,7 +35,7 @@ const ScheduleForm = ({
   anchorEl: HTMLElement | null;
   setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { addMySchedule } = useAddMySchedule();
+  const { addMySchedule, myScheduleList } = useAddMySchedule();
   const handleValidate = (values: AddMyScheduleFormData) => {
     const errors: Record<string, string> = {};
     if (!values.name) {

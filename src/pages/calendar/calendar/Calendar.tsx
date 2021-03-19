@@ -9,9 +9,10 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import useStyles from "./calendarStyle";
 import AddMyScheduleForm from "../form/AddMyScheduleForm";
-import { getMyScheduleListApi } from "../../../api/schedule/myschedule";
+import useAddMySchedule from "../../../utils/hooks/useAddMySchedule";
 
 const Calendar = () => {
+  const { getMyScheduleList, myScheduleList } = useAddMySchedule();
   const [date, setDate] = useState<Array<DateType>>([
     { date: 0, day: 1, month: 1, year: 2020 }
   ]);
@@ -23,7 +24,10 @@ const Calendar = () => {
     if (month < 9) {
       yearMonth = `${year.toString()}-0${(month + 1).toString()}`;
     } else yearMonth = `${year.toString()}-${(month + 1).toString()}`;
-    getMyScheduleListApi(yearMonth);
+    // getMyScheduleListApi(yearMonth);
+
+    getMyScheduleList(yearMonth);
+
     const arr: Array<DateType> = [];
 
     // 해당월의 마지막날짜 구하는 로직
@@ -48,8 +52,8 @@ const Calendar = () => {
       month: today.getMonth()
     };
     getDate(dat.year, dat.month);
+    console.log(myScheduleList);
   }, []);
-
   const dateRendering = (dates: Array<DateType>) => (
     <>
       <div style={{ flexBasis: `calc((100% / 7)*${dates[0].day})` }} />

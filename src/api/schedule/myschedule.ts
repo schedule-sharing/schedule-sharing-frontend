@@ -4,12 +4,15 @@ import axios from "../../config/axios/axios";
 const token = window.localStorage.getItem("access_token");
 
 const getMyScheduleListApi = async (month: string) => {
-  const result = await axios.get(`/myschedule/list/${month}`, {
+  const result = await axios.get(`/myschedule/list/`, {
+    params: {
+      yearMonth: month
+    },
     headers: {
       Authorization: `Bearer ${token}`
     }
   });
-  return null;
+  return result.data._embedded?.myScheduleResponseList;
 };
 
 const addMyScheduleApi = async (newSchedule: AddMyScheduleFormData) => {

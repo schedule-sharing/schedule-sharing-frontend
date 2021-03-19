@@ -18,12 +18,12 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "react-hooks","prettier"],
+  "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
   "rules": {
-    "import/prefer-default-export":"off",
-    "no-shadow":"warn",
+    "import/prefer-default-export": "off",
+    "no-shadow": "warn",
     "react-hooks/rules-of-hooks": "warn",
-    "react/jsx-props-no-spreading":"warn",
+    "react/jsx-props-no-spreading": "warn",
     "no-console": "warn",
     "max-len": "off",
     "react/prop-types": "off",
@@ -33,11 +33,12 @@
     "linebreak-style": "off",
     "no-use-before-define": "off",
     "react-hooks/exhaustive-deps": "warn",
-    "no-unused-expressions":"warn",
+    "no-unused-expressions": "warn",
+    "no-underscore-dangle": "off",
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".tsx",".ts"]
+        "extensions": [".tsx", ".ts"]
       }
     ],
     "import/extensions": [
@@ -47,8 +48,8 @@
         "ts": "never",
         "tsx": "never"
       }
-    ]
-    ,"prettier/prettier":["warn"]
+    ],
+    "prettier/prettier": ["warn"]
   },
   "settings": {
     "import/resolver": {
