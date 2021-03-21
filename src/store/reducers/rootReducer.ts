@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
 import visibilityReducer from "./visibilityReducer/visibilityReducer";
+import clubReducer from "./clubReducer/clubReducer";
 
 const rootReducer = combineReducers({
-  visibilityReducer
+  visibilityReducer,
+  clubReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

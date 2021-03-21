@@ -1,21 +1,26 @@
-import { Avatar, Grid } from "@material-ui/core";
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Typography from "@material-ui/core/Typography";
-import AddIcon from "@material-ui/icons/Add";
+import {
+  Avatar,
+  Grid,
+  ListItem,
+  List,
+  ListItemText,
+  Divider,
+  Drawer,
+  IconButton,
+  Typography
+} from "@material-ui/core";
+import { Add, Settings } from "@material-ui/icons";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ClubForm from "../../pages/club/form/Clubform";
 import sideBarStyle from "./sideMenuBarStyle";
+import useClub from "../../utils/hooks/reducer/useClub";
 
 const SideMenuBar: React.FC<{
   children?: React.ReactNode;
 }> = ({ children }) => {
   const classes = sideBarStyle();
+  const { clubs } = useClub();
   const [clubForm, setClubForm] = useState<boolean>(true);
   const handleClubFormVisibility = () => {
     setClubForm((prev) => !prev);
@@ -32,61 +37,64 @@ const SideMenuBar: React.FC<{
           paper: classes.drawerPaper
         }}>
         <div className={classes.drawerHeader}>
+          <IconButton size="small" children={<Settings />} />
           <Grid container spacing={3}>
-            <Grid item xs={4}>
-              <Avatar
-                // src="https://cdnweb01.wikitree.co.kr/webdata/editor/202009/23/img_20200923081643_5ab21941.webp"
-                className={classes.drawerAvatar}
-              />
+            <Grid container item xs={12}>
+              <Grid item xs={5}>
+                <Avatar
+                  src="https://cdnweb01.wikitree.co.kr/webdata/editor/202009/23/img_20200923081643_5ab21941.webp"
+                  className={classes.drawerAvatar}
+                />
+              </Grid>
+              <Grid item xs={7}>
+                <Typography variant="h5" align="center">
+                  hyunjae
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={8}>
-              <Grid container spacing={4}>
-                <Grid item xs={12}>
-                  <Typography variant="h5" align="center">
-                    hyunjae
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography>마지막 접속 6일전</Typography>
-                </Grid>
+            <Grid container item xs={12}>
+              <Grid item xs={12}>
+                <Typography>마지막 접속 6일전</Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography>FE 개발자</Typography>
               </Grid>
             </Grid>
           </Grid>
         </div>
         <Divider classes={{ root: classes.divider }} variant="middle" />
-        {/* <List>
-          {["동네 친구", "학교", "여자친구"].map((text) => (
+        <List className={classes.list}>
+          {clubs.map((club: clubAddType, i) => (
             <Link
-              key={text}
-              href={{
-                pathname: "/calenders/groupcalender",
-                query: { title: text }
-              }}>
-              <ListItem button key={text}>
-                <ListItemText
-                  classes={{ primary: classes.listText }}
-                  primary={text}
-                />
+              key={`유저이름추가하기${club.clubName}${i.toString()}`}
+              to={`/calendar/${club.clubName}`}>
+              <ListItem className={classes.listItem} button>
+                <ListItemText>
+                  <Typography
+                    align="center"
+                    children={club.clubName}
+                    variant="h6"
+                  />
+                </ListItemText>
               </ListItem>
             </Link>
           ))}
-        </List> */}
+        </List>
         <Divider classes={{ root: classes.divider }} variant="middle" />
         <Grid container justify="center">
           <IconButton
             onClick={handleClubFormVisibility}
             classes={{ root: classes.addIcon }}>
-            <AddIcon fontSize="large" />
+            <Add fontSize="large" />
           </IconButton>
         </Grid>
       </Drawer>
-      <main className={classes.content}>
-        {children}
-        <ClubForm
-          visibility={clubForm}
-          setVisibility={handleClubFormVisibility}
-        />
-      </main>
+      <main className={classes.content}>{children}</main>
+
+      <ClubForm
+        visibility={clubForm}
+        setVisibility={handleClubFormVisibility}
+      />
     </div>
   );
 };

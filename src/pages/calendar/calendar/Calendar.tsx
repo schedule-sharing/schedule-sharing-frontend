@@ -5,16 +5,18 @@ import {
   ArrowForward,
   ShoppingBasket
 } from "@material-ui/icons";
+import axios from "axios";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
-import useStyles from "./calendarStyle";
+import useClub from "../../../utils/hooks/reducer/useClub";
 import ScheduleForm from "../form/ScheduleForm";
-import { setVisibility } from "../../../store/reducers/visibilityReducer/visibilityReducer";
+import useStyles from "./calendarStyle";
 
 const Calendar = () => {
   const [date, setDate] = useState<Array<DateType>>([
     { date: 0, day: 1, month: 1, year: 2020 }
   ]);
+  const { clubs, addClub } = useClub();
   const [formRef, setFormRef] = useState<HTMLElement | null>(null);
   const [formVisibility, setFormVisibility] = useState(false);
   // 날짜 구하는 로직
@@ -35,6 +37,7 @@ const Calendar = () => {
     }
     setDate(arr);
   };
+
   useEffect(() => {
     // 초기마운트시  오늘 날짜 기준으로날짜 설정
     const today = new Date(); // new Date(2021, 1, 3); 2월 3일 기준으로 날짜
@@ -42,8 +45,11 @@ const Calendar = () => {
       year: today.getFullYear(),
       month: today.getMonth()
     };
+    axios.get("/club/3").then((res) => {
+      addClub({ clubName: res.data.clubName, categories: res.data.categories });
+    });
     getDate(dat.year, dat.month);
-  }, []);
+  }, [addClub]);
   const dateRendering = (dates: Array<DateType>) => (
     <>
       <div style={{ flexBasis: `calc((100% / 7)*${dates[0].day})` }} />

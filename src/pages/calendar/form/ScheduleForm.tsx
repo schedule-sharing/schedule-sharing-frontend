@@ -9,6 +9,7 @@ import {
   Theme,
   Button
 } from "@material-ui/core";
+import { addSchedule } from "../../../api/schedule/schedule";
 
 const initialValues: schudleAddType = {
   title: "",
@@ -41,9 +42,7 @@ const ScheduleForm = ({
     }
   };
   const handleSubmit = (values: schudleAddType) => {
-    console.log(values);
-
-    setVisibility(false);
+    addSchedule(values).then(() => setVisibility(false));
   };
 
   const classes = useStyles();
