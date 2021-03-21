@@ -7,15 +7,19 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import ClubForm from "../../pages/club/form/Clubform";
 import sideBarStyle from "./sideMenuBarStyle";
 
 const SideMenuBar: React.FC<{
   children?: React.ReactNode;
 }> = ({ children }) => {
   const classes = sideBarStyle();
-
+  const [clubForm, setClubForm] = useState<boolean>(true);
+  const handleClubFormVisibility = () => {
+    setClubForm((prev) => !prev);
+  };
   return (
     <div className={classes.root}>
       {/* drawer */}
@@ -69,12 +73,20 @@ const SideMenuBar: React.FC<{
         </List> */}
         <Divider classes={{ root: classes.divider }} variant="middle" />
         <Grid container justify="center">
-          <IconButton classes={{ root: classes.addIcon }}>
+          <IconButton
+            onClick={handleClubFormVisibility}
+            classes={{ root: classes.addIcon }}>
             <AddIcon fontSize="large" />
           </IconButton>
         </Grid>
       </Drawer>
-      <main className={classes.content}>{children}</main>
+      <main className={classes.content}>
+        {children}
+        <ClubForm
+          visibility={clubForm}
+          setVisibility={handleClubFormVisibility}
+        />
+      </main>
     </div>
   );
 };

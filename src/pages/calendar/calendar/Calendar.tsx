@@ -9,6 +9,7 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import useStyles from "./calendarStyle";
 import ScheduleForm from "../form/ScheduleForm";
+import { setVisibility } from "../../../store/reducers/visibilityReducer/visibilityReducer";
 
 const Calendar = () => {
   const [date, setDate] = useState<Array<DateType>>([
@@ -94,7 +95,9 @@ const Calendar = () => {
     }
     getDate(year, month);
   };
-
+  const handleScheduleAddFormVisibility = () => {
+    setFormVisibility((prev) => !prev);
+  };
   const handleAddBtnClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -125,7 +128,7 @@ const Calendar = () => {
       <ScheduleForm
         anchorEl={formRef}
         visibility={formVisibility}
-        setVisibility={setFormVisibility}
+        setVisibility={handleScheduleAddFormVisibility}
       />
     </div>
   );
