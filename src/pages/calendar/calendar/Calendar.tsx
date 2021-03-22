@@ -1,4 +1,4 @@
-import { IconButton } from "@material-ui/core";
+import { IconButton, Button } from "@material-ui/core";
 import {
   AddBox,
   ArrowBack,
@@ -7,25 +7,33 @@ import {
 } from "@material-ui/icons";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import useStyles from "./calendarStyle";
 import AddMyScheduleForm from "../form/AddMyScheduleForm";
 import useAddMySchedule from "../../../utils/hooks/useAddMySchedule";
+import { RootState } from "../../../store/reducers/rootReducer";
+import { MyScheduleState } from "../../../store/reducers/scheduleReducer/myScheduleReducer";
+import MyScheduleDetail from "../../../components/myschedule/MyScheduleDetail";
 
 const Calendar = () => {
-  const { getMyScheduleList, myScheduleList } = useAddMySchedule();
+  const { getMyScheduleList } = useAddMySchedule();
+
+  const myScheduleListState: MyScheduleState = useSelector(
+    (state: RootState) => state.myScheduleReducer
+  );
+  const { myScheduleList } = myScheduleListState;
   const [date, setDate] = useState<Array<DateType>>([
     { date: 0, day: 1, month: 1, year: 2020 }
   ]);
   const [formRef, setFormRef] = useState<HTMLElement | null>(null);
   const [formVisibility, setFormVisibility] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   // 날짜 구하는 로직
   const getDate = (year: number, month: number) => {
     let yearMonth = "";
     if (month < 9) {
       yearMonth = `${year.toString()}-0${(month + 1).toString()}`;
     } else yearMonth = `${year.toString()}-${(month + 1).toString()}`;
-    // getMyScheduleListApi(yearMonth);
-
     getMyScheduleList(yearMonth);
 
     const arr: Array<DateType> = [];
@@ -52,8 +60,20 @@ const Calendar = () => {
       month: today.getMonth()
     };
     getDate(dat.year, dat.month);
-    console.log(myScheduleList);
   }, []);
+  const handleClick = () => {
+    setModalOpen(true);
+  };
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+  const scheduleRendering = (name: string) => (
+    <>
+      {/* onKeyDown={() => handleClick()} onClick={() => handleClick()} */}
+      <Button onClick={() => handleClick()}>{name}</Button>
+    </>
+  );
+
   const dateRendering = (dates: Array<DateType>) => (
     <>
       <div style={{ flexBasis: `calc((100% / 7)*${dates[0].day})` }} />
@@ -65,8 +85,8 @@ const Calendar = () => {
             [classes.saturday]: dat.day === 6,
             [classes.sunday]: dat.day === 0
           })}>
-          <div className={classes.contentItemTitle}>{dat.date}</div>
-          <div className={classes.contentItemBtnContainer}>
+          <div className={classes.contentItemUtilsContainer}>
+            <div className={classes.contentItemTitle}>{dat.date}</div>
             <IconButton
               onClick={(e) => handleAddBtnClick(e)}
               className={classes.contentItemIcon}
@@ -79,6 +99,18 @@ const Calendar = () => {
               children={<ShoppingBasket />}
             />
           </div>
+          {/* <div className={classes.contentItemScheduleContainer}>
+            {scheduleRendering(dat.date)}
+          </div> */}
+          {myScheduleList?.map((c) => (
+            <div key={`mySchedule${c.name}`}>
+              {parseInt(c?.startDate?.slice(8, 10), 10) === dat.date ? (
+                <div className={classes.contentItemScheduleContainer}>
+                  {scheduleRendering(c.name)}
+                </div>
+              ) : null}
+            </div>
+          ))}
         </div>
       ))}
     </>
@@ -161,6 +193,10 @@ const Calendar = () => {
         anchorEl={formRef}
         visibility={formVisibility}
         setVisibility={setFormVisibility}
+      />
+      <MyScheduleDetail
+        modalOpen={modalOpen}
+        handleModalClose={() => handleModalClose()}
       />
     </div>
   );

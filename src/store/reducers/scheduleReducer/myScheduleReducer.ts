@@ -12,12 +12,11 @@ export interface AddMyScheduleFormData {
 }
 
 export interface MySchedule {
-  scheduleId: number;
-  memberId: number;
+  myScheduleId: number;
   contents: string;
   name: string;
-  scheduleStartDate: string;
-  scheduleEndDate: string;
+  startDate: string;
+  endDate: string;
 }
 
 export interface MyScheduleState {
@@ -29,11 +28,54 @@ const initialState: MyScheduleState = {
 };
 
 // actions
-const ADD_MY_SCHEDULE = "myschedule/add" as const;
+const ADD_MY_SCHEDULE = "myschedule/add";
 const UPDATE_MY_SCHEDULE = "myschedule/update";
 const GET_MY_SCHEDULE_LIST = "myschedule/getlist";
+const GET_MY_SCHEDULE_LIST_FAILED = "myschedule/getlist/FAILED";
 
 // action creators
+export const addMyScheduleAction = (newSchedule: MySchedule) => ({
+  type: ADD_MY_SCHEDULE,
+  payload: newSchedule
+});
+
+export const addMyScheduleActionAsync = (
+  newSchedule: AddMyScheduleFormData
+) => async (dispatch: any) => {
+  try {
+    const payload = await addMyScheduleApi(newSchedule);
+    dispatch(addMyScheduleAction(payload));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const updateMyScheduleAction = (newSchedule: MySchedule) => ({
+  type: UPDATE_MY_SCHEDULE,
+  payload: newSchedule
+});
+
+// export const getMyScheduleList = (month: string) => ({
+//   type: GET_MY_SCHEDULE_LIST,
+//   payload: month
+// });
+
+export const getMyScheduleListAction = (scheduleList: MySchedule[]) => ({
+  type: GET_MY_SCHEDULE_LIST,
+  payload: scheduleList
+});
+
+export const getMyScheduleListActionAsync = (month: string) => async (
+  dispatch: any
+) => {
+  try {
+    const payload = await getMyScheduleListApi(month);
+    dispatch(getMyScheduleListAction(payload as MySchedule[]));
+  } catch (e) {
+    dispatch({ type: GET_MY_SCHEDULE_LIST_FAILED });
+  }
+};
+
 type AddMyScheduleAction = ReturnType<typeof addMyScheduleAction>;
 type UpdateMyScheduleAction = ReturnType<typeof updateMyScheduleAction>;
 type GetMyScheduleListAction = ReturnType<typeof getMyScheduleListAction>;
@@ -42,37 +84,19 @@ type MyScheduleActions =
   | UpdateMyScheduleAction
   | GetMyScheduleListAction;
 
-export const addMyScheduleAction = (newSchedule: AddMyScheduleFormData) => ({
-  type: ADD_MY_SCHEDULE,
-  payload: newSchedule
-});
-
-export const updateMyScheduleAction = (newSchedule: MySchedule) => ({
-  type: UPDATE_MY_SCHEDULE,
-  payload: newSchedule
-});
-
-export const getMyScheduleListAction = (month: string) => ({
-  type: GET_MY_SCHEDULE_LIST,
-  payload: month
-});
-
 // reducer
-export default async (state = initialState, action: MyScheduleActions) => {
+export default (state = initialState, action: MyScheduleActions) => {
   const copied = { ...state };
   switch (action.type) {
     case ADD_MY_SCHEDULE: {
-      const data = await addMyScheduleApi(
-        action.payload as AddMyScheduleFormData
-      );
-      return data;
+      copied.myScheduleList.concat(action.payload);
+      return copied;
     }
     case UPDATE_MY_SCHEDULE: {
       return copied || null;
     }
     case GET_MY_SCHEDULE_LIST: {
-      const data = await getMyScheduleListApi(action.payload as string);
-      copied.myScheduleList = data;
+      copied.myScheduleList = action.payload as MySchedule[];
       return copied;
     }
     default:

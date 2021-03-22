@@ -4,31 +4,24 @@ import { RootState } from "../../store/reducers/rootReducer";
 import {
   addMyScheduleAction,
   AddMyScheduleFormData,
-  getMyScheduleListAction
+  getMyScheduleListAction,
+  getMyScheduleListActionAsync,
+  addMyScheduleActionAsync
 } from "../../store/reducers/scheduleReducer/myScheduleReducer";
 
 export default function useAddMySchedule() {
   const dispatch = useDispatch();
-  const myScheduleList = useSelector((state: RootState) => {
-    const res = async () => {
-      const rr = await state.myScheduleReducer;
-      return rr;
-    };
-    return res;
-  });
-  console.log(myScheduleList);
-
   const getMyScheduleList = useCallback(
     (month: string) => {
-      dispatch(getMyScheduleListAction(month));
+      dispatch(getMyScheduleListActionAsync(month));
     },
     [dispatch]
   );
   const addMySchedule = useCallback(
     (newSchedule: AddMyScheduleFormData) => {
-      dispatch(addMyScheduleAction(newSchedule));
+      dispatch(addMyScheduleActionAsync(newSchedule));
     },
     [dispatch]
   );
-  return { addMySchedule, getMyScheduleList, myScheduleList };
+  return { addMySchedule, getMyScheduleList };
 }

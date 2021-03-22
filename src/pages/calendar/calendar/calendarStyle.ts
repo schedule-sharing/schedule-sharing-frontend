@@ -42,13 +42,13 @@ export default makeStyles((theme: Theme) => ({
     borderColor: theme.palette.grey.A100,
     flexBasis: "calc(100% / 7)",
     paddingLeft: theme.spacing(1),
-    display: "flex"
-  },
-  contentItemTitle: {},
-  contentItemBtnContainer: {
-    flex: "1",
     display: "flex",
-    justifyContent: "flex-end",
+    flexDirection: "column"
+  },
+  contentItemTitle: { marginRight: "45%" },
+  contentItemUtilsContainer: {
+    display: "flex",
+    justifyContent: "flex-start",
     alignItems: "flex-start"
   },
   contentItemIcon: {
@@ -58,6 +58,18 @@ export default makeStyles((theme: Theme) => ({
     "&:hover": {
       opacity: "1"
     }
+  },
+  contentItemScheduleContainer: {
+    border: "2px white solid",
+    borderRadius: "50px",
+    width: "95%",
+    color: "black",
+    backgroundColor: "white",
+    textAlign: "center",
+    "&:hover": {
+      opacity: "0.7"
+    },
+    cursor: "pointer"
   },
   saturday: {
     color: "blue"

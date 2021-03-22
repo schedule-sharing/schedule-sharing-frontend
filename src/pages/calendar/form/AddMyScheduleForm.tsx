@@ -35,7 +35,7 @@ const ScheduleForm = ({
   anchorEl: HTMLElement | null;
   setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { addMySchedule, myScheduleList } = useAddMySchedule();
+  const { addMySchedule } = useAddMySchedule();
   const handleValidate = (values: AddMyScheduleFormData) => {
     const errors: Record<string, string> = {};
     if (!values.name) {
