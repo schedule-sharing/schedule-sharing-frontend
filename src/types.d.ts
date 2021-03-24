@@ -17,7 +17,7 @@ type schudleAddType = {
 type clubType = {
   clubName: string;
   categories: string;
-  clubId?: number;
+  clubId?: string;
 };
 // user
 type SignUpFormValue = {

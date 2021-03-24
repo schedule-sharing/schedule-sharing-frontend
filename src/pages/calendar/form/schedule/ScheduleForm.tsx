@@ -9,7 +9,7 @@ import {
   Theme,
   Button
 } from "@material-ui/core";
-import { addSchedule } from "../../../api/schedule/schedule";
+import { addSchedule } from "../../../../api/schedule/schedule";
 
 const initialValues: schudleAddType = {
   title: "",

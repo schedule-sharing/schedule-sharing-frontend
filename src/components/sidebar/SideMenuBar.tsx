@@ -12,7 +12,7 @@ import {
 import { Add, Settings } from "@material-ui/icons";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import ClubForm from "../../pages/club/form/Clubform";
+import ClubForm from "../../pages/calendar/form/club/Clubform";
 import sideBarStyle from "./sideMenuBarStyle";
 import useClub from "../../utils/hooks/reducer/useClub";
 
@@ -66,7 +66,7 @@ const SideMenuBar: React.FC<{
           {clubs.clubs.map((club: clubType, i) => (
             <Link
               key={`유저이름추가하기${club.clubName}${i.toString()}`}
-              to={`/calendar/${club.clubName}`}>
+              to={`/calendar/${club.clubId}`}>
               <ListItem className={classes.listItem} button>
                 <ListItemText>
                   <Typography

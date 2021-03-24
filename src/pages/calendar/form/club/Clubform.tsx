@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { Form, Formik } from "formik";
 import React from "react";
-import useClub from "../../../utils/hooks/reducer/useClub";
+import useClub from "../../../../utils/hooks/reducer/useClub";
 
 const useStyles = makeStyles((theme: Theme) => ({
   modal: {

@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/reducers/rootReducer";
 import {
   asyncGetClub as getClub,
-  asyncPostClub as postClub
+  asyncPostClub as postClub,
+  asyncRemoveClub as removeClub
 } from "../../../store/reducers/clubReducer/clubReducer";
 
 export default function useClub() {
@@ -19,5 +20,11 @@ export default function useClub() {
     },
     [dispatch]
   );
-  return { asyncGetClub, asyncPostClub, clubs };
+  const asyncRemoveClub = useCallback(
+    (id: string) => {
+      dispatch(removeClub(id));
+    },
+    [dispatch]
+  );
+  return { asyncGetClub, asyncPostClub, asyncRemoveClub, clubs };
 }

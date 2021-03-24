@@ -8,7 +8,7 @@ import {
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import useClub from "../../../utils/hooks/reducer/useClub";
-import ScheduleForm from "../form/ScheduleForm";
+import ScheduleForm from "../form/schedule/ScheduleForm";
 import useStyles from "./calendarStyle";
 
 const Calendar = () => {
@@ -47,7 +47,7 @@ const Calendar = () => {
     };
     asyncGetClub();
     getDate(dat.year, dat.month);
-  }, [asyncGetClub]);
+  }, []);
   const dateRendering = (dates: Array<DateType>) => (
     <>
       <div style={{ flexBasis: `calc((100% / 7)*${dates[0].day})` }} />
