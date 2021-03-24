@@ -10,7 +10,6 @@ import {
 } from "@material-ui/core";
 import { Form, Formik } from "formik";
 import React from "react";
-import { addClub as addClubApi } from "../../../api/club/club";
 import useClub from "../../../utils/hooks/reducer/useClub";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-const initialValue: clubAddType = {
+const initialValue: clubType = {
   clubName: "",
   categories: ""
 };
@@ -39,12 +38,9 @@ const Clubform = ({
   visibility: boolean;
   setVisibility: () => void;
 }) => {
-  const { addClub } = useClub();
-  const handleSubmit = async (val: clubAddType) => {
-    addClubApi(val).then(() => {
-      addClub(val);
-      setVisibility();
-    });
+  const { asyncPostClub } = useClub();
+  const handleSubmit = async (val: clubType) => {
+    asyncPostClub(val);
   };
   const classes = useStyles();
   return (

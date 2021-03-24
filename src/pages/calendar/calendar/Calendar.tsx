@@ -5,7 +5,6 @@ import {
   ArrowForward,
   ShoppingBasket
 } from "@material-ui/icons";
-import axios from "axios";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import useClub from "../../../utils/hooks/reducer/useClub";
@@ -16,7 +15,8 @@ const Calendar = () => {
   const [date, setDate] = useState<Array<DateType>>([
     { date: 0, day: 1, month: 1, year: 2020 }
   ]);
-  const { clubs, addClub } = useClub();
+
+  const { asyncGetClub } = useClub();
   const [formRef, setFormRef] = useState<HTMLElement | null>(null);
   const [formVisibility, setFormVisibility] = useState(false);
   // 날짜 구하는 로직
@@ -45,11 +45,9 @@ const Calendar = () => {
       year: today.getFullYear(),
       month: today.getMonth()
     };
-    axios.get("/club/3").then((res) => {
-      addClub({ clubName: res.data.clubName, categories: res.data.categories });
-    });
+    asyncGetClub();
     getDate(dat.year, dat.month);
-  }, [addClub]);
+  }, [asyncGetClub]);
   const dateRendering = (dates: Array<DateType>) => (
     <>
       <div style={{ flexBasis: `calc((100% / 7)*${dates[0].day})` }} />

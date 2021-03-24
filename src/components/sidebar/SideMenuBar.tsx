@@ -64,7 +64,7 @@ const SideMenuBar: React.FC<{
         </div>
         <Divider classes={{ root: classes.divider }} variant="middle" />
         <List className={classes.list}>
-          {clubs.map((club: clubAddType, i) => (
+          {clubs.clubs.map((club: clubType, i) => (
             <Link
               key={`유저이름추가하기${club.clubName}${i.toString()}`}
               to={`/calendar/${club.clubName}`}>

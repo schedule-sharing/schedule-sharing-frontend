@@ -13,9 +13,11 @@ type schudleAddType = {
   expireDate: string;
   leastPeople: string;
 };
-type clubAddType = {
+
+type clubType = {
   clubName: string;
   categories: string;
+  clubId?: number;
 };
 // user
 type SignUpFormValue = {
