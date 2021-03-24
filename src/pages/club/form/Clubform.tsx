@@ -41,6 +41,7 @@ const Clubform = ({
   const { asyncPostClub } = useClub();
   const handleSubmit = async (val: clubType) => {
     asyncPostClub(val);
+    setVisibility();
   };
   const classes = useStyles();
   return (

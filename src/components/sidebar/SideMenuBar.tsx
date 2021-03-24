@@ -37,7 +37,6 @@ const SideMenuBar: React.FC<{
           paper: classes.drawerPaper
         }}>
         <div className={classes.drawerHeader}>
-          <IconButton size="small" children={<Settings />} />
           <Grid container spacing={3}>
             <Grid container item xs={12}>
               <Grid item xs={5}>

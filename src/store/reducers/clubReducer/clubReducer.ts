@@ -48,8 +48,11 @@ export const asyncGetClub = () => async (
   try {
     const value: Array<clubType> = await axios
       .get("/member/getClubs")
-      // eslint-disable-next-line no-underscore-dangle
-      .then((res) => res.data._embedded.clubList);
+      .then((res) => {
+        if (res.status !== 200) throw new Error();
+        if (!res.data) return res.data._embedded.clubList;
+        return [];
+      });
     dispatch(getClub(value));
   } catch (err) {
     alert("asyncGetClub 에러");
@@ -63,8 +66,9 @@ export const asyncPostClub = (val: clubType) => async (
 ) => {
   dispatch(loadingClub());
   try {
-    await axios.post("/club, val").then((res) => res.data);
+    await axios.post("/club", val).then((res) => res.data);
     dispatch(addClub(val));
+    alert("asyncAddClub요청 성공");
   } catch (err) {
     alert("asyncAddClub  에러");
   }
