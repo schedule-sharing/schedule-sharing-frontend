@@ -22,6 +22,7 @@ const intialFormValue: SignUpFormValue = {
 const SignUpForm = () => {
   const classes = useStyles();
   const [showPw, setShowPw] = useState(false);
+  const [showPw2, setShowPw2] = useState(false);
   // submit
   const handleSubmit = (v: SignUpFormValue) => {
     const { email, name, password, imagePath } = v;
@@ -101,8 +102,9 @@ const SignUpForm = () => {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPw((prev) => !prev)}>
-                        {showPw ? <Visibility /> : <VisibilityOff />}
+
+                      <IconButton onClick={() => setShowPw2((prev) => !prev)}>
+                        {showPw2 ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
                   )

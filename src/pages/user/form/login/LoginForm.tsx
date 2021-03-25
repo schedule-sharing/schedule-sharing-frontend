@@ -9,9 +9,9 @@ import {
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { Formik } from "formik";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import useStyles from "./loginFormStyle";
+import { Link, useHistory } from "react-router-dom";
 import { login } from "../../../../api/user/user";
+import useStyles from "./loginFormStyle";
 
 const intialFormValue: LoginFormValue = {
   email: "",
@@ -19,10 +19,14 @@ const intialFormValue: LoginFormValue = {
 };
 const LoginForm = () => {
   const classes = useStyles();
+  const history = useHistory();
   const [showPw, setShowPw] = useState(false);
   // submit
   const handleSubmit = (v: LoginFormValue) => {
-    login(v);
+    login(v).then(() => {
+      alert("로그인 성공");
+      history.push("/calendar");
+    });
   };
 
   return (

@@ -20,8 +20,9 @@
   },
   "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
   "rules": {
-    "import/prefer-default-export": "off",
-    "no-shadow": "warn",
+    "no-underscore-dangle":"off",
+    "import/prefer-default-export":"off",
+    "no-shadow":"warn",
     "react-hooks/rules-of-hooks": "warn",
     "react/jsx-props-no-spreading": "warn",
     "no-console": "warn",

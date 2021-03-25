@@ -33,6 +33,8 @@ const Calendar = () => {
   const [date, setDate] = useState<Array<DateType>>([
     { date: 0, day: 1, month: 1, year: 2020 }
   ]);
+
+  const { asyncGetClub } = useClub();
   const [formRef, setFormRef] = useState<HTMLElement | null>(null);
   const [formVisibility, setFormVisibility] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -80,6 +82,7 @@ const Calendar = () => {
     }
     setDate(arr);
   };
+
   useEffect(() => {
     // 초기마운트시  오늘 날짜 기준으로날짜 설정
     const today = new Date(); // new Date(2021, 1, 3); 2월 3일 기준으로 날짜
@@ -87,6 +90,7 @@ const Calendar = () => {
       year: today.getFullYear(),
       month: today.getMonth()
     };
+    asyncGetClub();
     getDate(dat.year, dat.month);
   }, []);
   const handleClick = (schedule: MySchedule) => {
@@ -170,7 +174,9 @@ const Calendar = () => {
     }
     getDate(year, month);
   };
-
+  const handleScheduleAddFormVisibility = () => {
+    setFormVisibility((prev) => !prev);
+  };
   const handleAddBtnClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -206,15 +212,12 @@ const Calendar = () => {
         visibility={formVisibility}
         setVisibility={setFormVisibility}
       />
-      {/* <AddClubScheduleForm
-        anchorEl={formRef}
-        visibility={formVisibility}
-        setVisibility={setFormVisibility}
-      /> */}
+
       <MyScheduleDetail
         modalOpen={modalOpen}
         scheduleDetail={scheduleDetail as MySchedule}
         handleModalClose={() => handleModalClose()}
+        setVisibility={handleScheduleAddFormVisibility}
       />
     </div>
   );

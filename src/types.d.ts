@@ -14,6 +14,11 @@ type schudleAddType = {
   leastPeople: string;
 };
 
+type clubType = {
+  clubName: string;
+  categories: string;
+  clubId?: string;
+};
 // user
 type SignUpFormValue = {
   email: string;
