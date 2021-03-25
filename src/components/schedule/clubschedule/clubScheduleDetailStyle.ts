@@ -7,10 +7,15 @@ export default makeStyles((theme: Theme) => ({
     justifyContent: "center"
   },
   modalContentContainer: {
+    padding: "1.5% 4%",
     width: "70%",
-    height: "70%",
+    height: "40%",
     display: "flex",
-    alignItems: "center",
-    flexDirection: "column"
+    alignItems: "space-between",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    ".MuiDivider-root": {
+      border: "2px solid black"
+    }
   }
 }));

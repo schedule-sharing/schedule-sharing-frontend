@@ -86,11 +86,10 @@ type MyScheduleActions =
 
 // reducer
 export default (state = initialState, action: MyScheduleActions) => {
-  const copied = { ...state };
+  const copied = { myScheduleList: [...state.myScheduleList] };
   switch (action.type) {
     case ADD_MY_SCHEDULE: {
-      copied.myScheduleList.concat(action.payload);
-      return copied;
+      return copied.myScheduleList.concat(action.payload);
     }
     case UPDATE_MY_SCHEDULE: {
       return copied || null;

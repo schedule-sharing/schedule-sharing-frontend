@@ -61,7 +61,7 @@ export default makeStyles((theme: Theme) => ({
   },
   contentItemScheduleContainer: {
     border: "2px white solid",
-    borderRadius: "50px",
+    borderRadius: "10px",
     width: "95%",
     color: "black",
     backgroundColor: "white",

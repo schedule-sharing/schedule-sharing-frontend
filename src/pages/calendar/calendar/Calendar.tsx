@@ -12,12 +12,20 @@ import useStyles from "./calendarStyle";
 import AddMyScheduleForm from "../form/AddMyScheduleForm";
 import useAddMySchedule from "../../../utils/hooks/useAddMySchedule";
 import { RootState } from "../../../store/reducers/rootReducer";
-import { MyScheduleState } from "../../../store/reducers/scheduleReducer/myScheduleReducer";
-import MyScheduleDetail from "../../../components/myschedule/MyScheduleDetail";
+import {
+  MySchedule,
+  MyScheduleState
+} from "../../../store/reducers/scheduleReducer/myScheduleReducer";
+
+import MyScheduleDetail from "../../../components/schedule/myschedule/MyScheduleDetail";
+import AddClubScheduleForm from "../form/AddClubScheduleForm";
+import {
+  ClubScheduleState,
+  ClubSchedule
+} from "../../../store/reducers/scheduleReducer/clubScheduleReducer";
 
 const Calendar = () => {
   const { getMyScheduleList } = useAddMySchedule();
-
   const myScheduleListState: MyScheduleState = useSelector(
     (state: RootState) => state.myScheduleReducer
   );
@@ -28,6 +36,26 @@ const Calendar = () => {
   const [formRef, setFormRef] = useState<HTMLElement | null>(null);
   const [formVisibility, setFormVisibility] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const detailInitalState = {
+    myScheduleId: 0,
+    name: "",
+    contents: "",
+    startDate: "",
+    endDate: ""
+  };
+  const clubDetailInitialState = {
+    id: 0,
+    name: "",
+    contents: "",
+    startMeetingDate: "",
+    endMeetingDate: "",
+    memberName: "",
+    memberEmail: ""
+  };
+
+  const [scheduleDetail, setScheduleDetail] = useState<
+    MySchedule | ClubSchedule
+  >(detailInitalState || clubDetailInitialState);
   // 날짜 구하는 로직
   const getDate = (year: number, month: number) => {
     let yearMonth = "";
@@ -61,18 +89,35 @@ const Calendar = () => {
     };
     getDate(dat.year, dat.month);
   }, []);
-  const handleClick = () => {
+  const handleClick = (schedule: MySchedule) => {
     setModalOpen(true);
+    setScheduleDetail(schedule);
   };
   const handleModalClose = () => {
     setModalOpen(false);
   };
-  const scheduleRendering = (name: string) => (
-    <>
-      {/* onKeyDown={() => handleClick()} onClick={() => handleClick()} */}
-      <Button onClick={() => handleClick()}>{name}</Button>
-    </>
-  );
+
+  const myscheduleRendering = (dat: DateType) =>
+    myScheduleList?.map((c) => (
+      <div key={`mySchedule${c.name}`}>
+        {parseInt(c?.startDate?.slice(8, 10), 10) <= dat.date &&
+        parseInt(c?.endDate?.slice(8, 10), 10) >= dat.date ? (
+          <div className={classes.contentItemScheduleContainer}>
+            {scheduleDetailRendering(c)}
+          </div>
+        ) : null}
+      </div>
+    ));
+
+  const scheduleDetailRendering = (schedule: MySchedule) => {
+    const { name } = schedule;
+    return (
+      <>
+        {/* onKeyDown={() => handleClick()} onClick={() => handleClick()} */}
+        <Button onClick={() => handleClick(schedule)}>{name}</Button>
+      </>
+    );
+  };
 
   const dateRendering = (dates: Array<DateType>) => (
     <>
@@ -99,44 +144,11 @@ const Calendar = () => {
               children={<ShoppingBasket />}
             />
           </div>
-          {/* <div className={classes.contentItemScheduleContainer}>
-            {scheduleRendering(dat.date)}
-          </div> */}
-          {myScheduleList?.map((c) => (
-            <div key={`mySchedule${c.name}`}>
-              {parseInt(c?.startDate?.slice(8, 10), 10) === dat.date ? (
-                <div className={classes.contentItemScheduleContainer}>
-                  {scheduleRendering(c.name)}
-                </div>
-              ) : null}
-            </div>
-          ))}
+          {myscheduleRendering(dat)}
         </div>
       ))}
     </>
   );
-  const handleForwardBtnClick = () => {
-    let { year } = date[0];
-    let { month } = date[0];
-    if (month === 11) {
-      month = 0;
-      year += 1;
-    } else {
-      month += 1;
-    }
-    getDate(year, month);
-  };
-  const handleBackBtnClick = () => {
-    let { year } = date[0];
-    let { month } = date[0];
-    if (month === 0) {
-      month = 11;
-      year -= 1;
-    } else {
-      month -= 1;
-    }
-    getDate(year, month);
-  };
 
   const handleBtnClick = (type: string) => {
     let { year } = date[0];
@@ -194,8 +206,14 @@ const Calendar = () => {
         visibility={formVisibility}
         setVisibility={setFormVisibility}
       />
+      {/* <AddClubScheduleForm
+        anchorEl={formRef}
+        visibility={formVisibility}
+        setVisibility={setFormVisibility}
+      /> */}
       <MyScheduleDetail
         modalOpen={modalOpen}
+        scheduleDetail={scheduleDetail as MySchedule}
         handleModalClose={() => handleModalClose()}
       />
     </div>
