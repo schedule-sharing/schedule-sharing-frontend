@@ -10,7 +10,7 @@ function App() {
       <div className="App">
         <Switch>
           <Route path="/user" component={UserLayout} />
-          <Route path="/calendar" component={CalendarLayout} />
+          <Route path="/calendar/:id" component={CalendarLayout} />
           <Route path="/" component={HomeLayout} />
         </Switch>
       </div>
@@ -29,7 +29,7 @@ function App() {
           <Link to="/user">user 로 가기</Link>
         </div>
         <div>
-          <Link to="/calendar">calendar 로 가기</Link>
+          <Link to="/calendar/mycalendar">calendar 로 가기</Link>
         </div>
         <div>
           <Link to="/">홈으로가기</Link>

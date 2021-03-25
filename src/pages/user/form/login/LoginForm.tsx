@@ -1,52 +1,32 @@
-import React, { useState } from "react";
 import {
-  InputAdornment,
-  makeStyles,
-  Typography,
-  TextField,
-  Theme,
   Button,
+  Grid,
   IconButton,
-  Grid
+  InputAdornment,
+  TextField,
+  Typography
 } from "@material-ui/core";
-import { Formik } from "formik";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+import { Formik } from "formik";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { login } from "../../../../api/user/user";
+import useStyles from "./loginFormStyle";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    padding: theme.spacing(2),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    margin: "0 auto"
-  },
-  textField: {
-    backgroundColor: "white",
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: "green"
-      }
-    }
-  },
-  loginBtn: {
-    backgroundColor: "white"
-  }
-}));
-type intialFormValueType = {
-  userId: string;
-  userPw: string;
-};
-const intialFormValue: intialFormValueType = {
-  userId: "",
-  userPw: ""
+const intialFormValue: LoginFormValue = {
+  email: "",
+  password: ""
 };
 const LoginForm = () => {
   const classes = useStyles();
+  const history = useHistory();
   const [showPw, setShowPw] = useState(false);
   // submit
-  const handleSubmit = (v: intialFormValueType) => {
-    console.log(v);
+  const handleSubmit = (v: LoginFormValue) => {
+    login(v).then(() => {
+      alert("로그인 성공");
+      history.push("/calendar");
+    });
   };
 
   return (
@@ -60,21 +40,19 @@ const LoginForm = () => {
                 fullWidth
                 size="small"
                 classes={{ root: classes.textField }}
-                name="userId"
+                name="email"
                 placeholder="아이디"
                 variant="outlined"
-                value={formikProps.values.userId}
+                value={formikProps.values.email}
                 onChange={formikProps.handleChange}
-                error={
-                  formikProps.touched && Boolean(formikProps.errors.userId)
-                }
-                helperText={formikProps.touched && formikProps.errors.userId}
+                error={formikProps.touched && Boolean(formikProps.errors.email)}
+                helperText={formikProps.touched && formikProps.errors.email}
               />
               <TextField
                 fullWidth
                 size="small"
                 className={classes.textField}
-                name="userPw"
+                name="password"
                 placeholder="비밀번호"
                 InputProps={{
                   endAdornment: (
@@ -87,12 +65,10 @@ const LoginForm = () => {
                 }}
                 type={showPw ? "text" : "password"}
                 variant="outlined"
-                value={formikProps.values.userPw}
+                value={formikProps.values.password}
                 onChange={formikProps.handleChange}
-                error={
-                  formikProps.touched && Boolean(formikProps.errors.userId)
-                }
-                helperText={formikProps.touched && formikProps.errors.userId}
+                error={formikProps.touched && Boolean(formikProps.errors.email)}
+                helperText={formikProps.touched && formikProps.errors.email}
               />
 
               {/* 비번 잊음 */}
