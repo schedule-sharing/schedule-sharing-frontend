@@ -1,8 +1,8 @@
 import { Button, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { Link, Switch, Route, Redirect } from "react-router-dom";
-import SignUpForm from "./form/SignUpForm";
-import LoginForm from "./form/LoginForm";
+import SignUpForm from "./form/signUp/SignUpForm";
+import LoginForm from "./form/login/LoginForm";
 
 const UserLayout = () => (
   <>

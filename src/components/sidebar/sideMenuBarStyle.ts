@@ -63,9 +63,8 @@ export default makeStyles((theme: Theme) => ({
     width: "75px",
     height: "75px"
   },
-  listText: {
-    fontSize: "30px"
-  },
+  list: { padding: "0" },
+  listItem: { padding: "0" },
   addIcon: {
     width: "50px",
     height: "50px",

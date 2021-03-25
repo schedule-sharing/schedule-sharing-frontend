@@ -13,3 +13,21 @@ type schudleAddType = {
   expireDate: string;
   leastPeople: string;
 };
+
+type clubType = {
+  clubName: string;
+  categories: string;
+  clubId?: string;
+};
+// user
+type SignUpFormValue = {
+  email: string;
+  name: string;
+  password: string;
+  imagePath: string;
+  confirmPassword?: string;
+};
+type LoginFormValue = {
+  email: string;
+  password: string;
+};
