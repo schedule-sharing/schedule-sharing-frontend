@@ -108,7 +108,7 @@ const SignUpForm = () => {
                     </InputAdornment>
                   )
                 }}
-                type={showPw ? "text" : "password"}
+                type={showPw2 ? "text" : "password"}
                 variant="outlined"
                 value={formikProps.values.confirmPassword}
                 onChange={formikProps.handleChange}

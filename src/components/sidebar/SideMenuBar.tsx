@@ -21,7 +21,7 @@ const SideMenuBar: React.FC<{
 }> = ({ children }) => {
   const classes = sideBarStyle();
   const { clubs } = useClub();
-  const [clubForm, setClubForm] = useState<boolean>(true);
+  const [clubForm, setClubForm] = useState<boolean>(false);
   const handleClubFormVisibility = () => {
     setClubForm((prev) => !prev);
   };

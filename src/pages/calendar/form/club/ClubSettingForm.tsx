@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Grid, Popover, makeStyles, Theme } from "@material-ui/core";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import useClub from "../../../../utils/hooks/reducer/useClub";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -20,15 +20,16 @@ const ClubSettingForm = ({
 }: ClubSettingForm) => {
   const classes = useStyles();
   const { asyncRemoveClub, clubs } = useClub();
+  const history = useHistory();
   const { id } = useParams<{ id: string }>();
-  const handleClubDelete = () => {
+  const handleClubDelete = async () => {
     // eslint-disable-next-line no-restricted-globals
     if (confirm("클럽을 정말 삭제하시겠습니까?")) {
       if (id === "mycalendar") {
         alert("mycalendar는 삭제할 수 없습니다.");
         return;
       }
-      asyncRemoveClub(id);
+      if (await asyncRemoveClub(id)) window.location.reload();
       // if (clubs.clubs.find((v) => v.clubId === id)) asyncRemoveClub(id);
     }
   };

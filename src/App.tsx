@@ -3,14 +3,15 @@ import { Link, Switch, Route } from "react-router-dom";
 import CalendarLayout from "./pages/calendar/CalendarLayout";
 import UserLayout from "./pages/user/UserLayout";
 import HomeLayout from "./pages/home/HomeLayout";
+import Auth from "./utils/hoc/Auth";
 
 function App() {
   return (
     <>
       <div className="App">
         <Switch>
-          <Route path="/user" component={UserLayout} />
-          <Route path="/calendar/:id" component={CalendarLayout} />
+          <Route path="/user" component={Auth(UserLayout)} />
+          <Route path="/calendar/:id" component={Auth(CalendarLayout)} />
           <Route path="/" component={HomeLayout} />
         </Switch>
       </div>

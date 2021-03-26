@@ -10,7 +10,7 @@ import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { Formik } from "formik";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { login } from "../../../../api/user/user";
+import useUser from "../../../../utils/hooks/reducer/useUser";
 import useStyles from "./loginFormStyle";
 
 const intialFormValue: LoginFormValue = {
@@ -20,13 +20,11 @@ const intialFormValue: LoginFormValue = {
 const LoginForm = () => {
   const classes = useStyles();
   const history = useHistory();
+  const { login, user } = useUser();
   const [showPw, setShowPw] = useState(false);
   // submit
-  const handleSubmit = (v: LoginFormValue) => {
-    login(v).then(() => {
-      alert("로그인 성공");
-      history.push("/calendar");
-    });
+  const handleSubmit = async (v: LoginFormValue) => {
+    if (await login(v)) history.push("/calendar");
   };
 
   return (

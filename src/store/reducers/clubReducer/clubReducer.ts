@@ -49,12 +49,12 @@ export const asyncGetClub = () => async (
 ) => {
   dispatch(loadingClub());
   try {
-    const value: Array<clubType> = await axios
-      .get("/member/getClubs")
-      .then((res) => {
-        if (res.status !== 200) throw new Error();
-        return res.data._embedded.clubList;
-      });
+    let value: Array<clubType> = [];
+    const data = await axios.get("/member/getClubs").then((res) => {
+      if (res.status !== 200) throw new Error();
+      return res.data;
+    });
+    if (data._embedded) value = await data._embedded.clubList;
     dispatch(getClub(value));
   } catch (err) {
     alert("asyncGetClub 에러");
@@ -72,7 +72,6 @@ export const asyncPostClub = (val: clubType) => async (
       .post("/club", val)
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         dispatch(
           addClub({
             clubId: data.clubId,
@@ -94,13 +93,16 @@ export const asyncRemoveClub = (id: string) => async (
 ) => {
   dispatch(loadingClub());
   try {
+    if (!id) console.log("id없음");
     await axios
       .delete(`/club/${id}`)
       .then((res) =>
         res.data.success ? dispatch(removeClub(id)) : new Error("clubReducer")
       );
+    return true;
   } catch (err) {
     alert("asyncRemoveClub 에러");
+    return false;
   }
   dispatch(loadingClub());
 };

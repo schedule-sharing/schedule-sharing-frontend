@@ -21,9 +21,7 @@ export default function useClub() {
     [dispatch]
   );
   const asyncRemoveClub = useCallback(
-    (id: string) => {
-      dispatch(removeClub(id));
-    },
+    (id: string) => dispatch(removeClub(id)),
     [dispatch]
   );
   return { asyncGetClub, asyncPostClub, asyncRemoveClub, clubs };

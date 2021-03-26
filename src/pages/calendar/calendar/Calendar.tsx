@@ -47,7 +47,7 @@ const Calendar = () => {
     };
     asyncGetClub();
     getDate(dat.year, dat.month);
-  }, []);
+  }, [asyncGetClub]);
   const dateRendering = (dates: Array<DateType>) => (
     <>
       <div style={{ flexBasis: `calc((100% / 7)*${dates[0].day})` }} />
