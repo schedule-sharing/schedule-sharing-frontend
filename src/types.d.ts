@@ -6,7 +6,7 @@ type DateType = {
 };
 // "Mon" | "Tues" | "Wed" | "Thur" | "Fri" | "Sat" | "Sun"
 
-type schudleAddType = {
+type scheduleAddType = {
   title: string;
   date: string;
   place: string;

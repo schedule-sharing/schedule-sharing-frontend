@@ -1,7 +1,7 @@
-import React from "react";
-import { Button, Grid, Popover, makeStyles, Theme } from "@material-ui/core";
-import { useHistory, useParams } from "react-router-dom";
+import { Button, Grid, makeStyles, Popover, Theme } from "@material-ui/core";
+import React, { useState } from "react";
 import useClub from "../../../../utils/hooks/reducer/useClub";
+import ClubModifyForm from "./ClubModifyForm";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -19,22 +19,19 @@ const ClubSettingForm = ({
   visibility
 }: ClubSettingForm) => {
   const classes = useStyles();
-  const { asyncRemoveClub, clubs } = useClub();
-  const history = useHistory();
-  const { id } = useParams<{ id: string }>();
+  const [visi, setVisi] = useState(false);
+  const { asyncRemoveClub, asyncModifyClub, clubs } = useClub();
   const handleClubDelete = async () => {
-    // eslint-disable-next-line no-restricted-globals
-    if (confirm("클럽을 정말 삭제하시겠습니까?")) {
-      if (id === "mycalendar") {
-        alert("mycalendar는 삭제할 수 없습니다.");
-        return;
-      }
-      if (await asyncRemoveClub(id)) window.location.reload();
-      // if (clubs.clubs.find((v) => v.clubId === id)) asyncRemoveClub(id);
+    if (!clubs.currentClub.clubId) {
+      alert("선택된 클럽이 없습니다");
+      return;
     }
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm(`정말 ${clubs.currentClub.clubName}을 삭제하시겠습니까?`))
+      await asyncRemoveClub(clubs.currentClub.clubId!);
   };
-  const handleClubModify = () => {
-    //
+  const handleBtnClick = () => {
+    setVisi((prev) => !prev);
   };
   return (
     <Popover
@@ -51,7 +48,8 @@ const ClubSettingForm = ({
       }}>
       <Grid className={classes.root} container>
         <Grid item xs={12}>
-          <Button>클럽 수정</Button>
+          <Button onClick={handleBtnClick}>클럽 수정</Button>
+          <ClubModifyForm setVisibility={handleBtnClick} visibility={visi} />
         </Grid>
         <Grid item xs={12}>
           <Button onClick={handleClubDelete}>클럽 삭제</Button>

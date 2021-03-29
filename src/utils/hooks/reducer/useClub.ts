@@ -4,7 +4,9 @@ import { RootState } from "../../../store/reducers/rootReducer";
 import {
   asyncGetClub as getClub,
   asyncPostClub as postClub,
-  asyncRemoveClub as removeClub
+  asyncRemoveClub as removeClub,
+  selectClub as sClub,
+  asyncModifyClub as modifyClub
 } from "../../../store/reducers/clubReducer/clubReducer";
 
 export default function useClub() {
@@ -24,5 +26,21 @@ export default function useClub() {
     (id: string) => dispatch(removeClub(id)),
     [dispatch]
   );
-  return { asyncGetClub, asyncPostClub, asyncRemoveClub, clubs };
+  const selectClub = useCallback((id: string) => dispatch(sClub(id)), [
+    dispatch
+  ]);
+  const asyncModifyClub = useCallback(
+    (id: string, val: { clubName: string; categories: string }) => {
+      dispatch(modifyClub(id, val));
+    },
+    [dispatch]
+  );
+  return {
+    selectClub,
+    asyncGetClub,
+    asyncPostClub,
+    asyncRemoveClub,
+    asyncModifyClub,
+    clubs
+  };
 }

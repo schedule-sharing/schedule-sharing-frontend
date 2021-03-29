@@ -3,9 +3,7 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import useUser from "../../utils/hooks/reducer/useUser";
 
 const handleError = (err: AxiosError) => {
-  console.log("토큰 갱신요청");
-  const { login } = useUser();
-  login({ email: "test@test.test", password: "12345" });
+  console.error(err);
   return Promise.reject(err);
 };
 axios.defaults.baseURL = "http://15.165.16.96:8080/api";
@@ -14,9 +12,9 @@ axios.defaults.baseURL = "http://15.165.16.96:8080/api";
 // else
 // {}
 // 요청 인터셉터
-axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-  "access_token"
-)}`;
+// axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
+//   "access_token"
+// )}`;
 
 axios.interceptors.request.use((config: AxiosRequestConfig) => {
   const request = {

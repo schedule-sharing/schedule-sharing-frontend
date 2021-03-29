@@ -1,7 +1,10 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/reducers/rootReducer";
-import { asyncLogin } from "../../../store/reducers/userReducer/userReducer";
+import {
+  asyncLogin,
+  asyncLogout
+} from "../../../store/reducers/userReducer/userReducer";
 
 export default () => {
   const dispatch = useDispatch();
@@ -11,5 +14,7 @@ export default () => {
     (val: LoginFormValue) => dispatch(asyncLogin(val)),
     [dispatch]
   );
-  return { user, login };
+
+  const logout = useCallback(() => dispatch(asyncLogout()), [dispatch]);
+  return { user, login, logout };
 };

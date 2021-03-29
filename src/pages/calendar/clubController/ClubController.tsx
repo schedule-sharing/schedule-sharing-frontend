@@ -1,29 +1,10 @@
-import { IconButton, makeStyles, Theme, Typography } from "@material-ui/core";
+import { IconButton, Typography } from "@material-ui/core";
 import { Settings } from "@material-ui/icons";
-import React, { useEffect, useRef, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import useClub from "../../../utils/hooks/reducer/useClub";
 import ClubSettingForm from "../form/club/ClubSettingForm";
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    backgroundColor: theme.palette.primary.main,
-    display: "flex",
-    alignItems: "center",
-    "& div": {}
-  },
-
-  title: {
-    textTransform: "uppercase",
-    color: theme.palette.secondary.dark
-  },
-  titlebox: {
-    flex: 1
-  },
-  settingbox: {
-    paddingRight: theme.spacing(2)
-  }
-}));
+import useStyles from "./clubControllerStyle";
 
 const ClubController = () => {
   const classes = useStyles();
@@ -43,6 +24,7 @@ const ClubController = () => {
       history.push("mycalendar");
     }
   }, []);
+
   return (
     <div className={classes.root}>
       <div className={classes.titlebox}>

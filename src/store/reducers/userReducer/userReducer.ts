@@ -32,15 +32,29 @@ export const asyncLogin = (value: LoginFormValue) => async (
     };
     if (res.data.access_token) {
       // 일단은 로컬스토리이제 토큰 저장
-      window.localStorage.setItem("access_token", res.data.access_token);
+      await window.localStorage.setItem("access_token", res.data.access_token);
       dispatch(login(user));
       return true;
     }
-    dispatch(loading());
     return false;
   } catch (err) {
-    //
+    console.error(err);
     return false;
+  } finally {
+    dispatch(loading());
+  }
+};
+export const asyncLogout = () => async (
+  dispatch: Dispatch<ReturnType<typeof loading> | ReturnType<typeof logout>>
+) => {
+  dispatch(loading());
+  try {
+    await window.localStorage.removeItem("access_token");
+    dispatch(logout());
+  } catch (err) {
+    console.error(err);
+  } finally {
+    dispatch(loading());
   }
 };
 type UserAction =
@@ -54,7 +68,7 @@ type UserState = {
   user: user;
 };
 const initialState: UserState = {
-  loading: false,
+  loading: true,
   authenticated: false,
   user: {
     email: "",
@@ -73,13 +87,13 @@ export default (state = initialState, action: UserAction) => {
       };
     case LOGIN:
       return {
-        loading: state.loading,
+        ...state,
         authenticated: true,
         user: action.payload.user
       };
     case LOGOUT:
       return {
-        loading: state.loading,
+        ...state,
         authenticated: false,
         user: initialState.user
       };

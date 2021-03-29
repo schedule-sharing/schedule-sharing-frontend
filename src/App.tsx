@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Switch, Route } from "react-router-dom";
+import { Link, Switch, Route, Redirect } from "react-router-dom";
 import CalendarLayout from "./pages/calendar/CalendarLayout";
 import UserLayout from "./pages/user/UserLayout";
 import HomeLayout from "./pages/home/HomeLayout";
@@ -11,6 +11,11 @@ function App() {
       <div className="App">
         <Switch>
           <Route path="/user" component={Auth(UserLayout)} />
+          <Route
+            exact
+            path="/calendar"
+            render={() => <Redirect to="/calendar/mycalendar" />}
+          />
           <Route path="/calendar/:id" component={Auth(CalendarLayout)} />
           <Route path="/" component={HomeLayout} />
         </Switch>
