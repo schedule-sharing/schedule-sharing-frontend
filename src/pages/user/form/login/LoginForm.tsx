@@ -10,6 +10,7 @@ import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { Formik } from "formik";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import Loading from "../../../../components/spinner/Loading";
 import useUser from "../../../../utils/hooks/reducer/useUser";
 import useStyles from "./loginFormStyle";
 
@@ -24,7 +25,7 @@ const LoginForm = () => {
   const [showPw, setShowPw] = useState(false);
   // submit
   const handleSubmit = async (v: LoginFormValue) => {
-    if (await login(v)) history.push("/calendar");
+    await login(v);
   };
 
   return (

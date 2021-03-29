@@ -7,7 +7,9 @@ import {
 } from "@material-ui/icons";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
+import Loading from "../../../components/spinner/Loading";
 import useClub from "../../../utils/hooks/reducer/useClub";
+import useUser from "../../../utils/hooks/reducer/useUser";
 import ScheduleForm from "../form/schedule/ScheduleForm";
 import useStyles from "./calendarStyle";
 
@@ -17,6 +19,8 @@ const Calendar = () => {
   ]);
 
   const { asyncGetClub } = useClub();
+  const { user } = useUser();
+  const { clubs } = useClub();
   const [formRef, setFormRef] = useState<HTMLElement | null>(null);
   const [formVisibility, setFormVisibility] = useState(false);
   // 날짜 구하는 로직
@@ -134,6 +138,7 @@ const Calendar = () => {
         visibility={formVisibility}
         setVisibility={handleScheduleAddFormVisibility}
       />
+      <Loading isLoading={user.loading || clubs.loading} />
     </div>
   );
 };

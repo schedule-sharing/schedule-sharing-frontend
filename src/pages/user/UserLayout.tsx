@@ -4,11 +4,13 @@ import { Link, Switch, Route, Redirect } from "react-router-dom";
 import SignUpForm from "./form/signUp/SignUpForm";
 import LoginForm from "./form/login/LoginForm";
 import useUser from "../../utils/hooks/reducer/useUser";
+import Loading from "../../components/spinner/Loading";
 
 const UserLayout = () => {
   const { user } = useUser();
   return (
     <>
+      <Loading isLoading={user.loading} />
       <Grid container justify="center">
         {/* header */}
         <Grid xs={12} item container justify="space-around">
