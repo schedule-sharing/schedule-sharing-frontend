@@ -1,28 +1,39 @@
-import { AddClubScheduleFormData } from "../../store/reducers/scheduleReducer/clubScheduleReducer";
+import {
+  AddClubScheduleFormData,
+  UpdateClubScheduleFormData
+} from "../../store/reducers/scheduleReducer/clubScheduleReducer";
 import axios from "../../config/axios/axios";
 
-const token = window.localStorage.getItem("access_token");
-
-const getClubScheduleListApi = async (clubId: number, yearMonth: number) => {
+const getClubScheduleListApi = async (clubId: number, yearMonth: string) => {
   const result = await axios.get(`/clubSchedule/list/${clubId}`, {
     params: {
       yearMonth
-    },
-    headers: {
-      Authorization: `Bearer ${token}`
     }
   });
   return result.data;
 };
 
 const addClubScheduleApi = async (newSchedule: AddClubScheduleFormData) => {
-  const result = await axios.post("/clubSchedule", newSchedule, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-  const { data } = result;
-  return data;
+  const result = await axios.post("/clubSchedule", newSchedule);
+  return result.data;
 };
 
-export { getClubScheduleListApi, addClubScheduleApi };
+const updateClubScheduleApi = async (
+  id: number,
+  newSchedule: UpdateClubScheduleFormData
+) => {
+  const result = await axios.put(`/clubSchedule/${id}`, newSchedule);
+  return result.data;
+};
+
+const deleteClubScheduleApi = async (id: number) => {
+  const result = await axios.delete(`/clubSchedule/${id}`);
+  return result.data;
+};
+
+export {
+  getClubScheduleListApi,
+  addClubScheduleApi,
+  updateClubScheduleApi,
+  deleteClubScheduleApi
+};

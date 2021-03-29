@@ -39,7 +39,7 @@ const ClubController = () => {
   const { id } = useParams<{ id: string }>();
   useEffect(() => {
     if (clubs.clubs.findIndex((v) => v.clubId === id) === -1) {
-      history.push("mycalendar");
+      // history.push("mycalendar");
     }
   }, []);
   return (

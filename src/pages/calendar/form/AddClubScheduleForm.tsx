@@ -29,10 +29,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 const AddClubScheduleForm = ({
+  clubId,
   visibility,
   anchorEl,
   setVisibility
 }: {
+  clubId: string;
   visibility: boolean;
   anchorEl: HTMLElement | null;
   setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
@@ -45,7 +47,8 @@ const AddClubScheduleForm = ({
     }
   };
   const handleSubmit = (values: AddClubScheduleFormData) => {
-    addClubSchedule(values);
+    const realValues = { ...values, clubId: parseInt(clubId, 10) };
+    addClubSchedule(realValues);
     setVisibility(false);
   };
 

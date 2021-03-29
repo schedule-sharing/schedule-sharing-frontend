@@ -9,5 +9,4 @@ const CalendarLayout = () => (
     <Calendar />
   </SideMenuBar>
 );
-
 export default CalendarLayout;

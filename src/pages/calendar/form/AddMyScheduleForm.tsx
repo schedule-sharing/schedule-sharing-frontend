@@ -9,10 +9,10 @@ import {
   Theme,
   Button
 } from "@material-ui/core";
-import { AddMyScheduleFormData } from "../../../store/reducers/scheduleReducer/myScheduleReducer";
-import useAddMySchedule from "../../../utils/hooks/useAddMySchedule";
+import { MyScheduleFormData } from "../../../store/reducers/scheduleReducer/myScheduleReducer";
+import useMySchedule from "../../../utils/hooks/useMySchedule";
 
-const initialValue: AddMyScheduleFormData = {
+const initialValue: MyScheduleFormData = {
   name: "",
   contents: "",
   scheduleStartDate: "",
@@ -35,14 +35,14 @@ const ScheduleForm = ({
   anchorEl: HTMLElement | null;
   setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { addMySchedule } = useAddMySchedule();
-  const handleValidate = (values: AddMyScheduleFormData) => {
+  const { addMySchedule } = useMySchedule();
+  const handleValidate = (values: MyScheduleFormData) => {
     const errors: Record<string, string> = {};
     if (!values.name) {
       errors.name = "name 없음";
     }
   };
-  const handleSubmit = (values: AddMyScheduleFormData) => {
+  const handleSubmit = (values: MyScheduleFormData) => {
     addMySchedule(values);
     setVisibility(false);
   };

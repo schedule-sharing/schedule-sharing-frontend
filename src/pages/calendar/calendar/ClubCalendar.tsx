@@ -9,27 +9,19 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import useStyles from "./calendarStyle";
 import AddMyScheduleForm from "../form/AddMyScheduleForm";
-import useMySchedule from "../../../utils/hooks/useMySchedule";
-import { MySchedule } from "../../../store/reducers/scheduleReducer/myScheduleReducer";
-import MyScheduleDetail from "../../../components/schedule/myschedule/MyScheduleDetail";
 import { ClubSchedule } from "../../../store/reducers/scheduleReducer/clubScheduleReducer";
 import useClubSchedule from "../../../utils/hooks/useClubSchedule";
+import AddClubScheduleForm from "../form/AddClubScheduleForm";
+import ClubScheduleDetail from "../../../components/schedule/clubschedule/ClubScheduleDetail";
 
-const Calendar = () => {
-  const { getMyScheduleList, myScheduleList } = useMySchedule();
+const ClubCalendar = ({ clubId }: { clubId: string }) => {
+  const { getClubScheduleList, clubScheduleList } = useClubSchedule();
   const [date, setDate] = useState<Array<DateType>>([
     { date: 0, day: 1, month: 1, year: 2020 }
   ]);
   const [formRef, setFormRef] = useState<HTMLElement | null>(null);
   const [formVisibility, setFormVisibility] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const detailInitalState = {
-    myScheduleId: 0,
-    name: "",
-    contents: "",
-    startDate: "",
-    endDate: ""
-  };
   const clubDetailInitialState = {
     id: 0,
     name: "",
@@ -40,9 +32,9 @@ const Calendar = () => {
     memberEmail: ""
   };
 
-  const [scheduleDetail, setScheduleDetail] = useState<
-    MySchedule | ClubSchedule
-  >(detailInitalState || clubDetailInitialState);
+  const [scheduleDetail, setScheduleDetail] = useState<ClubSchedule>(
+    clubDetailInitialState
+  );
   // 날짜 구하는 로직
   const getDate = (year: number, month: number) => {
     let yearMonth = "";
@@ -50,7 +42,7 @@ const Calendar = () => {
       yearMonth = `${year.toString()}-0${(month + 1).toString()}`;
     } else yearMonth = `${year.toString()}-${(month + 1).toString()}`;
 
-    getMyScheduleList(yearMonth);
+    getClubScheduleList(parseInt(clubId, 10), yearMonth);
 
     const arr: Array<DateType> = [];
 
@@ -77,7 +69,7 @@ const Calendar = () => {
     };
     getDate(dat.year, dat.month);
   }, []);
-  const handleClick = (schedule: MySchedule) => {
+  const handleClick = (schedule: ClubSchedule) => {
     setModalOpen(true);
     setScheduleDetail(schedule);
   };
@@ -85,21 +77,21 @@ const Calendar = () => {
     setModalOpen(false);
   };
 
-  const myScheduleRendering = (dat: DateType) =>
-    myScheduleList?.map((c) => (
-      <div key={`mySchedule++${c?.myScheduleId}`}>
-        {parseInt(c?.startDate?.slice(8, 10), 10) <= dat.date &&
-        parseInt(c?.endDate?.slice(8, 10), 10) >= dat.date ? (
-          <div
-            key={`detail//${c?.myScheduleId}`}
-            className={classes.contentItemScheduleContainer}>
+  const clubScheduleRendering = (dat: DateType) =>
+    clubScheduleList?.map((c) => (
+      <div key={`clubSchedule++${c?.id}`}>
+        {parseInt(c?.startMeetingDate?.slice(8, 10), 10) <= dat.date &&
+        parseInt(c?.endMeetingDate?.slice(8, 10), 10) >= dat.date ? (
+          <div className={classes.contentItemScheduleContainer}>
             {scheduleDetailRendering(c)}
           </div>
         ) : null}
       </div>
     ));
 
-  const scheduleDetailRendering = (schedule: MySchedule) => {
+  // const clubScheduleRendering = (dat: DateType)=>
+
+  const scheduleDetailRendering = (schedule: ClubSchedule) => {
     const { name } = schedule;
     return (
       <>
@@ -134,7 +126,7 @@ const Calendar = () => {
               children={<ShoppingBasket />}
             />
           </div>
-          {myScheduleRendering(dat)}
+          {clubScheduleRendering(dat)}
         </div>
       ))}
     </>
@@ -191,18 +183,19 @@ const Calendar = () => {
       </div>
       {/* contents */}
       <div className={classes.content}>{dateRendering(date)}</div>
-      <AddMyScheduleForm
+      <AddClubScheduleForm
+        clubId={clubId}
         anchorEl={formRef}
         visibility={formVisibility}
         setVisibility={setFormVisibility}
       />
-      <MyScheduleDetail
+      <ClubScheduleDetail
         modalOpen={modalOpen}
-        scheduleDetail={scheduleDetail as MySchedule}
+        scheduleDetail={scheduleDetail as ClubSchedule}
         handleModalClose={() => handleModalClose()}
       />
     </div>
   );
 };
 
-export default Calendar;
+export default ClubCalendar;

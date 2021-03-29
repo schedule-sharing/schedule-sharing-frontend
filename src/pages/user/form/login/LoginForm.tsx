@@ -25,7 +25,7 @@ const LoginForm = () => {
   const handleSubmit = (v: LoginFormValue) => {
     login(v).then(() => {
       alert("로그인 성공");
-      history.push("/calendar");
+      history.push("/calendar/my");
     });
   };
 

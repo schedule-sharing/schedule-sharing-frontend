@@ -21,6 +21,7 @@ const SideMenuBar: React.FC<{
 }> = ({ children }) => {
   const classes = sideBarStyle();
   const { clubs } = useClub();
+  console.log(clubs);
   const [clubForm, setClubForm] = useState<boolean>(true);
   const handleClubFormVisibility = () => {
     setClubForm((prev) => !prev);
@@ -66,9 +67,10 @@ const SideMenuBar: React.FC<{
           {clubs.clubs.map((club: clubType, i) => (
             <Link
               key={`유저이름추가하기${club.clubName}${i.toString()}`}
-              to={`/calendar/${club.clubId}`}>
+              to={`/calendar/club/${club.clubId}`}>
               <ListItem className={classes.listItem} button>
                 <ListItemText>
+                  {club.clubId}
                   <Typography
                     align="center"
                     children={club.clubName}
