@@ -16,20 +16,13 @@ const ClubController = () => {
     setSettingFormVisibility((prev) => !prev);
     setRef(tar);
   };
-  const history = useHistory();
-  const { id } = useParams<{ id: string }>();
-
-  useEffect(() => {
-    if (clubs.clubs.findIndex((v) => v.clubId === id) === -1) {
-      history.push("mycalendar");
-    }
-  }, []);
-
   return (
     <div className={classes.root}>
       <div className={classes.titlebox}>
         <Typography className={classes.title} variant="h3">
-          {clubs.clubs.find((v) => v.clubId === id)?.clubName}
+          {clubs.currentClub.clubName
+            ? clubs.currentClub.clubName
+            : "myCalendar"}
         </Typography>
       </div>
       <div className={classes.settingbox}>

@@ -27,11 +27,23 @@ const LoginForm = () => {
   const handleSubmit = async (v: LoginFormValue) => {
     await login(v);
   };
-
+  // validate
+  const handleValidate = (v: LoginFormValue) => {
+    const errors: Record<string, string> = {};
+    if (!v.email) errors.email = "이메일을 입력하시오";
+    if (!v.password) errors.password = "비밀번호를 입력하시오";
+    return errors;
+  };
   return (
-    <Formik initialValues={intialFormValue} onSubmit={handleSubmit}>
+    <Formik
+      initialValues={intialFormValue}
+      validate={handleValidate}
+      onSubmit={handleSubmit}>
       {(formikProps) => (
-        <form className={classes.root} onSubmit={formikProps.handleSubmit}>
+        <form
+          className={classes.root}
+          onBlur={formikProps.handleBlur}
+          onSubmit={formikProps.handleSubmit}>
           <Grid container direction="column" spacing={3}>
             {/* 로그인 */}
             <Grid item container xs={12}>
@@ -44,8 +56,12 @@ const LoginForm = () => {
                 variant="outlined"
                 value={formikProps.values.email}
                 onChange={formikProps.handleChange}
-                error={formikProps.touched && Boolean(formikProps.errors.email)}
-                helperText={formikProps.touched && formikProps.errors.email}
+                error={
+                  formikProps.touched.email && Boolean(formikProps.errors.email)
+                }
+                helperText={
+                  formikProps.touched.email && formikProps.errors.email
+                }
               />
               <TextField
                 fullWidth
@@ -66,8 +82,13 @@ const LoginForm = () => {
                 variant="outlined"
                 value={formikProps.values.password}
                 onChange={formikProps.handleChange}
-                error={formikProps.touched && Boolean(formikProps.errors.email)}
-                helperText={formikProps.touched && formikProps.errors.email}
+                error={
+                  formikProps.touched.password &&
+                  Boolean(formikProps.errors.password)
+                }
+                helperText={
+                  formikProps.touched.password && formikProps.errors.password
+                }
               />
 
               {/* 비번 잊음 */}
@@ -77,7 +98,7 @@ const LoginForm = () => {
                   align="center"
                   children="비밀번호를 잊어버렸어요"
                 />
-                <Link to="/signup">
+                <Link to="/user/signup">
                   <Typography
                     variant="caption"
                     align="center"

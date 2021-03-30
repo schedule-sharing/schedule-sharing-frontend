@@ -14,22 +14,22 @@ const UserLayout = () => {
       <Grid container justify="center">
         {/* header */}
         <Grid xs={12} item container justify="space-around">
-          <Grid item xs={2}>
+          <Grid item xs={4}>
             {/* 앱로고 이름 들어가야함 */}
             <Typography color="secondary" children="앱로고&이름" />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={4}>
             <Link to="/">
               <Typography
                 style={{ marginTop: "100px" }}
                 color="secondary"
                 align="center"
-                variant="h3"
-                children="앱이름"
-              />
+                variant="h3">
+                앱이름
+              </Typography>
             </Link>
           </Grid>
-          <Grid container justify="flex-end" item xs={2}>
+          <Grid container justify="flex-end" item xs={4}>
             <Grid item xs={false}>
               <Link to="/user/signup">
                 <Button
