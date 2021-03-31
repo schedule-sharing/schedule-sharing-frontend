@@ -24,6 +24,7 @@ const SignUpForm = () => {
   const classes = useStyles();
   const [showPw, setShowPw] = useState(false);
   const [showPw2, setShowPw2] = useState(false);
+
   const [profileImg, setProfileImg] = useState<string>("");
   const [isValid, setIsValid] = useState(false);
   const history = useHistory();
@@ -180,6 +181,7 @@ const SignUpForm = () => {
                     </InputAdornment>
                   )
                 }}
+
                 type={showPw2 ? "text" : "password"}
                 variant="outlined"
                 value={formikProps.values.confirmPassword}
@@ -194,6 +196,7 @@ const SignUpForm = () => {
                 }
               />
               <Grid item justify="center" container xs={12}>
+
                 <Grid item xs={4}>
                   <Button
                     size="small"

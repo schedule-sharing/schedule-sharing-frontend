@@ -6,6 +6,7 @@ const ADD_CLUB = "club/add" as const;
 const GET_CLUB = "club/get" as const;
 const LOADING = "club/loading" as const;
 const REMOVE_CLUB = "club/remove" as const;
+
 const SELECT_CLUB = "club/select" as const;
 const MODIFY_CLUB = "club/modify" as const;
 // action creators
@@ -69,6 +70,7 @@ export const asyncGetClub = () => async (
 ) => {
   dispatch(loadingClub());
   try {
+
     let value: Array<clubType> = [];
     const data = await axios.get("/member/getClubs").then((res) => {
       if (res.status !== 200) throw new Error();
@@ -93,6 +95,7 @@ export const asyncPostClub = (val: clubType) => async (
       .post("/club", val)
       .then((res) => res.data)
       .then((data) => {
+
         dispatch(
           addClub({
             clubId: data.clubId,
@@ -104,6 +107,7 @@ export const asyncPostClub = (val: clubType) => async (
     alert("asyncAddClub요청 성공");
   } catch (err) {
     alert("asyncAddClub  에러");
+
   } finally {
     dispatch(loadingClub());
   }
@@ -115,6 +119,7 @@ export const asyncRemoveClub = (id: string) => async (
 ) => {
   dispatch(loadingClub());
   try {
+
     if (!id) console.log("id없음");
     await axios
       .delete(`/club/${id}`)

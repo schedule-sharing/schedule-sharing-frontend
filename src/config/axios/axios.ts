@@ -36,5 +36,4 @@ axios.interceptors.response.use((res: AxiosResponse) => {
   console.log("응답:", res);
   return res;
 }, handleError);
-
 export default axios;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form } from "formik";
 import {
   Grid,
@@ -9,14 +9,16 @@ import {
   Theme,
   Button
 } from "@material-ui/core";
-import { addSchedule } from "../../../../api/schedule/schedule";
 
-const initialValues: scheduleAddType = {
-  title: "",
-  date: "",
-  place: "",
-  expireDate: "",
-  leastPeople: ""
+import { AddClubScheduleFormData } from "../../../store/reducers/scheduleReducer/clubScheduleReducer";
+import useClubSchedule from "../../../utils/hooks/useClubSchedule";
+
+const initialValue: AddClubScheduleFormData = {
+  clubId: 0,
+  name: "",
+  contents: "",
+  startMeetingDate: "",
+  endMeetingDate: ""
 };
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -26,24 +28,28 @@ const useStyles = makeStyles((theme: Theme) => ({
     overflow: "hidden"
   }
 }));
-const ScheduleForm = ({
+const AddClubScheduleForm = ({
+  clubId,
   visibility,
   anchorEl,
   setVisibility
 }: {
+  clubId: string;
   visibility: boolean;
   anchorEl: HTMLElement | null;
   setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const handleValidate = (values: scheduleAddType) => {
+  const { addClubSchedule } = useClubSchedule();
+  const handleValidate = (values: AddClubScheduleFormData) => {
     const errors: Record<string, string> = {};
-    if (!values.title) {
-      errors.title = "title 없음";
+    if (!values.name) {
+      errors.name = "name 없음";
     }
   };
-
-  const handleSubmit = (values: scheduleAddType) => {
-    addSchedule(values).then(() => setVisibility(false));
+  const handleSubmit = (values: AddClubScheduleFormData) => {
+    const realValues = { ...values, clubId: parseInt(clubId, 10) };
+    addClubSchedule(realValues);
+    setVisibility(false);
   };
 
   const classes = useStyles();
@@ -61,7 +67,7 @@ const ScheduleForm = ({
         horizontal: "center"
       }}>
       <Formik
-        initialValues={initialValues}
+        initialValues={initialValue}
         validate={handleValidate}
         onSubmit={handleSubmit}>
         {(formikProps) => (
@@ -75,15 +81,14 @@ const ScheduleForm = ({
                   fullWidth
                   size="small"
                   label="일정 이름"
-                  name="title"
-                  value={formikProps.values.title}
+                  name="name"
+                  value={formikProps.values.name}
                   onChange={formikProps.handleChange}
                   error={
-                    Boolean(formikProps.errors.title) &&
-                    formikProps.touched.title
+                    Boolean(formikProps.errors.name) && formikProps.touched.name
                   }
                   helperText={
-                    formikProps.errors.title && formikProps.touched.title
+                    formikProps.errors.name && formikProps.touched.name
                   }
                 />
               </Grid>
@@ -91,15 +96,16 @@ const ScheduleForm = ({
                 <TextField
                   fullWidth
                   size="small"
-                  label="날짜"
-                  name="date"
-                  value={formikProps.values.date}
+                  label="내용"
+                  name="contents"
+                  value={formikProps.values.contents}
                   onChange={formikProps.handleChange}
                   error={
-                    Boolean(formikProps.errors.date) && formikProps.touched.date
+                    Boolean(formikProps.errors.contents) &&
+                    formikProps.touched.contents
                   }
                   helperText={
-                    formikProps.errors.date && formikProps.touched.date
+                    formikProps.errors.contents && formikProps.touched.contents
                   }
                 />
               </Grid>
@@ -107,35 +113,17 @@ const ScheduleForm = ({
                 <TextField
                   fullWidth
                   size="small"
-                  label="장소"
-                  name="place"
-                  value={formikProps.values.place}
+                  label="시작 날짜"
+                  name="startMeetingDate"
+                  value={formikProps.values.startMeetingDate}
                   onChange={formikProps.handleChange}
                   error={
-                    Boolean(formikProps.errors.place) &&
-                    formikProps.touched.place
+                    Boolean(formikProps.errors.startMeetingDate) &&
+                    formikProps.touched.startMeetingDate
                   }
                   helperText={
-                    formikProps.errors.place && formikProps.touched.place
-                  }
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="만료날짜"
-                  name="expireDate"
-                  value={formikProps.values.expireDate}
-                  onChange={formikProps.handleChange}
-                  error={
-                    Boolean(formikProps.errors.expireDate) &&
-                    formikProps.touched.expireDate
-                  }
-                  helperText={
-                    formikProps.errors.expireDate &&
-                    formikProps.touched.expireDate
+                    formikProps.errors.startMeetingDate &&
+                    formikProps.touched.startMeetingDate
                   }
                 />
               </Grid>
@@ -144,17 +132,17 @@ const ScheduleForm = ({
                 <TextField
                   fullWidth
                   size="small"
-                  label="최소 인원"
-                  name="leastPeople"
-                  value={formikProps.values.leastPeople}
+                  label="종료 날짜"
+                  name="endMeetingDate"
+                  value={formikProps.values.endMeetingDate}
                   onChange={formikProps.handleChange}
                   error={
-                    Boolean(formikProps.errors.leastPeople) &&
-                    formikProps.touched.leastPeople
+                    Boolean(formikProps.errors.endMeetingDate) &&
+                    formikProps.touched.endMeetingDate
                   }
                   helperText={
-                    formikProps.errors.leastPeople &&
-                    formikProps.touched.leastPeople
+                    formikProps.errors.endMeetingDate &&
+                    formikProps.touched.endMeetingDate
                   }
                 />
               </Grid>
@@ -177,4 +165,4 @@ const ScheduleForm = ({
   );
 };
 
-export default ScheduleForm;
+export default AddClubScheduleForm;

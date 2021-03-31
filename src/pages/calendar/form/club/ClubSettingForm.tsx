@@ -1,3 +1,4 @@
+
 import { Button, Grid, makeStyles, Popover, Theme } from "@material-ui/core";
 import React, { useState } from "react";
 import useClub from "../../../../utils/hooks/reducer/useClub";
@@ -19,6 +20,7 @@ const ClubSettingForm = ({
   visibility
 }: ClubSettingForm) => {
   const classes = useStyles();
+
   const [visi, setVisi] = useState(false);
   const { asyncRemoveClub, asyncModifyClub, clubs } = useClub();
   const handleClubDelete = async () => {

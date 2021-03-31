@@ -16,6 +16,7 @@ import ClubForm from "../../pages/calendar/form/club/Clubform";
 import useClub from "../../utils/hooks/reducer/useClub";
 import useUser from "../../utils/hooks/reducer/useUser";
 import sideBarStyle from "./sideMenuBarStyle";
+import useClub from "../../utils/hooks/reducer/useClub";
 
 const SideMenuBar: React.FC<{
   children?: React.ReactNode;

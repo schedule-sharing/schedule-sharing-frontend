@@ -1,3 +1,4 @@
+
 import { IconButton, Typography } from "@material-ui/core";
 import { Settings } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
@@ -16,6 +17,7 @@ const ClubController = () => {
     setSettingFormVisibility((prev) => !prev);
     setRef(tar);
   };
+
   return (
     <div className={classes.root}>
       <div className={classes.titlebox}>

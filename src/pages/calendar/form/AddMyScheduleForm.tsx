@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form } from "formik";
 import {
   Grid,
@@ -9,14 +9,14 @@ import {
   Theme,
   Button
 } from "@material-ui/core";
-import { addSchedule } from "../../../../api/schedule/schedule";
+import { MyScheduleFormData } from "../../../store/reducers/scheduleReducer/myScheduleReducer";
+import useMySchedule from "../../../utils/hooks/useMySchedule";
 
-const initialValues: scheduleAddType = {
-  title: "",
-  date: "",
-  place: "",
-  expireDate: "",
-  leastPeople: ""
+const initialValue: MyScheduleFormData = {
+  name: "",
+  contents: "",
+  scheduleStartDate: "",
+  scheduleEndDate: ""
 };
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -35,15 +35,16 @@ const ScheduleForm = ({
   anchorEl: HTMLElement | null;
   setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const handleValidate = (values: scheduleAddType) => {
+  const { addMySchedule } = useMySchedule();
+  const handleValidate = (values: MyScheduleFormData) => {
     const errors: Record<string, string> = {};
-    if (!values.title) {
-      errors.title = "title 없음";
+    if (!values.name) {
+      errors.name = "name 없음";
     }
   };
-
-  const handleSubmit = (values: scheduleAddType) => {
-    addSchedule(values).then(() => setVisibility(false));
+  const handleSubmit = (values: MyScheduleFormData) => {
+    addMySchedule(values);
+    setVisibility(false);
   };
 
   const classes = useStyles();
@@ -61,7 +62,7 @@ const ScheduleForm = ({
         horizontal: "center"
       }}>
       <Formik
-        initialValues={initialValues}
+        initialValues={initialValue}
         validate={handleValidate}
         onSubmit={handleSubmit}>
         {(formikProps) => (
@@ -75,15 +76,14 @@ const ScheduleForm = ({
                   fullWidth
                   size="small"
                   label="일정 이름"
-                  name="title"
-                  value={formikProps.values.title}
+                  name="name"
+                  value={formikProps.values.name}
                   onChange={formikProps.handleChange}
                   error={
-                    Boolean(formikProps.errors.title) &&
-                    formikProps.touched.title
+                    Boolean(formikProps.errors.name) && formikProps.touched.name
                   }
                   helperText={
-                    formikProps.errors.title && formikProps.touched.title
+                    formikProps.errors.name && formikProps.touched.name
                   }
                 />
               </Grid>
@@ -91,15 +91,16 @@ const ScheduleForm = ({
                 <TextField
                   fullWidth
                   size="small"
-                  label="날짜"
-                  name="date"
-                  value={formikProps.values.date}
+                  label="내용"
+                  name="contents"
+                  value={formikProps.values.contents}
                   onChange={formikProps.handleChange}
                   error={
-                    Boolean(formikProps.errors.date) && formikProps.touched.date
+                    Boolean(formikProps.errors.contents) &&
+                    formikProps.touched.contents
                   }
                   helperText={
-                    formikProps.errors.date && formikProps.touched.date
+                    formikProps.errors.contents && formikProps.touched.contents
                   }
                 />
               </Grid>
@@ -107,35 +108,17 @@ const ScheduleForm = ({
                 <TextField
                   fullWidth
                   size="small"
-                  label="장소"
-                  name="place"
-                  value={formikProps.values.place}
+                  label="시작 날짜"
+                  name="scheduleStartDate"
+                  value={formikProps.values.scheduleStartDate}
                   onChange={formikProps.handleChange}
                   error={
-                    Boolean(formikProps.errors.place) &&
-                    formikProps.touched.place
+                    Boolean(formikProps.errors.scheduleStartDate) &&
+                    formikProps.touched.scheduleStartDate
                   }
                   helperText={
-                    formikProps.errors.place && formikProps.touched.place
-                  }
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="만료날짜"
-                  name="expireDate"
-                  value={formikProps.values.expireDate}
-                  onChange={formikProps.handleChange}
-                  error={
-                    Boolean(formikProps.errors.expireDate) &&
-                    formikProps.touched.expireDate
-                  }
-                  helperText={
-                    formikProps.errors.expireDate &&
-                    formikProps.touched.expireDate
+                    formikProps.errors.scheduleStartDate &&
+                    formikProps.touched.scheduleStartDate
                   }
                 />
               </Grid>
@@ -144,17 +127,17 @@ const ScheduleForm = ({
                 <TextField
                   fullWidth
                   size="small"
-                  label="최소 인원"
-                  name="leastPeople"
-                  value={formikProps.values.leastPeople}
+                  label="종료 날짜"
+                  name="scheduleEndDate"
+                  value={formikProps.values.scheduleEndDate}
                   onChange={formikProps.handleChange}
                   error={
-                    Boolean(formikProps.errors.leastPeople) &&
-                    formikProps.touched.leastPeople
+                    Boolean(formikProps.errors.scheduleEndDate) &&
+                    formikProps.touched.scheduleEndDate
                   }
                   helperText={
-                    formikProps.errors.leastPeople &&
-                    formikProps.touched.leastPeople
+                    formikProps.errors.scheduleEndDate &&
+                    formikProps.touched.scheduleEndDate
                   }
                 />
               </Grid>
