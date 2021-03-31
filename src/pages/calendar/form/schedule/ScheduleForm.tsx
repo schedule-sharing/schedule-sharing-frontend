@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import { addSchedule } from "../../../../api/schedule/schedule";
 
-const initialValues: schudleAddType = {
+const initialValues: scheduleAddType = {
   title: "",
   date: "",
   place: "",
@@ -35,13 +35,14 @@ const ScheduleForm = ({
   anchorEl: HTMLElement | null;
   setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const handleValidate = (values: schudleAddType) => {
+  const handleValidate = (values: scheduleAddType) => {
     const errors: Record<string, string> = {};
     if (!values.title) {
       errors.title = "title 없음";
     }
   };
-  const handleSubmit = (values: schudleAddType) => {
+
+  const handleSubmit = (values: scheduleAddType) => {
     addSchedule(values).then(() => setVisibility(false));
   };
 

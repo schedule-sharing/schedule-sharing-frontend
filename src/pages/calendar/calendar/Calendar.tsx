@@ -7,6 +7,10 @@ import {
 } from "@material-ui/icons";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
+import Loading from "../../../components/spinner/Loading";
+import useClub from "../../../utils/hooks/reducer/useClub";
+import useUser from "../../../utils/hooks/reducer/useUser";
+import ScheduleForm from "../form/schedule/ScheduleForm";
 import useStyles from "./calendarStyle";
 import AddMyScheduleForm from "../form/AddMyScheduleForm";
 import useMySchedule from "../../../utils/hooks/useMySchedule";
@@ -20,6 +24,10 @@ const Calendar = () => {
   const [date, setDate] = useState<Array<DateType>>([
     { date: 0, day: 1, month: 1, year: 2020 }
   ]);
+
+  const { asyncGetClub } = useClub();
+  const { user } = useUser();
+  const { clubs } = useClub();
   const [formRef, setFormRef] = useState<HTMLElement | null>(null);
   const [formVisibility, setFormVisibility] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -68,6 +76,7 @@ const Calendar = () => {
     }
     setDate(arr);
   };
+
   useEffect(() => {
     // 초기마운트시  오늘 날짜 기준으로날짜 설정
     const today = new Date(); // new Date(2021, 1, 3); 2월 3일 기준으로 날짜
@@ -75,8 +84,9 @@ const Calendar = () => {
       year: today.getFullYear(),
       month: today.getMonth()
     };
+    asyncGetClub();
     getDate(dat.year, dat.month);
-  }, []);
+  }, [asyncGetClub]);
   const handleClick = (schedule: MySchedule) => {
     setModalOpen(true);
     setScheduleDetail(schedule);
@@ -160,7 +170,9 @@ const Calendar = () => {
     }
     getDate(year, month);
   };
-
+  const handleScheduleAddFormVisibility = () => {
+    setFormVisibility((prev) => !prev);
+  };
   const handleAddBtnClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -194,13 +206,14 @@ const Calendar = () => {
       <AddMyScheduleForm
         anchorEl={formRef}
         visibility={formVisibility}
-        setVisibility={setFormVisibility}
+        setVisibility={handleScheduleAddFormVisibility}
       />
       <MyScheduleDetail
         modalOpen={modalOpen}
         scheduleDetail={scheduleDetail as MySchedule}
         handleModalClose={() => handleModalClose()}
       />
+      <Loading isLoading={user.loading || clubs.loading} />
     </div>
   );
 };
