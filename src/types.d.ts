@@ -6,7 +6,7 @@ type DateType = {
 };
 // "Mon" | "Tues" | "Wed" | "Thur" | "Fri" | "Sat" | "Sun"
 
-type schudleAddType = {
+type scheduleAddType = {
   title: string;
   date: string;
   place: string;
@@ -30,4 +30,10 @@ type SignUpFormValue = {
 type LoginFormValue = {
   email: string;
   password: string;
+};
+type user = {
+  email: string;
+  id: string; // number 형 데이터 stringify
+  imagePath: string;
+  name: string;
 };
