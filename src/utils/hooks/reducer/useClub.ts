@@ -12,25 +12,19 @@ import {
 export default function useClub() {
   const dispatch = useDispatch();
   const clubs = useSelector((state: RootState) => state.clubReducer);
-
   const asyncGetClub = useCallback(() => {
     dispatch(getClub());
   }, [dispatch]);
   const asyncPostClub = useCallback(
-    (val: clubType) => {
+    (val: Omit<clubType, "clubId">) => {
       dispatch(postClub(val));
     },
     [dispatch]
   );
-  const asyncRemoveClub = useCallback(
-    (id: string) => dispatch(removeClub(id)),
-    [dispatch]
-  );
-  const selectClub = useCallback((id: string) => dispatch(sClub(id)), [
-    dispatch
-  ]);
+  const asyncRemoveClub = useCallback((id: string) => dispatch(removeClub(id)), [dispatch]);
+  const selectClub = useCallback((id: string) => dispatch(sClub(id)), [dispatch]);
   const asyncModifyClub = useCallback(
-    (id: string, val: { clubName: string; categories: string }) => {
+    (id: string, val: Omit<clubType, "clubId">) => {
       dispatch(modifyClub(id, val));
     },
     [dispatch]

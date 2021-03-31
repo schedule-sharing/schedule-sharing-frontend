@@ -9,19 +9,17 @@ import {
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { Formik } from "formik";
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import Loading from "../../../../components/spinner/Loading";
+import { Link } from "react-router-dom";
 import useUser from "../../../../utils/hooks/reducer/useUser";
 import useStyles from "./loginFormStyle";
 
-const intialFormValue: LoginFormValue = {
+const initialFormValue: LoginFormValue = {
   email: "",
   password: ""
 };
 const LoginForm = () => {
   const classes = useStyles();
-  const history = useHistory();
-  const { login, user } = useUser();
+  const { login } = useUser();
   const [showPw, setShowPw] = useState(false);
   // submit
   const handleSubmit = async (v: LoginFormValue) => {
@@ -36,7 +34,7 @@ const LoginForm = () => {
   };
   return (
     <Formik
-      initialValues={intialFormValue}
+      initialValues={initialFormValue}
       validate={handleValidate}
       onSubmit={handleSubmit}>
       {(formikProps) => (

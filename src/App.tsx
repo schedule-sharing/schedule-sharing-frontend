@@ -1,8 +1,8 @@
 import React from "react";
-import { Link, Switch, Route, Redirect } from "react-router-dom";
+import { Link, Redirect, Route, Switch } from "react-router-dom";
 import CalendarLayout from "./pages/calendar/CalendarLayout";
-import UserLayout from "./pages/user/UserLayout";
 import HomeLayout from "./pages/home/HomeLayout";
+import UserLayout from "./pages/user/UserLayout";
 import Auth from "./utils/hoc/Auth";
 
 function App() {

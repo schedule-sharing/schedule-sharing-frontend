@@ -22,7 +22,7 @@ const Loading = ({ isLoading, label }: Loading) => {
     <>
       <Backdrop className={classes.root} open={isLoading}>
         <CircularProgress color="secondary" />
-        {label}
+        <div>{label}</div>
       </Backdrop>
     </>
   );

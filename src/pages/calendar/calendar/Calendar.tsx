@@ -1,10 +1,5 @@
 import { IconButton } from "@material-ui/core";
-import {
-  AddBox,
-  ArrowBack,
-  ArrowForward,
-  ShoppingBasket
-} from "@material-ui/icons";
+import { AddBox, ArrowBack, ArrowForward, ShoppingBasket } from "@material-ui/icons";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import Loading from "../../../components/spinner/Loading";
@@ -14,9 +9,7 @@ import ScheduleForm from "../form/schedule/ScheduleForm";
 import useStyles from "./calendarStyle";
 
 const Calendar = () => {
-  const [date, setDate] = useState<Array<DateType>>([
-    { date: 0, day: 1, month: 1, year: 2020 }
-  ]);
+  const [date, setDate] = useState<Array<DateType>>([{ date: 0, day: 1, month: 1, year: 2020 }]);
 
   const { asyncGetClub } = useClub();
   const { user } = useUser();
@@ -65,17 +58,8 @@ const Calendar = () => {
           })}>
           <div className={classes.contentItemTitle}>{dat.date}</div>
           <div className={classes.contentItemBtnContainer}>
-            <IconButton
-              onClick={(e) => handleAddBtnClick(e)}
-              className={classes.contentItemIcon}
-              size="small"
-              children={<AddBox />}
-            />
-            <IconButton
-              className={classes.contentItemIcon}
-              size="small"
-              children={<ShoppingBasket />}
-            />
+            <IconButton onClick={(e) => handleAddBtnClick(e)} className={classes.contentItemIcon} size="small" children={<AddBox />} />
+            <IconButton className={classes.contentItemIcon} size="small" children={<ShoppingBasket />} />
           </div>
         </div>
       ))}
@@ -106,9 +90,7 @@ const Calendar = () => {
   const handleScheduleAddFormVisibility = () => {
     setFormVisibility((prev) => !prev);
   };
-  const handleAddBtnClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleAddBtnClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setFormVisibility(true);
     setFormRef(e.currentTarget);
   };
@@ -117,13 +99,8 @@ const Calendar = () => {
     <div className={classes.root}>
       <div className={classes.header}>
         <IconButton onClick={handleBackBtnClick} children={<ArrowBack />} />
-        <div className={classes.headerTitle}>
-          {`${date[0].year}년 ${date[0].month + 1}월`}
-        </div>
-        <IconButton
-          onClick={handleForwardBtnClick}
-          children={<ArrowForward />}
-        />
+        <div className={classes.headerTitle}>{`${date[0].year}년 ${date[0].month + 1}월`}</div>
+        <IconButton onClick={handleForwardBtnClick} children={<ArrowForward />} />
       </div>
       {/* weekrow */}
       <div className={classes.calHeader}>
@@ -133,11 +110,7 @@ const Calendar = () => {
       </div>
       {/* contents */}
       <div className={classes.content}>{dateRendering(date)}</div>
-      <ScheduleForm
-        anchorEl={formRef}
-        visibility={formVisibility}
-        setVisibility={handleScheduleAddFormVisibility}
-      />
+      <ScheduleForm anchorEl={formRef} visibility={formVisibility} setVisibility={handleScheduleAddFormVisibility} />
       <Loading isLoading={user.loading || clubs.loading} />
     </div>
   );

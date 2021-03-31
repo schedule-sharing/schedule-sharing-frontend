@@ -78,7 +78,7 @@ const SideMenuBar: React.FC<{
                   ? { backgroundColor: "orangered" }
                   : { backgroundColor: "inherit" }
               }
-              onClick={() => selectClub(club.clubId!)}
+              onClick={() => selectClub(club.clubId as string)}
               button>
               <ListItemText>
                 <Typography

@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
 import axios from "axios";
 // actions
-const LOGIN = "user/login" as const;
-const LOGOUT = "user/logout" as const;
-const LOADING = "user/loading" as const;
+const LOGIN = <const>"user/login";
+const LOGOUT = <const>"user/logout";
+const LOADING = <const>"user/loading";
 
 // action creators
 const login = (val: user) => ({
@@ -38,7 +38,7 @@ export const asyncLogin = (value: LoginFormValue) => async (
     }
     return false;
   } catch (err) {
-    console.error(err);
+    //
     return false;
   } finally {
     dispatch(loading());
@@ -52,7 +52,7 @@ export const asyncLogout = () => async (
     await window.localStorage.removeItem("access_token");
     dispatch(logout());
   } catch (err) {
-    console.error(err);
+    //
   } finally {
     dispatch(loading());
   }

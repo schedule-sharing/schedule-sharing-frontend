@@ -1,7 +1,6 @@
 import { IconButton, Typography } from "@material-ui/core";
 import { Settings } from "@material-ui/icons";
-import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useState } from "react";
 import useClub from "../../../utils/hooks/reducer/useClub";
 import ClubSettingForm from "../form/club/ClubSettingForm";
 import useStyles from "./clubControllerStyle";

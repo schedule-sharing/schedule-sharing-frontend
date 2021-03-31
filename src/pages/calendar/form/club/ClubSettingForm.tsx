@@ -20,7 +20,7 @@ const ClubSettingForm = ({
 }: ClubSettingForm) => {
   const classes = useStyles();
   const [visi, setVisi] = useState(false);
-  const { asyncRemoveClub, asyncModifyClub, clubs } = useClub();
+  const { asyncRemoveClub, clubs } = useClub();
   const handleClubDelete = async () => {
     if (!clubs.currentClub.clubId) {
       alert("선택된 클럽이 없습니다");
@@ -28,7 +28,7 @@ const ClubSettingForm = ({
     }
     // eslint-disable-next-line no-restricted-globals
     if (confirm(`정말 ${clubs.currentClub.clubName}을 삭제하시겠습니까?`))
-      await asyncRemoveClub(clubs.currentClub.clubId!);
+      await asyncRemoveClub(clubs.currentClub.clubId as string);
   };
   const handleBtnClick = () => {
     setVisi((prev) => !prev);

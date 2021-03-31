@@ -5,7 +5,15 @@ type DateType = {
   date: number;
 };
 // "Mon" | "Tues" | "Wed" | "Thur" | "Fri" | "Sat" | "Sun"
-
+enum days {
+  0 = "Sun",
+  1 = "Mon",
+  2 = "Tues",
+  3 = "Wed",
+  4 = "Thur",
+  5 = "Fri",
+  6 = "Sat"
+}
 type scheduleAddType = {
   title: string;
   date: string;
