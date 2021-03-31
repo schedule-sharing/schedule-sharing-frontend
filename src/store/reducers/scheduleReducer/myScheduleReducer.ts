@@ -6,6 +6,13 @@ import {
   updateMyScheduleApi
 } from "../../../api/schedule/myschedule";
 
+// response type
+interface DeleteSuccess {
+  success: boolean;
+  message: string;
+  id: number;
+}
+
 // state
 export interface MyScheduleFormData {
   name: string;
@@ -59,9 +66,9 @@ export const updateMyScheduleAction = (newSchedule: MySchedule) => ({
   payload: newSchedule
 });
 
-export const deleteMyScheduleAction = (scheduleList: MySchedule[]) => ({
+export const deleteMyScheduleAction = (successMessage: DeleteSuccess) => ({
   type: DELETE_MY_SCHEDULE,
-  payload: scheduleList
+  payload: successMessage
 });
 
 export const getMyScheduleListActionAsync = (month: string) => async (
@@ -83,7 +90,12 @@ export const addMyScheduleActionAsync = (
   dispatch(loadingAction());
   try {
     const payload = await addMyScheduleApi(newSchedule);
-    dispatch(addMyScheduleAction(payload));
+    const newPayload = {
+      ...payload,
+      startDate: payload.scheduleStartDate,
+      endDate: payload.scheduleEndDate
+    };
+    dispatch(addMyScheduleAction(newPayload));
   } catch (e) {
     console.log(e);
   }
@@ -97,7 +109,12 @@ export const updateMyScheduleActionAsync = (
   dispatch(loadingAction());
   try {
     const payload = await updateMyScheduleApi(id, newSchedule);
-    dispatch(updateMyScheduleAction(payload));
+    const newPayload = {
+      ...payload,
+      startDate: payload.scheduleStartDate,
+      endDate: payload.scheduleEndDate
+    };
+    dispatch(updateMyScheduleAction(newPayload));
   } catch (e) {
     console.log(e);
   }
@@ -109,8 +126,8 @@ export const deleteMyScheduleActionAsync = (id: number) => async (
 ) => {
   dispatch(loadingAction());
   try {
-    const payload = await deleteMyScheduleApi(id);
-    dispatch(deleteMyScheduleAction(payload));
+    const successMessage = await deleteMyScheduleApi(id);
+    dispatch(deleteMyScheduleAction({ ...successMessage, id }));
   } catch (e) {
     console.log(e);
   }
@@ -141,13 +158,15 @@ export default (state = initialState, action: MyScheduleActions) => {
       return copied;
     }
     case ADD_MY_SCHEDULE: {
-      // copied.myScheduleList = [...copied.myScheduleList, action.payload];
       return {
         ...copied,
         myScheduleList: [...copied.myScheduleList, action.payload]
       };
     }
     case UPDATE_MY_SCHEDULE: {
+      copied.myScheduleList = copied.myScheduleList.filter(
+        (c) => c.myScheduleId !== action.payload.myScheduleId
+      );
       return {
         ...copied,
         myScheduleList: [...copied.myScheduleList, action.payload]
@@ -155,10 +174,13 @@ export default (state = initialState, action: MyScheduleActions) => {
     }
     case GET_MY_SCHEDULE_LIST: {
       copied.myScheduleList.splice(0, copied.myScheduleList.length);
-      copied.myScheduleList = copied.myScheduleList.concat(action.payload);
+      copied.myScheduleList = JSON.parse(JSON.stringify(action.payload));
       return copied;
     }
     case DELETE_MY_SCHEDULE: {
+      copied.myScheduleList = copied.myScheduleList.filter(
+        (schedule) => schedule.myScheduleId !== action.payload.id
+      );
       return copied;
     }
     default:
