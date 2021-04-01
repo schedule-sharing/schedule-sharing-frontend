@@ -11,9 +11,7 @@ import { RootState } from "../../store/reducers/rootReducer";
 
 export default function useMySchedule() {
   const dispatch = useDispatch();
-  const myScheduleList = useSelector(
-    (state: RootState) => state.myScheduleReducer.myScheduleList
-  );
+  const myScheduleList = useSelector((state: RootState) => state.myScheduleReducer.myScheduleList);
   const getMyScheduleList = useCallback(
     (month: string) => {
       dispatch(getMyScheduleListActionAsync(month));

@@ -16,10 +16,7 @@ const addMyScheduleApi = async (newSchedule: MyScheduleFormData) => {
   return data;
 };
 
-const updateMyScheduleApi = async (
-  id: number,
-  newSchedule: MyScheduleFormData
-) => {
+const updateMyScheduleApi = async (id: number, newSchedule: MyScheduleFormData) => {
   const result = await axios.put(`/myschedule/${id}`, newSchedule);
   return result.data;
 };
@@ -29,9 +26,4 @@ const deleteMyScheduleApi = async (id: number) => {
   return result.data;
 };
 
-export {
-  addMyScheduleApi,
-  getMyScheduleListApi,
-  deleteMyScheduleApi,
-  updateMyScheduleApi
-};
+export { addMyScheduleApi, getMyScheduleListApi, deleteMyScheduleApi, updateMyScheduleApi };

@@ -4,5 +4,6 @@
   "arrowParens": "always",
   "semi": true,
   "endOfLine": "auto",
-  "jsxBracketSameLine": true
+  "jsxBracketSameLine": true,
+  "printWidth":150
 }

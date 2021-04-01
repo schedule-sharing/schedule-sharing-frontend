@@ -20,11 +20,7 @@ const UserLayout = () => {
           </Grid>
           <Grid item xs={4}>
             <Link to="/">
-              <Typography
-                style={{ marginTop: "100px" }}
-                color="secondary"
-                align="center"
-                variant="h3">
+              <Typography style={{ marginTop: "100px" }} color="secondary" align="center" variant="h3">
                 앱이름
               </Typography>
             </Link>
@@ -32,13 +28,7 @@ const UserLayout = () => {
           <Grid container justify="flex-end" item xs={4}>
             <Grid item xs={false}>
               <Link to="/user/signup">
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  fullWidth
-                  size="small"
-                  children="회원가입"
-                />
+                <Button color="secondary" variant="contained" fullWidth size="small" children="회원가입" />
               </Link>
             </Grid>
           </Grid>

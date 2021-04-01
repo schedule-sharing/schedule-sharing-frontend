@@ -1,10 +1,5 @@
 import { Dispatch } from "react";
-import {
-  addMyScheduleApi,
-  deleteMyScheduleApi,
-  getMyScheduleListApi,
-  updateMyScheduleApi
-} from "../../../api/schedule/myschedule";
+import { addMyScheduleApi, deleteMyScheduleApi, getMyScheduleListApi, updateMyScheduleApi } from "../../../api/schedule/myschedule";
 
 // response type
 interface DeleteSuccess {
@@ -71,9 +66,7 @@ export const deleteMyScheduleAction = (successMessage: DeleteSuccess) => ({
   payload: successMessage
 });
 
-export const getMyScheduleListActionAsync = (month: string) => async (
-  dispatch: Dispatch<GetMyScheduleListAction | LoadingAction>
-) => {
+export const getMyScheduleListActionAsync = (month: string) => async (dispatch: Dispatch<GetMyScheduleListAction | LoadingAction>) => {
   dispatch(loadingAction());
   try {
     const payload = await getMyScheduleListApi(month);
@@ -84,9 +77,7 @@ export const getMyScheduleListActionAsync = (month: string) => async (
   dispatch(loadingAction());
 };
 
-export const addMyScheduleActionAsync = (
-  newSchedule: MyScheduleFormData
-) => async (dispatch: Dispatch<AddMyScheduleAction | LoadingAction>) => {
+export const addMyScheduleActionAsync = (newSchedule: MyScheduleFormData) => async (dispatch: Dispatch<AddMyScheduleAction | LoadingAction>) => {
   dispatch(loadingAction());
   try {
     const payload = await addMyScheduleApi(newSchedule);
@@ -102,10 +93,9 @@ export const addMyScheduleActionAsync = (
   dispatch(loadingAction());
 };
 
-export const updateMyScheduleActionAsync = (
-  id: number,
-  newSchedule: MyScheduleFormData
-) => async (dispatch: Dispatch<UpdateMyScheduleAction | LoadingAction>) => {
+export const updateMyScheduleActionAsync = (id: number, newSchedule: MyScheduleFormData) => async (
+  dispatch: Dispatch<UpdateMyScheduleAction | LoadingAction>
+) => {
   dispatch(loadingAction());
   try {
     const payload = await updateMyScheduleApi(id, newSchedule);
@@ -121,9 +111,7 @@ export const updateMyScheduleActionAsync = (
   dispatch(loadingAction());
 };
 
-export const deleteMyScheduleActionAsync = (id: number) => async (
-  dispatch: Dispatch<DeleteMyScheduleAction | LoadingAction>
-) => {
+export const deleteMyScheduleActionAsync = (id: number) => async (dispatch: Dispatch<DeleteMyScheduleAction | LoadingAction>) => {
   dispatch(loadingAction());
   try {
     const successMessage = await deleteMyScheduleApi(id);
@@ -139,12 +127,7 @@ type UpdateMyScheduleAction = ReturnType<typeof updateMyScheduleAction>;
 type GetMyScheduleListAction = ReturnType<typeof getMyScheduleListAction>;
 type DeleteMyScheduleAction = ReturnType<typeof deleteMyScheduleAction>;
 type LoadingAction = ReturnType<typeof loadingAction>;
-type MyScheduleActions =
-  | AddMyScheduleAction
-  | UpdateMyScheduleAction
-  | GetMyScheduleListAction
-  | DeleteMyScheduleAction
-  | LoadingAction;
+type MyScheduleActions = AddMyScheduleAction | UpdateMyScheduleAction | GetMyScheduleListAction | DeleteMyScheduleAction | LoadingAction;
 
 // reducer
 export default (state = initialState, action: MyScheduleActions) => {
@@ -164,9 +147,7 @@ export default (state = initialState, action: MyScheduleActions) => {
       };
     }
     case UPDATE_MY_SCHEDULE: {
-      copied.myScheduleList = copied.myScheduleList.filter(
-        (c) => c.myScheduleId !== action.payload.myScheduleId
-      );
+      copied.myScheduleList = copied.myScheduleList.filter((c) => c.myScheduleId !== action.payload.myScheduleId);
       return {
         ...copied,
         myScheduleList: [...copied.myScheduleList, action.payload]
@@ -178,9 +159,7 @@ export default (state = initialState, action: MyScheduleActions) => {
       return copied;
     }
     case DELETE_MY_SCHEDULE: {
-      copied.myScheduleList = copied.myScheduleList.filter(
-        (schedule) => schedule.myScheduleId !== action.payload.id
-      );
+      copied.myScheduleList = copied.myScheduleList.filter((schedule) => schedule.myScheduleId !== action.payload.id);
       return copied;
     }
     default:

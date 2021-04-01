@@ -6,10 +6,8 @@ const ADD_CLUB = "club/add" as const;
 const GET_CLUB = "club/get" as const;
 const LOADING = "club/loading" as const;
 const REMOVE_CLUB = "club/remove" as const;
-
 const SELECT_CLUB = "club/select" as const;
 const MODIFY_CLUB = "club/modify" as const;
-// action creators
 
 type ClubAction =
   | ReturnType<typeof getClub>
@@ -18,6 +16,8 @@ type ClubAction =
   | ReturnType<typeof removeClub>
   | ReturnType<typeof selectClub>
   | ReturnType<typeof modifyClub>;
+
+// action creators
 const loadingClub = () => ({
   type: LOADING
 });
@@ -44,10 +44,7 @@ const removeClub = (id: string) => ({
     clubId: id
   }
 });
-const modifyClub = (
-  id: string,
-  val: { clubName: string; categories: string }
-) => ({
+const modifyClub = (id: string, val: { clubName: string; categories: string }) => ({
   type: MODIFY_CLUB,
   payload: {
     clubId: id,
@@ -63,14 +60,9 @@ export const selectClub = (id: string) => ({
     clubId: id
   }
 });
-export const asyncGetClub = () => async (
-  dispatch: Dispatch<
-    ReturnType<typeof getClub> | ReturnType<typeof loadingClub>
-  >
-) => {
+export const asyncGetClub = () => async (dispatch: Dispatch<ReturnType<typeof getClub> | ReturnType<typeof loadingClub>>) => {
   dispatch(loadingClub());
   try {
-
     let value: Array<clubType> = [];
     const data = await axios.get("/member/getClubs").then((res) => {
       if (res.status !== 200) throw new Error();
@@ -84,18 +76,13 @@ export const asyncGetClub = () => async (
     dispatch(loadingClub());
   }
 };
-export const asyncPostClub = (val: clubType) => async (
-  dispatch: Dispatch<
-    ReturnType<typeof addClub> | ReturnType<typeof loadingClub>
-  >
-) => {
+export const asyncPostClub = (val: clubType) => async (dispatch: Dispatch<ReturnType<typeof addClub> | ReturnType<typeof loadingClub>>) => {
   dispatch(loadingClub());
   try {
     await axios
       .post("/club", val)
       .then((res) => res.data)
       .then((data) => {
-
         dispatch(
           addClub({
             clubId: data.clubId,
@@ -107,25 +94,15 @@ export const asyncPostClub = (val: clubType) => async (
     alert("asyncAddClub요청 성공");
   } catch (err) {
     alert("asyncAddClub  에러");
-
   } finally {
     dispatch(loadingClub());
   }
 };
-export const asyncRemoveClub = (id: string) => async (
-  dispatch: Dispatch<
-    ReturnType<typeof removeClub> | ReturnType<typeof loadingClub>
-  >
-) => {
+export const asyncRemoveClub = (id: string) => async (dispatch: Dispatch<ReturnType<typeof removeClub> | ReturnType<typeof loadingClub>>) => {
   dispatch(loadingClub());
   try {
-
     if (!id) console.log("id없음");
-    await axios
-      .delete(`/club/${id}`)
-      .then((res) =>
-        res.data.success ? dispatch(removeClub(id)) : new Error("clubReducer")
-      );
+    await axios.delete(`/club/${id}`).then((res) => (res.data.success ? dispatch(removeClub(id)) : new Error("clubReducer")));
     return true;
   } catch (err) {
     alert("asyncRemoveClub 에러");
@@ -134,13 +111,8 @@ export const asyncRemoveClub = (id: string) => async (
     dispatch(loadingClub());
   }
 };
-export const asyncModifyClub = (
-  id: string,
-  val: { clubName: string; categories: string }
-) => async (
-  dispatch: Dispatch<
-    ReturnType<typeof loadingClub> | ReturnType<typeof modifyClub>
-  >
+export const asyncModifyClub = (id: string, val: { clubName: string; categories: string }) => async (
+  dispatch: Dispatch<ReturnType<typeof loadingClub> | ReturnType<typeof modifyClub>>
 ) => {
   dispatch(loadingClub());
   try {
@@ -194,8 +166,7 @@ export default (state = initialState, action: ClubAction) => {
       );
       return copiedState;
     case GET_CLUB:
-      action.payload.clubs.forEach((v) => copiedState.clubs.push(v));
-      return { ...copiedState };
+      return { ...copiedState, clubs: JSON.parse(JSON.stringify(action.payload.clubs)) };
     case MODIFY_CLUB: {
       const curr: clubType = { categories: "", clubName: "", clubId: "" };
       const modClubs = copiedState.clubs.map((v) => {
@@ -217,9 +188,7 @@ export default (state = initialState, action: ClubAction) => {
       if (!copiedState.currentClub) return copiedState;
       return {
         ...copiedState,
-        clubs: copiedState.clubs.filter(
-          (v) => action.payload.clubId !== v.clubId
-        )
+        clubs: copiedState.clubs.filter((v) => action.payload.clubId !== v.clubId)
       };
     default:
       return copiedState;

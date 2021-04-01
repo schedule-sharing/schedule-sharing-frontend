@@ -1,4 +1,3 @@
-
 import { Button, Grid, makeStyles, Popover, Theme } from "@material-ui/core";
 import React, { useState } from "react";
 import useClub from "../../../../utils/hooks/reducer/useClub";
@@ -6,7 +5,7 @@ import ClubModifyForm from "./ClubModifyForm";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    pdding: theme.spacing(3)
+    padding: theme.spacing(3)
   }
 }));
 type ClubSettingForm = {
@@ -14,23 +13,18 @@ type ClubSettingForm = {
   setVisibility: (bool: boolean) => void;
   visibility: boolean;
 };
-const ClubSettingForm = ({
-  anchorEl,
-  setVisibility,
-  visibility
-}: ClubSettingForm) => {
+const ClubSettingForm = ({ anchorEl, setVisibility, visibility }: ClubSettingForm) => {
   const classes = useStyles();
 
   const [visi, setVisi] = useState(false);
-  const { asyncRemoveClub, asyncModifyClub, clubs } = useClub();
+  const { asyncRemoveClub, clubs } = useClub();
   const handleClubDelete = async () => {
     if (!clubs.currentClub.clubId) {
       alert("선택된 클럽이 없습니다");
       return;
     }
     // eslint-disable-next-line no-restricted-globals
-    if (confirm(`정말 ${clubs.currentClub.clubName}을 삭제하시겠습니까?`))
-      await asyncRemoveClub(clubs.currentClub.clubId!);
+    if (confirm(`정말 ${clubs.currentClub.clubName}을 삭제하시겠습니까?`)) await asyncRemoveClub(clubs.currentClub.clubId as string);
   };
   const handleBtnClick = () => {
     setVisi((prev) => !prev);

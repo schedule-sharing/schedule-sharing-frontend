@@ -1,26 +1,11 @@
-import {
-  Modal,
-  Card,
-  CardContent,
-  TextField,
-  Divider,
-  Typography,
-  Button,
-  IconButton
-} from "@material-ui/core";
-import { Formik, Form } from "formik";
+import { Button, Card, CardContent, Divider, IconButton, Modal, TextField, Typography } from "@material-ui/core";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import UpdateIcon from "@material-ui/icons/Update";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { Form, Formik } from "formik";
 import React, { useState } from "react";
-import clsx from "clsx";
-import {
-  ClubSchedule,
-  AddClubScheduleFormData,
-  UpdateClubScheduleFormData
-} from "../../../store/reducers/scheduleReducer/clubScheduleReducer";
-import clubScheduleDetailStyle from "./clubScheduleDetailStyle";
+import { ClubSchedule, UpdateClubScheduleFormData } from "../../../store/reducers/scheduleReducer/clubScheduleReducer";
 import useClubSchedule from "../../../utils/hooks/useClubSchedule";
+import clubScheduleDetailStyle from "./clubScheduleDetailStyle";
 
 const ClubScheduleDetail = ({
   modalOpen,
@@ -33,13 +18,7 @@ const ClubScheduleDetail = ({
 }) => {
   const classes = clubScheduleDetailStyle();
   const { updateClubSchedule, deleteClubSchedule } = useClubSchedule();
-  const {
-    id,
-    name,
-    contents,
-    startMeetingDate,
-    endMeetingDate
-  } = scheduleDetail;
+  const { id, name, contents, startMeetingDate, endMeetingDate } = scheduleDetail;
   const [currentId, setCurrentId] = useState(0);
   const initialValues: UpdateClubScheduleFormData = {
     name,
@@ -88,10 +67,7 @@ const ClubScheduleDetail = ({
   const UpdateRendering = () => (
     <>
       <CardContent>
-        <Formik
-          initialValues={initialValues}
-          validate={handleValidate}
-          onSubmit={handleSubmit}>
+        <Formik initialValues={initialValues} validate={handleValidate} onSubmit={handleSubmit}>
           {(formikProps) => (
             <Form>
               <TextField
@@ -101,9 +77,7 @@ const ClubScheduleDetail = ({
                 name="name"
                 value={formikProps.values.name}
                 onChange={formikProps.handleChange}
-                error={
-                  Boolean(formikProps.errors.name) && formikProps.touched.name
-                }
+                error={Boolean(formikProps.errors.name) && formikProps.touched.name}
                 helperText={formikProps.errors.name && formikProps.touched.name}
               />
               <Divider style={{ marginBottom: "2%" }} />
@@ -114,13 +88,8 @@ const ClubScheduleDetail = ({
                 name="contents"
                 value={formikProps.values.contents}
                 onChange={formikProps.handleChange}
-                error={
-                  Boolean(formikProps.errors.contents) &&
-                  formikProps.touched.contents
-                }
-                helperText={
-                  formikProps.errors.contents && formikProps.touched.contents
-                }
+                error={Boolean(formikProps.errors.contents) && formikProps.touched.contents}
+                helperText={formikProps.errors.contents && formikProps.touched.contents}
               />
               <TextField
                 fullWidth
@@ -129,14 +98,8 @@ const ClubScheduleDetail = ({
                 name="scheduleStartDate"
                 value={formikProps.values.startMeetingDate}
                 onChange={formikProps.handleChange}
-                error={
-                  Boolean(formikProps.errors.startMeetingDate) &&
-                  formikProps.touched.startMeetingDate
-                }
-                helperText={
-                  formikProps.errors.startMeetingDate &&
-                  formikProps.touched.startMeetingDate
-                }
+                error={Boolean(formikProps.errors.startMeetingDate) && formikProps.touched.startMeetingDate}
+                helperText={formikProps.errors.startMeetingDate && formikProps.touched.startMeetingDate}
               />
               <TextField
                 fullWidth
@@ -145,14 +108,8 @@ const ClubScheduleDetail = ({
                 name="scheduleEndDate"
                 value={formikProps.values.endMeetingDate}
                 onChange={formikProps.handleChange}
-                error={
-                  Boolean(formikProps.errors.endMeetingDate) &&
-                  formikProps.touched.endMeetingDate
-                }
-                helperText={
-                  formikProps.errors.endMeetingDate &&
-                  formikProps.touched.endMeetingDate
-                }
+                error={Boolean(formikProps.errors.endMeetingDate) && formikProps.touched.endMeetingDate}
+                helperText={formikProps.errors.endMeetingDate && formikProps.touched.endMeetingDate}
               />
               <Button size="small" type="submit" color="secondary">
                 확인
@@ -181,12 +138,7 @@ const ClubScheduleDetail = ({
         }}
         className={classes.modalContainer}
         open={modalOpen}>
-        <Card
-          className={
-            currentId === id
-              ? classes.updateModalContentContainer
-              : classes.detailModalContentContainer
-          }>
+        <Card className={currentId === id ? classes.updateModalContentContainer : classes.detailModalContentContainer}>
           {currentId === id ? <UpdateRendering /> : <DetailRendering />}
         </Card>
       </Modal>

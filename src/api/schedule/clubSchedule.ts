@@ -1,7 +1,4 @@
-import {
-  AddClubScheduleFormData,
-  UpdateClubScheduleFormData
-} from "../../store/reducers/scheduleReducer/clubScheduleReducer";
+import { AddClubScheduleFormData, UpdateClubScheduleFormData } from "../../store/reducers/scheduleReducer/clubScheduleReducer";
 import axios from "../../config/axios/axios";
 
 const getClubScheduleListApi = async (clubId: number, yearMonth: string) => {
@@ -18,10 +15,7 @@ const addClubScheduleApi = async (newSchedule: AddClubScheduleFormData) => {
   return result.data;
 };
 
-const updateClubScheduleApi = async (
-  id: number,
-  newSchedule: UpdateClubScheduleFormData
-) => {
+const updateClubScheduleApi = async (id: number, newSchedule: UpdateClubScheduleFormData) => {
   const result = await axios.put(`/clubSchedule/${id}`, newSchedule);
   return result.data;
 };
@@ -31,9 +25,4 @@ const deleteClubScheduleApi = async (id: number) => {
   return result.data;
 };
 
-export {
-  getClubScheduleListApi,
-  addClubScheduleApi,
-  updateClubScheduleApi,
-  deleteClubScheduleApi
-};
+export { getClubScheduleListApi, addClubScheduleApi, updateClubScheduleApi, deleteClubScheduleApi };

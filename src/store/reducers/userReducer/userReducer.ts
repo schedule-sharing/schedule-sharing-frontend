@@ -18,9 +18,7 @@ const logout = () => ({
 const loading = () => ({
   type: LOADING
 });
-export const asyncLogin = (value: LoginFormValue) => async (
-  dispatch: Dispatch<ReturnType<typeof login> | ReturnType<typeof loading>>
-) => {
+export const asyncLogin = (value: LoginFormValue) => async (dispatch: Dispatch<ReturnType<typeof login> | ReturnType<typeof loading>>) => {
   dispatch(loading());
   try {
     const res = await axios.post("/authenticate", value);
@@ -44,9 +42,7 @@ export const asyncLogin = (value: LoginFormValue) => async (
     dispatch(loading());
   }
 };
-export const asyncLogout = () => async (
-  dispatch: Dispatch<ReturnType<typeof loading> | ReturnType<typeof logout>>
-) => {
+export const asyncLogout = () => async (dispatch: Dispatch<ReturnType<typeof loading> | ReturnType<typeof logout>>) => {
   dispatch(loading());
   try {
     await window.localStorage.removeItem("access_token");
@@ -57,10 +53,7 @@ export const asyncLogout = () => async (
     dispatch(loading());
   }
 };
-type UserAction =
-  | ReturnType<typeof login>
-  | ReturnType<typeof logout>
-  | ReturnType<typeof loading>;
+type UserAction = ReturnType<typeof login> | ReturnType<typeof logout> | ReturnType<typeof loading>;
 
 type UserState = {
   loading: boolean;

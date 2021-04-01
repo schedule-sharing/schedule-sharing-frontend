@@ -1,29 +1,20 @@
-import { IconButton, Button } from "@material-ui/core";
-import {
-  AddBox,
-  ArrowBack,
-  ArrowForward,
-  ShoppingBasket
-} from "@material-ui/icons";
+import { Button, IconButton } from "@material-ui/core";
+import { AddBox, ArrowBack, ArrowForward, ShoppingBasket } from "@material-ui/icons";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import MyScheduleDetail from "../../../components/schedule/myschedule/MyScheduleDetail";
 import Loading from "../../../components/spinner/Loading";
+import { ClubSchedule } from "../../../store/reducers/scheduleReducer/clubScheduleReducer";
+import { MySchedule } from "../../../store/reducers/scheduleReducer/myScheduleReducer";
 import useClub from "../../../utils/hooks/reducer/useClub";
 import useUser from "../../../utils/hooks/reducer/useUser";
-import ScheduleForm from "../form/schedule/ScheduleForm";
-import useStyles from "./calendarStyle";
-import AddMyScheduleForm from "../form/AddMyScheduleForm";
 import useMySchedule from "../../../utils/hooks/useMySchedule";
-import { MySchedule } from "../../../store/reducers/scheduleReducer/myScheduleReducer";
-import MyScheduleDetail from "../../../components/schedule/myschedule/MyScheduleDetail";
-import { ClubSchedule } from "../../../store/reducers/scheduleReducer/clubScheduleReducer";
-import useClubSchedule from "../../../utils/hooks/useClubSchedule";
+import AddMyScheduleForm from "../form/AddMyScheduleForm";
+import useStyles from "./calendarStyle";
 
 const Calendar = () => {
   const { getMyScheduleList, myScheduleList } = useMySchedule();
-  const [date, setDate] = useState<Array<DateType>>([
-    { date: 0, day: 1, month: 1, year: 2020 }
-  ]);
+  const [date, setDate] = useState<Array<DateType>>([{ date: 0, day: 1, month: 1, year: 2020 }]);
 
   const { asyncGetClub } = useClub();
   const { user } = useUser();
@@ -48,35 +39,36 @@ const Calendar = () => {
     memberEmail: ""
   };
 
-  const [scheduleDetail, setScheduleDetail] = useState<
-    MySchedule | ClubSchedule
-  >(detailInitalState || clubDetailInitialState);
+  const [scheduleDetail, setScheduleDetail] = useState<MySchedule | ClubSchedule>(detailInitalState || clubDetailInitialState);
   // 날짜 구하는 로직
-  const getDate = (year: number, month: number) => {
-    let yearMonth = "";
-    if (month < 9) {
-      yearMonth = `${year.toString()}-0${(month + 1).toString()}`;
-    } else yearMonth = `${year.toString()}-${(month + 1).toString()}`;
 
-    getMyScheduleList(yearMonth);
+  const getDate = useCallback(
+    (year: number, month: number) => {
+      let yearMonth = "";
+      if (month < 9) {
+        yearMonth = `${year.toString()}-0${(month + 1).toString()}`;
+      } else yearMonth = `${year.toString()}-${(month + 1).toString()}`;
 
-    const arr: Array<DateType> = [];
+      getMyScheduleList(yearMonth);
 
-    // 해당월의 마지막날짜 구하는 로직
-    const endOfMonth = new Date(year, month + 1, 0).getDate();
+      const arr: Array<DateType> = [];
 
-    // 해당 월의 날짜배열들
-    for (let i = 1; i <= endOfMonth; i += 1) {
-      arr.push({
-        year,
-        month,
-        date: i,
-        day: new Date(year, month, i).getDay()
-      });
-    }
-    setDate(arr);
-  };
+      // 해당월의 마지막날짜 구하는 로직
+      const endOfMonth = new Date(year, month + 1, 0).getDate();
 
+      // 해당 월의 날짜배열들
+      for (let i = 1; i <= endOfMonth; i += 1) {
+        arr.push({
+          year,
+          month,
+          date: i,
+          day: new Date(year, month, i).getDay()
+        });
+      }
+      setDate(arr);
+    },
+    [getMyScheduleList]
+  );
   useEffect(() => {
     // 초기마운트시  오늘 날짜 기준으로날짜 설정
     const today = new Date(); // new Date(2021, 1, 3); 2월 3일 기준으로 날짜
@@ -86,7 +78,7 @@ const Calendar = () => {
     };
     asyncGetClub();
     getDate(dat.year, dat.month);
-  }, [asyncGetClub]);
+  }, [getDate, asyncGetClub]);
   const handleClick = (schedule: MySchedule) => {
     setModalOpen(true);
     setScheduleDetail(schedule);
@@ -98,11 +90,8 @@ const Calendar = () => {
   const myScheduleRendering = (dat: DateType) =>
     myScheduleList?.map((c) => (
       <div key={`mySchedule++${c?.myScheduleId}`}>
-        {parseInt(c?.startDate?.slice(8, 10), 10) <= dat.date &&
-        parseInt(c?.endDate?.slice(8, 10), 10) >= dat.date ? (
-          <div
-            key={`detail//${c?.myScheduleId}`}
-            className={classes.contentItemScheduleContainer}>
+        {parseInt(c?.startDate?.slice(8, 10), 10) <= dat.date && parseInt(c?.endDate?.slice(8, 10), 10) >= dat.date ? (
+          <div key={`detail//${c?.myScheduleId}`} className={classes.contentItemScheduleContainer}>
             {scheduleDetailRendering(c)}
           </div>
         ) : null}
@@ -132,17 +121,8 @@ const Calendar = () => {
           })}>
           <div className={classes.contentItemUtilsContainer}>
             <div className={classes.contentItemTitle}>{dat.date}</div>
-            <IconButton
-              onClick={(e) => handleAddBtnClick(e)}
-              className={classes.contentItemIcon}
-              size="small"
-              children={<AddBox />}
-            />
-            <IconButton
-              className={classes.contentItemIcon}
-              size="small"
-              children={<ShoppingBasket />}
-            />
+            <IconButton onClick={(e) => handleAddBtnClick(e)} className={classes.contentItemIcon} size="small" children={<AddBox />} />
+            <IconButton className={classes.contentItemIcon} size="small" children={<ShoppingBasket />} />
           </div>
           {myScheduleRendering(dat)}
         </div>
@@ -173,9 +153,7 @@ const Calendar = () => {
   const handleScheduleAddFormVisibility = () => {
     setFormVisibility((prev) => !prev);
   };
-  const handleAddBtnClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleAddBtnClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setFormVisibility(true);
     setFormRef(e.currentTarget);
   };
@@ -183,17 +161,9 @@ const Calendar = () => {
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <IconButton
-          onClick={() => handleBtnClick("Back")}
-          children={<ArrowBack />}
-        />
-        <div className={classes.headerTitle}>
-          {`${date[0].year}년 ${date[0].month + 1}월`}
-        </div>
-        <IconButton
-          onClick={() => handleBtnClick("Forward")}
-          children={<ArrowForward />}
-        />
+        <IconButton onClick={() => handleBtnClick("Back")} children={<ArrowBack />} />
+        <div className={classes.headerTitle}>{`${date[0].year}년 ${date[0].month + 1}월`}</div>
+        <IconButton onClick={() => handleBtnClick("Forward")} children={<ArrowForward />} />
       </div>
       {/* weekrow */}
       <div className={classes.calHeader}>
@@ -203,16 +173,8 @@ const Calendar = () => {
       </div>
       {/* contents */}
       <div className={classes.content}>{dateRendering(date)}</div>
-      <AddMyScheduleForm
-        anchorEl={formRef}
-        visibility={formVisibility}
-        setVisibility={handleScheduleAddFormVisibility}
-      />
-      <MyScheduleDetail
-        modalOpen={modalOpen}
-        scheduleDetail={scheduleDetail as MySchedule}
-        handleModalClose={() => handleModalClose()}
-      />
+      <AddMyScheduleForm anchorEl={formRef} visibility={formVisibility} setVisibility={handleScheduleAddFormVisibility} />
+      <MyScheduleDetail modalOpen={modalOpen} scheduleDetail={scheduleDetail as MySchedule} handleModalClose={() => handleModalClose()} />
       <Loading isLoading={user.loading || clubs.loading} />
     </div>
   );

@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   clubScheduleReducer,
   clubReducer,
   userReducer
-})
+});
 
 export type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;

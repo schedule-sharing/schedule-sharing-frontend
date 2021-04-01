@@ -7,7 +7,6 @@ import HomeLayout from "./pages/home/HomeLayout";
 import ClubCalendarLayout from "./pages/calendar/ClubCalendarLayout";
 import Auth from "./utils/hoc/Auth";
 
-
 function App() {
   return (
     <>
@@ -16,12 +15,10 @@ function App() {
           <Route path="/calendar/mycalendar" component={Auth(CalendarLayout)} />
           <Route path="/calendar/club/:clubId" component={Auth(ClubCalendarLayout)} />
           <Route path="/user" component={Auth(UserLayout)} />
-          <Route
-            exact
-            path="/calendar"
-            render={() => <Redirect to="/calendar/my" />}
-          />
-          /*<Route path="/calendar/:id" component={Auth(CalendarLayout)} />*/
+          <Route exact path="/calendar" render={() => <Redirect to="/calendar/my" />} />
+          {/*
+          <Route path="/calendar/:id" component={Auth(CalendarLayout)} />
+          */}
           <Route path="/" component={HomeLayout} />
         </Switch>
       </div>

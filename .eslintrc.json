@@ -3,13 +3,7 @@
     "browser": true,
     "es2021": true
   },
-  "extends": [
-    "plugin:react/recommended",
-    "airbnb",
-    "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "prettier/react"
-  ],
+  "extends": ["plugin:react/recommended", "airbnb", "plugin:@typescript-eslint/recommended", "prettier", "prettier/react"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -20,11 +14,12 @@
   },
   "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
   "rules": {
-
-    "react/require-default-props":"off",
-    "no-underscore-dangle":"off",
-    "import/prefer-default-export":"off",
-    "no-shadow":"warn",
+    "no-console":"off",
+    "no-alert": "off",
+    "react/require-default-props": "off",
+    "no-underscore-dangle": "off",
+    "import/prefer-default-export": "off",
+    "no-shadow": "warn",
     "react-hooks/rules-of-hooks": "warn",
     "react/jsx-props-no-spreading": "warn",
     //"no-console": "warn",

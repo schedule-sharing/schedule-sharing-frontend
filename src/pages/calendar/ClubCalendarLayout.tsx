@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import SideMenuBar from "../../components/sidebar/SideMenuBar";
-import Calendar from "./calendar/Calendar";
 import ClubController from "./clubController/ClubController";
 import ClubCalendar from "./calendar/ClubCalendar";
 

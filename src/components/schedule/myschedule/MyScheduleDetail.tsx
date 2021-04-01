@@ -1,25 +1,11 @@
-import {
-  Modal,
-  Card,
-  CardContent,
-  TextField,
-  Divider,
-  Typography,
-  Button,
-  IconButton
-} from "@material-ui/core";
-import { Formik, Form } from "formik";
+import { Button, Card, CardContent, Divider, IconButton, Modal, TextField, Typography } from "@material-ui/core";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import UpdateIcon from "@material-ui/icons/Update";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { Form, Formik } from "formik";
 import React, { useState } from "react";
-import clsx from "clsx";
-import {
-  MySchedule,
-  MyScheduleFormData
-} from "../../../store/reducers/scheduleReducer/myScheduleReducer";
-import myScheduleDetailStyle from "./myScheduleDetailStyle";
+import { MySchedule, MyScheduleFormData } from "../../../store/reducers/scheduleReducer/myScheduleReducer";
 import useMySchedule from "../../../utils/hooks/useMySchedule";
+import myScheduleDetailStyle from "./myScheduleDetailStyle";
 
 const MyScheduleDetail = ({
   modalOpen,
@@ -81,10 +67,7 @@ const MyScheduleDetail = ({
   const UpdateRendering = () => (
     <>
       <CardContent>
-        <Formik
-          initialValues={initialValues}
-          validate={handleValidate}
-          onSubmit={handleSubmit}>
+        <Formik initialValues={initialValues} validate={handleValidate} onSubmit={handleSubmit}>
           {(formikProps) => (
             <Form>
               <TextField
@@ -94,9 +77,7 @@ const MyScheduleDetail = ({
                 name="name"
                 value={formikProps.values.name}
                 onChange={formikProps.handleChange}
-                error={
-                  Boolean(formikProps.errors.name) && formikProps.touched.name
-                }
+                error={Boolean(formikProps.errors.name) && formikProps.touched.name}
                 helperText={formikProps.errors.name && formikProps.touched.name}
               />
               <Divider style={{ marginBottom: "2%" }} />
@@ -107,13 +88,8 @@ const MyScheduleDetail = ({
                 name="contents"
                 value={formikProps.values.contents}
                 onChange={formikProps.handleChange}
-                error={
-                  Boolean(formikProps.errors.contents) &&
-                  formikProps.touched.contents
-                }
-                helperText={
-                  formikProps.errors.contents && formikProps.touched.contents
-                }
+                error={Boolean(formikProps.errors.contents) && formikProps.touched.contents}
+                helperText={formikProps.errors.contents && formikProps.touched.contents}
               />
               <TextField
                 fullWidth
@@ -122,14 +98,8 @@ const MyScheduleDetail = ({
                 name="scheduleStartDate"
                 value={formikProps.values.scheduleStartDate}
                 onChange={formikProps.handleChange}
-                error={
-                  Boolean(formikProps.errors.scheduleStartDate) &&
-                  formikProps.touched.scheduleStartDate
-                }
-                helperText={
-                  formikProps.errors.scheduleStartDate &&
-                  formikProps.touched.scheduleStartDate
-                }
+                error={Boolean(formikProps.errors.scheduleStartDate) && formikProps.touched.scheduleStartDate}
+                helperText={formikProps.errors.scheduleStartDate && formikProps.touched.scheduleStartDate}
               />
               <TextField
                 fullWidth
@@ -138,14 +108,8 @@ const MyScheduleDetail = ({
                 name="scheduleEndDate"
                 value={formikProps.values.scheduleEndDate}
                 onChange={formikProps.handleChange}
-                error={
-                  Boolean(formikProps.errors.scheduleEndDate) &&
-                  formikProps.touched.scheduleEndDate
-                }
-                helperText={
-                  formikProps.errors.scheduleEndDate &&
-                  formikProps.touched.scheduleEndDate
-                }
+                error={Boolean(formikProps.errors.scheduleEndDate) && formikProps.touched.scheduleEndDate}
+                helperText={formikProps.errors.scheduleEndDate && formikProps.touched.scheduleEndDate}
               />
               <Button size="small" type="submit" color="secondary">
                 확인
@@ -174,17 +138,8 @@ const MyScheduleDetail = ({
         }}
         className={classes.modalContainer}
         open={modalOpen}>
-        <Card
-          className={
-            currentId === myScheduleId
-              ? classes.updateModalContentContainer
-              : classes.detailModalContentContainer
-          }>
-          {currentId === myScheduleId ? (
-            <UpdateRendering />
-          ) : (
-            <DetailRendering />
-          )}
+        <Card className={currentId === myScheduleId ? classes.updateModalContentContainer : classes.detailModalContentContainer}>
+          {currentId === myScheduleId ? <UpdateRendering /> : <DetailRendering />}
         </Card>
       </Modal>
     </>

@@ -1,11 +1,5 @@
 import { Dispatch } from "react";
-import {
-  getClubScheduleListApi,
-  addClubScheduleApi,
-  updateClubScheduleApi,
-  deleteClubScheduleApi
-} from "../../../api/schedule/clubSchedule";
-import clubScheduleDetailStyle from "../../../components/schedule/clubschedule/clubScheduleDetailStyle";
+import { addClubScheduleApi, getClubScheduleListApi, updateClubScheduleApi } from "../../../api/schedule/clubSchedule";
 
 // state
 export interface AddClubScheduleFormData {
@@ -62,9 +56,7 @@ export const addClubScheduleAction = (newClubSchedule: ClubSchedule) => ({
   payload: newClubSchedule
 });
 
-export const getClubScheduleListAction = (
-  newClubScheduleList: ClubSchedule[]
-) => ({
+export const getClubScheduleListAction = (newClubScheduleList: ClubSchedule[]) => ({
   type: GET_CLUB_SCHEDULE_LIST,
   payload: newClubScheduleList
 });
@@ -78,10 +70,9 @@ export const deleteClubScheduleAction = () => ({
   type: DELETE_CLUB_SCHEDULE
 });
 
-export const getClubScheduleListActionAsync = (
-  clubId: number,
-  yearMonth: string
-) => async (dispatch: Dispatch<GetClubScheduleListAction | LoadingAction>) => {
+export const getClubScheduleListActionAsync = (clubId: number, yearMonth: string) => async (
+  dispatch: Dispatch<GetClubScheduleListAction | LoadingAction>
+) => {
   dispatch(loadingAction());
   try {
     const payload = await getClubScheduleListApi(clubId, yearMonth);
@@ -92,9 +83,9 @@ export const getClubScheduleListActionAsync = (
   dispatch(loadingAction());
 };
 
-export const addClubScheduleActionAsync = (
-  newSchedule: AddClubScheduleFormData
-) => async (dispatch: Dispatch<AddClubScheduleAction | LoadingAction>) => {
+export const addClubScheduleActionAsync = (newSchedule: AddClubScheduleFormData) => async (
+  dispatch: Dispatch<AddClubScheduleAction | LoadingAction>
+) => {
   dispatch(loadingAction());
   try {
     const payload = await addClubScheduleApi(newSchedule);
@@ -105,10 +96,9 @@ export const addClubScheduleActionAsync = (
   dispatch(loadingAction());
 };
 
-export const updateClubScheduleActionAsync = (
-  id: number,
-  newSchedule: UpdateClubScheduleFormData
-) => async (dispatch: Dispatch<UpdateClubScheduleAction | LoadingAction>) => {
+export const updateClubScheduleActionAsync = (id: number, newSchedule: UpdateClubScheduleFormData) => async (
+  dispatch: Dispatch<UpdateClubScheduleAction | LoadingAction>
+) => {
   dispatch(loadingAction());
   try {
     const payload = await updateClubScheduleApi(id, newSchedule);
@@ -119,12 +109,9 @@ export const updateClubScheduleActionAsync = (
   dispatch(loadingAction());
 };
 
-export const deleteClubScheduleActionAsync = (id: number) => async (
-  dispatch: Dispatch<DeleteClubScheduleAction | LoadingAction>
-) => {
+export const deleteClubScheduleActionAsync = (id: number) => async (dispatch: Dispatch<DeleteClubScheduleAction | LoadingAction>) => {
   dispatch(loadingAction());
   try {
-    const payload = await deleteClubScheduleApi(id);
     dispatch(deleteClubScheduleAction());
   } catch (e) {
     console.error(e);
@@ -137,12 +124,7 @@ type GetClubScheduleListAction = ReturnType<typeof getClubScheduleListAction>;
 type AddClubScheduleAction = ReturnType<typeof addClubScheduleAction>;
 type UpdateClubScheduleAction = ReturnType<typeof updateClubScheduleAction>;
 type DeleteClubScheduleAction = ReturnType<typeof deleteClubScheduleAction>;
-type ClubScheduleActions =
-  | AddClubScheduleAction
-  | UpdateClubScheduleAction
-  | GetClubScheduleListAction
-  | DeleteClubScheduleAction
-  | LoadingAction;
+type ClubScheduleActions = AddClubScheduleAction | UpdateClubScheduleAction | GetClubScheduleListAction | DeleteClubScheduleAction | LoadingAction;
 
 // reducers
 
@@ -158,9 +140,7 @@ export default (state = initialState, action: ClubScheduleActions) => {
     }
     case GET_CLUB_SCHEDULE_LIST: {
       copied.clubScheduleList.splice(0, copied.clubScheduleList.length);
-      copied.clubScheduleList = copied.clubScheduleList.concat(
-        action.payload as ClubSchedule[]
-      );
+      copied.clubScheduleList = copied.clubScheduleList.concat(action.payload as ClubSchedule[]);
       return copied;
     }
     case ADD_CLUB_SCHEDULE: {
@@ -170,9 +150,7 @@ export default (state = initialState, action: ClubScheduleActions) => {
       };
     }
     case UPDATE_CLUB_SCHEDULE: {
-      copied.clubScheduleList = copied.clubScheduleList.filter(
-        (c) => c.id !== action.payload.id
-      );
+      copied.clubScheduleList = copied.clubScheduleList.filter((c) => c.id !== action.payload.id);
       return {
         ...copied,
         clubScheduleList: [...copied.clubScheduleList, action.payload]

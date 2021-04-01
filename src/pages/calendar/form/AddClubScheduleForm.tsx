@@ -1,15 +1,6 @@
-import React, { useEffect } from "react";
-import { Formik, Form } from "formik";
-import {
-  Grid,
-  makeStyles,
-  Typography,
-  Popover,
-  TextField,
-  Theme,
-  Button
-} from "@material-ui/core";
-
+import { Button, Grid, makeStyles, Popover, TextField, Theme, Typography } from "@material-ui/core";
+import { Form, Formik } from "formik";
+import React from "react";
 import { AddClubScheduleFormData } from "../../../store/reducers/scheduleReducer/clubScheduleReducer";
 import useClubSchedule from "../../../utils/hooks/useClubSchedule";
 
@@ -66,10 +57,7 @@ const AddClubScheduleForm = ({
         vertical: "bottom",
         horizontal: "center"
       }}>
-      <Formik
-        initialValues={initialValue}
-        validate={handleValidate}
-        onSubmit={handleSubmit}>
+      <Formik initialValues={initialValue} validate={handleValidate} onSubmit={handleSubmit}>
         {(formikProps) => (
           <Form>
             <Grid className={classes.root} container>
@@ -84,12 +72,8 @@ const AddClubScheduleForm = ({
                   name="name"
                   value={formikProps.values.name}
                   onChange={formikProps.handleChange}
-                  error={
-                    Boolean(formikProps.errors.name) && formikProps.touched.name
-                  }
-                  helperText={
-                    formikProps.errors.name && formikProps.touched.name
-                  }
+                  error={Boolean(formikProps.errors.name) && formikProps.touched.name}
+                  helperText={formikProps.errors.name && formikProps.touched.name}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -100,13 +84,8 @@ const AddClubScheduleForm = ({
                   name="contents"
                   value={formikProps.values.contents}
                   onChange={formikProps.handleChange}
-                  error={
-                    Boolean(formikProps.errors.contents) &&
-                    formikProps.touched.contents
-                  }
-                  helperText={
-                    formikProps.errors.contents && formikProps.touched.contents
-                  }
+                  error={Boolean(formikProps.errors.contents) && formikProps.touched.contents}
+                  helperText={formikProps.errors.contents && formikProps.touched.contents}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -117,14 +96,8 @@ const AddClubScheduleForm = ({
                   name="startMeetingDate"
                   value={formikProps.values.startMeetingDate}
                   onChange={formikProps.handleChange}
-                  error={
-                    Boolean(formikProps.errors.startMeetingDate) &&
-                    formikProps.touched.startMeetingDate
-                  }
-                  helperText={
-                    formikProps.errors.startMeetingDate &&
-                    formikProps.touched.startMeetingDate
-                  }
+                  error={Boolean(formikProps.errors.startMeetingDate) && formikProps.touched.startMeetingDate}
+                  helperText={formikProps.errors.startMeetingDate && formikProps.touched.startMeetingDate}
                 />
               </Grid>
 
@@ -136,24 +109,15 @@ const AddClubScheduleForm = ({
                   name="endMeetingDate"
                   value={formikProps.values.endMeetingDate}
                   onChange={formikProps.handleChange}
-                  error={
-                    Boolean(formikProps.errors.endMeetingDate) &&
-                    formikProps.touched.endMeetingDate
-                  }
-                  helperText={
-                    formikProps.errors.endMeetingDate &&
-                    formikProps.touched.endMeetingDate
-                  }
+                  error={Boolean(formikProps.errors.endMeetingDate) && formikProps.touched.endMeetingDate}
+                  helperText={formikProps.errors.endMeetingDate && formikProps.touched.endMeetingDate}
                 />
               </Grid>
               <Grid item xs={12} container justify="space-around">
                 <Button size="small" type="submit" color="secondary">
                   확인
                 </Button>
-                <Button
-                  size="small"
-                  onClick={() => setVisibility(false)}
-                  color="default">
+                <Button size="small" onClick={() => setVisibility(false)} color="default">
                   취소
                 </Button>
               </Grid>

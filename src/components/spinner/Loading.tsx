@@ -1,9 +1,4 @@
-import {
-  Backdrop,
-  CircularProgress,
-  makeStyles,
-  Theme
-} from "@material-ui/core";
+import { Backdrop, CircularProgress, makeStyles, Theme } from "@material-ui/core";
 import React from "react";
 
 type Loading = {

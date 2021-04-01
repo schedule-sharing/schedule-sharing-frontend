@@ -1,8 +1,6 @@
-
 import { IconButton, Typography } from "@material-ui/core";
 import { Settings } from "@material-ui/icons";
-import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useState } from "react";
 import useClub from "../../../utils/hooks/reducer/useClub";
 import ClubSettingForm from "../form/club/ClubSettingForm";
 import useStyles from "./clubControllerStyle";
@@ -22,22 +20,12 @@ const ClubController = () => {
     <div className={classes.root}>
       <div className={classes.titlebox}>
         <Typography className={classes.title} variant="h3">
-          {clubs.currentClub.clubName
-            ? clubs.currentClub.clubName
-            : "myCalendar"}
+          {clubs.currentClub.clubName ? clubs.currentClub.clubName : "myCalendar"}
         </Typography>
       </div>
       <div className={classes.settingbox}>
-        <IconButton
-          size="medium"
-          children={<Settings />}
-          onClick={(e) => handleSettingBtnClick(e.currentTarget)}
-        />
-        <ClubSettingForm
-          anchorEl={ref}
-          visibility={settingFormvisibility}
-          setVisibility={setSettingFormVisibility}
-        />
+        <IconButton size="medium" children={<Settings />} onClick={(e) => handleSettingBtnClick(e.currentTarget)} />
+        <ClubSettingForm anchorEl={ref} visibility={settingFormvisibility} setVisibility={setSettingFormVisibility} />
       </div>
     </div>
   );

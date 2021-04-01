@@ -1,13 +1,4 @@
-import {
-  Button,
-  MenuItem,
-  Grid,
-  makeStyles,
-  Modal,
-  TextField,
-  Theme,
-  Typography
-} from "@material-ui/core";
+import { Button, MenuItem, Grid, makeStyles, Modal, TextField, Theme, Typography } from "@material-ui/core";
 import { Form, Formik } from "formik";
 import React from "react";
 import useClub from "../../../../utils/hooks/reducer/useClub";
@@ -31,13 +22,7 @@ const initialValue: clubType = {
   clubName: "",
   categories: ""
 };
-const ClubModifyForm = ({
-  visibility,
-  setVisibility
-}: {
-  visibility: boolean;
-  setVisibility: () => void;
-}) => {
+const ClubModifyForm = ({ visibility, setVisibility }: { visibility: boolean; setVisibility: () => void }) => {
   const { asyncModifyClub, clubs } = useClub();
   const handleSubmit = async (val: clubType) => {
     if (!clubs.currentClub.clubId) {
@@ -68,14 +53,8 @@ const ClubModifyForm = ({
                     name="clubName"
                     value={formikProps.values.clubName}
                     onChange={formikProps.handleChange}
-                    error={
-                      Boolean(formikProps.errors.clubName) &&
-                      formikProps.touched.clubName
-                    }
-                    helperText={
-                      formikProps.errors.clubName &&
-                      formikProps.touched.clubName
-                    }
+                    error={Boolean(formikProps.errors.clubName) && formikProps.touched.clubName}
+                    helperText={formikProps.errors.clubName && formikProps.touched.clubName}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -85,20 +64,12 @@ const ClubModifyForm = ({
                     name="categories"
                     value={formikProps.values.categories}
                     onChange={formikProps.handleChange}
-                    error={
-                      formikProps.touched.categories &&
-                      Boolean(formikProps.errors.categories)
-                    }
-                    helperText={
-                      formikProps.touched.categories &&
-                      formikProps.errors.categories
-                    }
+                    error={formikProps.touched.categories && Boolean(formikProps.errors.categories)}
+                    helperText={formikProps.touched.categories && formikProps.errors.categories}
                     fullWidth>
-                    {["가족", "밥", "동네 친구", "여자 친구", "스터디"].map(
-                      (v) => (
-                        <MenuItem key={v} value={v} children={v} />
-                      )
-                    )}
+                    {["가족", "밥", "동네 친구", "여자 친구", "스터디"].map((v) => (
+                      <MenuItem key={v} value={v} children={v} />
+                    ))}
                   </TextField>
                 </Grid>
                 <Grid item xs={12} container justify="space-around">

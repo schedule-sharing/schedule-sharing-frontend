@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import useUser from "../hooks/reducer/useUser";
 
@@ -9,8 +9,7 @@ const Auth = (Compo: any) => {
     const history = useHistory();
     useEffect(() => {
       if (!isAuth) history.push("/user/login");
-      if (isAuth && history.location.pathname.startsWith("/user"))
-        history.push("/calendar");
+      if (isAuth && history.location.pathname.startsWith("/user")) history.push("/calendar");
     }, [isAuth, history]);
     return <Compo />;
   };
