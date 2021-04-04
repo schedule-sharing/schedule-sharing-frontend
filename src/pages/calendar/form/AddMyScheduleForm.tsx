@@ -1,14 +1,16 @@
 import { Button, Grid, makeStyles, Popover, TextField, Theme, Typography } from "@material-ui/core";
-import { Form, Formik } from "formik";
-import React from "react";
+import { Form, Formik, FormikProps } from "formik";
+import React, { useState } from "react";
+import { DateTimePicker } from "@material-ui/pickers";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import { MyScheduleFormData } from "../../../store/reducers/scheduleReducer/myScheduleReducer";
 import useMySchedule from "../../../utils/hooks/useMySchedule";
 
 const initialValue: MyScheduleFormData = {
   name: "",
   contents: "",
-  scheduleStartDate: "",
-  scheduleEndDate: ""
+  scheduleStartDate: new Date().toJSON(),
+  scheduleEndDate: new Date(Date.now() + 86400000).toJSON()
 };
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -27,6 +29,7 @@ const ScheduleForm = ({
   anchorEl: HTMLElement | null;
   setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const [date123, setDate123] = useState<Date | null>(new Date("2014-08-18T21:11:54"));
   const { addMySchedule } = useMySchedule();
   const handleValidate = (values: MyScheduleFormData) => {
     const errors: Record<string, string> = {};
@@ -38,7 +41,16 @@ const ScheduleForm = ({
     addMySchedule(values);
     setVisibility(false);
   };
-
+  const handleDateChange = (
+    formikProps: FormikProps<MyScheduleFormData>,
+    fieldName: "scheduleStartDate" | "scheduleEndDate",
+    value: MaterialUiPickersDate
+  ) => {
+    if (value) {
+      formikProps.setFieldValue(fieldName, value.toJSON().replace(".000Z", ""));
+      console.log(value.toJSON().replace(".000Z", ""));
+    }
+  };
   const classes = useStyles();
   return (
     <Popover
@@ -85,20 +97,39 @@ const ScheduleForm = ({
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <DateTimePicker
+                  disableToolbar
+                  variant="inline"
+                  size="small"
+                  label="시작날짜"
+                  error={Boolean(formikProps.errors.scheduleStartDate) && formikProps.touched.scheduleStartDate}
+                  helperText={formikProps.errors.scheduleStartDate && formikProps.touched.scheduleStartDate}
+                  value={formikProps.values.scheduleStartDate}
+                  onChange={(e) => handleDateChange(formikProps, "scheduleStartDate", e)}
+                />
+                {/* <TextField
                   fullWidth
                   size="small"
                   label="시작 날짜"
                   name="scheduleStartDate"
                   value={formikProps.values.scheduleStartDate}
                   onChange={formikProps.handleChange}
-                  error={Boolean(formikProps.errors.scheduleStartDate) && formikProps.touched.scheduleStartDate}
-                  helperText={formikProps.errors.scheduleStartDate && formikProps.touched.scheduleStartDate}
-                />
+                 /> */}
               </Grid>
 
               <Grid item xs={12}>
-                <TextField
+                <DateTimePicker
+                  disableToolbar
+                  variant="inline"
+                  size="small"
+                  label="종료날짜"
+                  error={Boolean(formikProps.errors.scheduleEndDate) && formikProps.touched.scheduleEndDate}
+                  helperText={formikProps.errors.scheduleEndDate && formikProps.touched.scheduleEndDate}
+                  value={formikProps.values.scheduleEndDate}
+                  onChange={(e) => handleDateChange(formikProps, "scheduleEndDate", e)}
+                />
+
+                {/* <TextField
                   fullWidth
                   size="small"
                   label="종료 날짜"
@@ -107,7 +138,7 @@ const ScheduleForm = ({
                   onChange={formikProps.handleChange}
                   error={Boolean(formikProps.errors.scheduleEndDate) && formikProps.touched.scheduleEndDate}
                   helperText={formikProps.errors.scheduleEndDate && formikProps.touched.scheduleEndDate}
-                />
+                /> */}
               </Grid>
               <Grid item xs={12} container justify="space-around">
                 <Button size="small" type="submit" color="secondary">

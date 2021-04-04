@@ -37,4 +37,3 @@ type user = {
   imagePath: string;
   name: string;
 };
-

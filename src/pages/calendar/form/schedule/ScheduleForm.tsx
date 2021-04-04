@@ -1,14 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import {
-  Grid,
-  makeStyles,
-  Typography,
-  Popover,
-  TextField,
-  Theme,
-  Button
-} from "@material-ui/core";
+import { Grid, makeStyles, Typography, Popover, TextField, Theme, Button } from "@material-ui/core";
 import { addSchedule } from "../../../../api/schedule/schedule";
 
 const initialValues: scheduleAddType = {
@@ -60,10 +52,7 @@ const ScheduleForm = ({
         vertical: "bottom",
         horizontal: "center"
       }}>
-      <Formik
-        initialValues={initialValues}
-        validate={handleValidate}
-        onSubmit={handleSubmit}>
+      <Formik initialValues={initialValues} validate={handleValidate} onSubmit={handleSubmit}>
         {(formikProps) => (
           <Form>
             <Grid className={classes.root} container>
@@ -78,13 +67,8 @@ const ScheduleForm = ({
                   name="title"
                   value={formikProps.values.title}
                   onChange={formikProps.handleChange}
-                  error={
-                    Boolean(formikProps.errors.title) &&
-                    formikProps.touched.title
-                  }
-                  helperText={
-                    formikProps.errors.title && formikProps.touched.title
-                  }
+                  error={Boolean(formikProps.errors.title) && formikProps.touched.title}
+                  helperText={formikProps.errors.title && formikProps.touched.title}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -95,12 +79,8 @@ const ScheduleForm = ({
                   name="date"
                   value={formikProps.values.date}
                   onChange={formikProps.handleChange}
-                  error={
-                    Boolean(formikProps.errors.date) && formikProps.touched.date
-                  }
-                  helperText={
-                    formikProps.errors.date && formikProps.touched.date
-                  }
+                  error={Boolean(formikProps.errors.date) && formikProps.touched.date}
+                  helperText={formikProps.errors.date && formikProps.touched.date}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -111,13 +91,8 @@ const ScheduleForm = ({
                   name="place"
                   value={formikProps.values.place}
                   onChange={formikProps.handleChange}
-                  error={
-                    Boolean(formikProps.errors.place) &&
-                    formikProps.touched.place
-                  }
-                  helperText={
-                    formikProps.errors.place && formikProps.touched.place
-                  }
+                  error={Boolean(formikProps.errors.place) && formikProps.touched.place}
+                  helperText={formikProps.errors.place && formikProps.touched.place}
                 />
               </Grid>
 
@@ -129,14 +104,8 @@ const ScheduleForm = ({
                   name="expireDate"
                   value={formikProps.values.expireDate}
                   onChange={formikProps.handleChange}
-                  error={
-                    Boolean(formikProps.errors.expireDate) &&
-                    formikProps.touched.expireDate
-                  }
-                  helperText={
-                    formikProps.errors.expireDate &&
-                    formikProps.touched.expireDate
-                  }
+                  error={Boolean(formikProps.errors.expireDate) && formikProps.touched.expireDate}
+                  helperText={formikProps.errors.expireDate && formikProps.touched.expireDate}
                 />
               </Grid>
 
@@ -148,24 +117,15 @@ const ScheduleForm = ({
                   name="leastPeople"
                   value={formikProps.values.leastPeople}
                   onChange={formikProps.handleChange}
-                  error={
-                    Boolean(formikProps.errors.leastPeople) &&
-                    formikProps.touched.leastPeople
-                  }
-                  helperText={
-                    formikProps.errors.leastPeople &&
-                    formikProps.touched.leastPeople
-                  }
+                  error={Boolean(formikProps.errors.leastPeople) && formikProps.touched.leastPeople}
+                  helperText={formikProps.errors.leastPeople && formikProps.touched.leastPeople}
                 />
               </Grid>
               <Grid item xs={12} container justify="space-around">
                 <Button size="small" type="submit" color="secondary">
                   확인
                 </Button>
-                <Button
-                  size="small"
-                  onClick={() => setVisibility(false)}
-                  color="default">
+                <Button size="small" onClick={() => setVisibility(false)} color="default">
                   취소
                 </Button>
               </Grid>

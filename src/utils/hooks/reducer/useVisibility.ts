@@ -1,10 +1,7 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/reducers/rootReducer";
-import {
-  setVisibility as setVisi,
-  VisibilityStrings
-} from "../../../store/reducers/visibilityReducer/visibilityReducer";
+import { setVisibility as setVisi, VisibilityStrings } from "../../../store/reducers/visibilityReducer/visibilityReducer";
 
 export default function useVisibility() {
   const dispatch = useDispatch();

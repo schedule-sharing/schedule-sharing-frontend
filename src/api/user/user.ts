@@ -9,9 +9,7 @@ export const login = async (value: LoginFormValue) => {
     .then((res) => {
       // 일단은 로컬스토리이제 토큰 저장
       window.localStorage.setItem("access_token", res.data.access_token);
-      axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-        "access_token"
-      )}`;
+      axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem("access_token")}`;
       return res.data;
     })
     .catch((err) => {

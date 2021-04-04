@@ -10,6 +10,7 @@ import Auth from "./utils/hoc/Auth";
 function App() {
   return (
     <>
+      {/* TODO: USER관련 API 구현 */}
       <div className="App">
         <Switch>
           <Route path="/calendar/mycalendar" component={Auth(CalendarLayout)} />

@@ -52,12 +52,14 @@ const SignUpForm = () => {
   // submit
   const handleSubmit = (v: SignUpFormValue) => {
     const { email, name, password, imagePath } = v;
-    axios.post("/member/signup", { email, name, password, imagePath }).then((res) => {
-      // TODO: if response 값이 참이면 로그인페이지로 이동, 거짓이면 거짓메시지출력
-      alert("가입이 완료되었습니다.");
-      history.push("/user/login");
-      return res.data;
-    });
+    axios
+      .post("/member/signup", { email, name, password, imagePath })
+      .then((res) => {
+        alert("가입이 완료되었습니다.");
+        history.push("/user/login");
+        return res.data;
+      })
+      .catch((err) => alert(err.message));
   };
   // validate
   const handleValidate = (v: SignUpFormValue) => {

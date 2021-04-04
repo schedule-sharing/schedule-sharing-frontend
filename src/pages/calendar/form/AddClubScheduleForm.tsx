@@ -1,5 +1,7 @@
 import { Button, Grid, makeStyles, Popover, TextField, Theme, Typography } from "@material-ui/core";
-import { Form, Formik } from "formik";
+import { DateTimePicker } from "@material-ui/pickers";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
+import { Form, Formik, FormikProps } from "formik";
 import React from "react";
 import { AddClubScheduleFormData } from "../../../store/reducers/scheduleReducer/clubScheduleReducer";
 import useClubSchedule from "../../../utils/hooks/useClubSchedule";
@@ -37,12 +39,22 @@ const AddClubScheduleForm = ({
       errors.name = "name 없음";
     }
   };
+
   const handleSubmit = (values: AddClubScheduleFormData) => {
     const realValues = { ...values, clubId: parseInt(clubId, 10) };
     addClubSchedule(realValues);
     setVisibility(false);
   };
-
+  const handleDateChange = (
+    formikProps: FormikProps<AddClubScheduleFormData>,
+    fieldName: "startMeetingDate" | "endMeetingDate",
+    value: MaterialUiPickersDate
+  ) => {
+    if (value) {
+      formikProps.setFieldValue(fieldName, value.toJSON().replace(".000Z", ""));
+      console.log(value.toJSON().replace(".000Z", ""));
+    }
+  };
   const classes = useStyles();
   return (
     <Popover
@@ -89,28 +101,29 @@ const AddClubScheduleForm = ({
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
+                <DateTimePicker
+                  disableToolbar
+                  variant="inline"
                   size="small"
-                  label="시작 날짜"
-                  name="startMeetingDate"
-                  value={formikProps.values.startMeetingDate}
-                  onChange={formikProps.handleChange}
+                  label="시작날짜"
                   error={Boolean(formikProps.errors.startMeetingDate) && formikProps.touched.startMeetingDate}
                   helperText={formikProps.errors.startMeetingDate && formikProps.touched.startMeetingDate}
+                  value={formikProps.values.startMeetingDate}
+                  onChange={(e) => handleDateChange(formikProps, "startMeetingDate", e)}
                 />
+                {/* TODO: 날짜 입력 형식 수정 클릭하면 달력나오게 */}
               </Grid>
 
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
+                <DateTimePicker
+                  disableToolbar
+                  variant="inline"
                   size="small"
-                  label="종료 날짜"
-                  name="endMeetingDate"
-                  value={formikProps.values.endMeetingDate}
-                  onChange={formikProps.handleChange}
+                  label="시작날짜"
                   error={Boolean(formikProps.errors.endMeetingDate) && formikProps.touched.endMeetingDate}
                   helperText={formikProps.errors.endMeetingDate && formikProps.touched.endMeetingDate}
+                  value={formikProps.values.endMeetingDate}
+                  onChange={(e) => handleDateChange(formikProps, "endMeetingDate", e)}
                 />
               </Grid>
               <Grid item xs={12} container justify="space-around">

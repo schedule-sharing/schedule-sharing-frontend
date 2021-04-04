@@ -1,22 +1,7 @@
 import React from "react";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle
-} from "@material-ui/core";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
 
-const AlertDialog = ({
-  visibility,
-  setVisibility,
-  text
-}: {
-  visibility: boolean;
-  setVisibility: (v: boolean) => void;
-  text: string;
-}) => {
+const AlertDialog = ({ visibility, setVisibility, text }: { visibility: boolean; setVisibility: (v: boolean) => void; text: string }) => {
   const handleClose = () => {
     setVisibility(false);
   };
