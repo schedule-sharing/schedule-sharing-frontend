@@ -7,8 +7,8 @@ import useMySchedule from "../../utils/hooks/useMySchedule";
 const initialValue: MyScheduleFormData = {
   name: "",
   contents: "",
-  scheduleStartDate: "",
-  scheduleEndDate: ""
+  scheduleStartDate: new Date().toJSON().replace(/\.[0-9]{3}[A-Z]{1}/, ""),
+  scheduleEndDate: new Date(Date.now() + 86400000).toJSON().replace(/\.[0-9]{3}[A-Z]{1}/, "")
 };
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

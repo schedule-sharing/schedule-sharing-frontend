@@ -14,15 +14,15 @@ import theme from "./styles/themes/mainTheme";
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistStore(store)}>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <App />
-          </MuiPickersUtilsProvider>
-        </BrowserRouter>
-      </ThemeProvider>
-    </PersistGate>
+    {/* <PersistGate loading={null} persistor={persistStore(store)}> */}
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <App />
+        </MuiPickersUtilsProvider>
+      </BrowserRouter>
+    </ThemeProvider>
+    {/* </PersistGate> */}
   </Provider>,
   document.getElementById("root")
 );

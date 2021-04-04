@@ -111,7 +111,6 @@ const AddClubScheduleForm = ({
                   value={formikProps.values.startMeetingDate}
                   onChange={(e) => handleDateChange(formikProps, "startMeetingDate", e)}
                 />
-                {/* TODO: 날짜 입력 형식 수정 클릭하면 달력나오게 */}
               </Grid>
 
               <Grid item xs={12}>

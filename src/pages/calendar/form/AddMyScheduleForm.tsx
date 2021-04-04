@@ -9,8 +9,8 @@ import useMySchedule from "../../../utils/hooks/useMySchedule";
 const initialValue: MyScheduleFormData = {
   name: "",
   contents: "",
-  scheduleStartDate: new Date().toJSON(),
-  scheduleEndDate: new Date(Date.now() + 86400000).toJSON()
+  scheduleStartDate: new Date().toJSON().replace(/\.[0-9]{3}[A-Z]{1}/, ""),
+  scheduleEndDate: new Date(Date.now() + 86400000).toJSON().replace(/\.[0-9]{3}[A-Z]{1}/, "")
 };
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -29,7 +29,6 @@ const ScheduleForm = ({
   anchorEl: HTMLElement | null;
   setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [date123, setDate123] = useState<Date | null>(new Date("2014-08-18T21:11:54"));
   const { addMySchedule } = useMySchedule();
   const handleValidate = (values: MyScheduleFormData) => {
     const errors: Record<string, string> = {};

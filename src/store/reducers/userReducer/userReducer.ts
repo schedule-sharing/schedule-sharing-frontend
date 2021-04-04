@@ -61,7 +61,7 @@ type UserState = {
   user: user;
 };
 const initialState: UserState = {
-  loading: true,
+  loading: false,
   authenticated: false,
   user: {
     email: "",
