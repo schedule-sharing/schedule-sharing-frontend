@@ -1,10 +1,10 @@
 import { Dispatch } from "redux";
 import axios from "axios";
+import { RootState } from "../rootReducer";
 // actions
 const LOGIN = "user/login" as const;
 const LOGOUT = "user/logout" as const;
 const LOADING = "user/loading" as const;
-
 // action creators
 const login = (val: user) => ({
   type: LOGIN,
@@ -18,6 +18,9 @@ const logout = () => ({
 const loading = () => ({
   type: LOADING
 });
+
+type UserAction = ReturnType<typeof login> | ReturnType<typeof logout> | ReturnType<typeof loading>;
+
 export const asyncLogin = (value: LoginFormValue) => async (dispatch: Dispatch<ReturnType<typeof login> | ReturnType<typeof loading>>) => {
   dispatch(loading());
   try {
@@ -53,7 +56,27 @@ export const asyncLogout = () => async (dispatch: Dispatch<ReturnType<typeof loa
     dispatch(loading());
   }
 };
-type UserAction = ReturnType<typeof login> | ReturnType<typeof logout> | ReturnType<typeof loading>;
+
+export const asyncRemove = () => async (dispatch: Dispatch<ReturnType<typeof logout> | ReturnType<typeof loading>>, getState: () => RootState) => {
+  console.log(getState());
+  const { id } = getState().userReducer.user;
+  // eslint-disable-next-line no-restricted-globals
+  if (confirm("정말 탈퇴하시겠습니까?")) {
+    dispatch(loading());
+    try {
+      const data = axios.delete(`/member/${id}`).then((res) => res.data);
+      data
+        .then((res) => {
+          if (res.success) alert(res.message);
+        })
+        .then(() => dispatch(logout()));
+    } catch (err) {
+      console.error(err.message);
+    } finally {
+      dispatch(loading());
+    }
+  }
+};
 
 type UserState = {
   loading: boolean;
@@ -90,6 +113,7 @@ export default (state = initialState, action: UserAction) => {
         authenticated: false,
         user: initialState.user
       };
+
     default:
       return state;
   }

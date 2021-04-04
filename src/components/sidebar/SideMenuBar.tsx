@@ -1,5 +1,5 @@
 import { Avatar, Button, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemText, Typography } from "@material-ui/core";
-import { Add } from "@material-ui/icons";
+import { Add, Settings, Cancel } from "@material-ui/icons";
 import React, { useState } from "react";
 import ClubForm from "../../pages/calendar/form/club/Clubform";
 import useClub from "../../utils/hooks/reducer/useClub";
@@ -10,7 +10,7 @@ const SideMenuBar: React.FC<{
   children?: React.ReactNode;
 }> = ({ children }) => {
   const { clubs, selectClub } = useClub();
-  const { user, logout } = useUser();
+  const { user, logout, remove } = useUser();
   const [clubForm, setClubForm] = useState<boolean>(false);
   const handleClubFormVisibility = () => {
     setClubForm((prev) => !prev);
@@ -34,13 +34,16 @@ const SideMenuBar: React.FC<{
                 <Avatar src={user.user.imagePath} className={classes.drawerAvatar} />
               </Grid>
               <Grid item xs={7}>
-                <Typography variant="h5" align="center">
+                <Typography variant="h6" align="center">
                   {user.user.name}
                 </Typography>
               </Grid>
             </Grid>
             <Grid container justify="center" item xs={12}>
               <Typography>{user.user.email}</Typography>
+              <IconButton size="small">
+                <Cancel onClick={() => remove()} />
+              </IconButton>
               <Grid item container justify="flex-end" xs={12}>
                 <Button onClick={logout} size="small" color="secondary" variant="contained">
                   Logout

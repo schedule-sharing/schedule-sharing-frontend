@@ -2,7 +2,7 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 const handleError = (err: AxiosError) => {
-  console.log(err.message);
+  alert(err.message);
   return Promise.reject(err);
 };
 axios.defaults.baseURL = "http://15.165.16.96:8080/api";

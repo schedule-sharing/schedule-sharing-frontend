@@ -149,8 +149,8 @@ const SignUpForm = () => {
                 error={formikProps.touched.confirmPassword && Boolean(formikProps.errors.confirmPassword)}
                 helperText={formikProps.touched.confirmPassword && formikProps.errors.confirmPassword}
               />
-              <Grid item justify="center" container xs={12}>
-                <Grid item xs={4}>
+              <Grid item container xs={12}>
+                <Grid item xs={6}>
                   <Button size="small" color="primary" variant="contained" component="label">
                     Upload a file
                     <input
@@ -163,7 +163,7 @@ const SignUpForm = () => {
                     />
                   </Button>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={12}>
                   {profileImg}
                 </Grid>
               </Grid>

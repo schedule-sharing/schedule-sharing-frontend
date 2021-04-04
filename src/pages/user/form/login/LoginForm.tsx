@@ -76,7 +76,15 @@ const LoginForm = () => {
             </Grid>
 
             <Grid item xs={12}>
-              <Button type="submit" className={classes.loginBtn} size="large" variant="contained" fullWidth children="로그인" />
+              <Button
+                name="loginFormSubmit"
+                type="submit"
+                className={classes.loginBtn}
+                size="large"
+                variant="contained"
+                fullWidth
+                children="로그인"
+              />
             </Grid>
           </Grid>
         </form>
